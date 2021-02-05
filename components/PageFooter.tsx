@@ -37,6 +37,16 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: 15,
         borderRight: `1px solid ${theme.palette.secondary.main}`,
       },
+      [theme.breakpoints.down("xs")]: {
+        paddingTop: 30,
+        marginBottom: 30,
+        borderTop: `1px solid ${theme.palette.secondary.main}`,
+      },
+    },
+    mainContent: {
+      [theme.breakpoints.down("xs")]: {
+        flexDirection: "column-reverse",
+      },
     },
   })
 );
@@ -50,29 +60,31 @@ const PageFooter: React.FC = () => {
       <Container maxWidth="md">
         <Box component="footer" className={classes.footer}>
           <Grid container justify="space-between">
-            <Grid item xs={12} sm={6}>
-              <Box className={classes.aboutAuthor}>
-                <AboutAuthor />
-                <IconButton>
-                  <Telegram style={{ color: "#0088CC" }} />
-                </IconButton>
-                <IconButton>
-                  <Facebook style={{ color: "#3B5998" }} />
-                </IconButton>
-                <IconButton>
-                  <YouTube style={{ color: "#C4202B" }} />
-                </IconButton>
-                <IconButton>
-                  <Twitter style={{ color: "#00ACEE" }} />
-                </IconButton>
-              </Box>
-            </Grid>
-            <Grid item container xs={12} sm={6}>
-              {FooterLinks.map((group: PageGroup, index) => (
-                <Grid item xs={12} sm={6} key={index}>
-                  <LinkGroup pageGroup={group} />
-                </Grid>
-              ))}
+            <Grid item container className={classes.mainContent}>
+              <Grid item xs={12} sm={6}>
+                <Box className={classes.aboutAuthor}>
+                  <AboutAuthor />
+                  <IconButton>
+                    <Telegram style={{ color: "#0088CC" }} />
+                  </IconButton>
+                  <IconButton>
+                    <Facebook style={{ color: "#3B5998" }} />
+                  </IconButton>
+                  <IconButton>
+                    <YouTube style={{ color: "#C4202B" }} />
+                  </IconButton>
+                  <IconButton>
+                    <Twitter style={{ color: "#00ACEE" }} />
+                  </IconButton>
+                </Box>
+              </Grid>
+              <Grid item container xs={12} sm={6}>
+                {FooterLinks.map((group: PageGroup, index) => (
+                  <Grid item xs={12} sm={6} key={index}>
+                    <LinkGroup pageGroup={group} />
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
 
             <Grid item xs={12} container justify="center">
