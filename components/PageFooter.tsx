@@ -10,6 +10,7 @@ import { Facebook, Telegram, Twitter, YouTube } from "@material-ui/icons";
 import FontSizes from "../constants/fontsizes";
 import FooterLinks from "../shared/data/footerlinks";
 import { PageGroup } from "../shared/lib/model/PageGroup";
+import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,7 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         paddingTop: 30,
         marginBottom: 30,
-        borderTop: `1px solid ${theme.palette.secondary.main}`,
       },
     },
     mainContent: {
@@ -78,6 +78,9 @@ const PageFooter: React.FC = () => {
                   </IconButton>
                 </Box>
               </Grid>
+              <Hidden smUp>
+                <Divider />
+              </Hidden>
               <Grid item container xs={12} sm={6}>
                 {FooterLinks.map((group: PageGroup, index) => (
                   <Grid item xs={12} sm={6} key={index}>
@@ -86,7 +89,6 @@ const PageFooter: React.FC = () => {
                 ))}
               </Grid>
             </Grid>
-
             <Grid item xs={12} container justify="center">
               <Typography
                 className={classes.copyText}
