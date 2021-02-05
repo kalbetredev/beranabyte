@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     activeText: {
       fontSize: FontSizes.navigationButton,
       fontWeight: "bold",
-      borderBottom: `1px solid ${theme.palette.primary.main}`,
+      color: theme.palette.primary.main,
     },
     inActiveText: {
       fontSize: FontSizes.navigationButton,
