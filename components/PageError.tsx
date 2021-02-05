@@ -64,7 +64,12 @@ const PageError = (props: PageErrorProps) => {
       </Grid>
       <Grid item>
         <Link href="/" passHref>
-          <Button variant="outlined" size="small" className={classes.homeBtn}>
+          <Button
+            component="a"
+            variant="outlined"
+            size="small"
+            className={classes.homeBtn}
+          >
             Take Me Home
           </Button>
         </Link>
