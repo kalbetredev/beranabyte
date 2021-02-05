@@ -82,9 +82,7 @@ const SubMenuContainer: React.FC<SubMenuContainerProps> = (
   props: SubMenuContainerProps
 ) => {
   const classes = useStyles();
-  const [arrowRef, setArrowRef] = useState<RefObject<HTMLSpanElement> | null>(
-    null
-  );
+  const [arrowRef, setArrowRef] = useState(null);
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(props.open);
@@ -120,10 +118,7 @@ const SubMenuContainer: React.FC<SubMenuContainerProps> = (
             timeout={400}
           >
             <Box>
-              <span
-                className={classes.arrow}
-                ref={setArrowRef as (instance: HTMLSpanElement | null) => void}
-              />
+              <span className={classes.arrow} ref={setArrowRef} />
               <Paper className={classes.paper} elevation={5}>
                 {props.children}
               </Paper>
