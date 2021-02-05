@@ -5,7 +5,7 @@ import FontSizes from "../constants/fontsizes";
 import { useRouter } from "next/router";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
-import SubMenuContainer from "../menu/SubMenuContainer";
+import SubMenuContainer from "./SubMenuContainer";
 
 interface NavButtonProps {
   pages: Page[];

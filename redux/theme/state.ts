@@ -1,4 +1,4 @@
-import { ThemeType } from "../../themes/AppTheme";
+import { ThemeType } from "../../shared/theme/theme-type";
 
 export interface ThemeState {
   themeType: ThemeType;

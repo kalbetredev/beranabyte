@@ -1,5 +1,5 @@
 import { HYDRATE } from "next-redux-wrapper";
-import { ThemeType } from "../../themes/AppTheme";
+import { ThemeType } from "../../shared/theme/theme-type";
 import { InitialState, ThemeState } from "./state";
 import { ThemeActionTypes, TOGGLE_DARK_MODE } from "./types";
 
