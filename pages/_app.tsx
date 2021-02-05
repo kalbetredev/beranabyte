@@ -9,13 +9,15 @@ import { MDXProvider } from "@mdx-js/react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { wrapper } from "../redux/store";
 import Head from "next/head";
+import { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }) {
+function MyApp(props: AppProps) {
+  const { Component, pageProps } = props;
   const themeType = useSelector((state: RootState) => state.theme.themeType);
   const theme = AppTheme(themeType);
 
   useEffect(() => {
-    // Material-UI Fix Remove the server-side injected CSS
+    // Material-UI SSR Fix Remove the server-side injected CSS
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement!.removeChild(jssStyles);
