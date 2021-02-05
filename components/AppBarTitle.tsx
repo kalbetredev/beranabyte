@@ -17,11 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AppBarTitle: React.FC<AppBarTitleProps> = (props: AppBarTitleProps) => {
   const classes = useStyles();
-  return (
-    <>
-      <Typography className={classes.titleText}>{props.title}</Typography>
-    </>
-  );
+  return <Typography className={classes.titleText}>{props.title}</Typography>;
 };
 
 export default AppBarTitle;
