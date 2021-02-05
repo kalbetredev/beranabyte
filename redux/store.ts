@@ -30,4 +30,8 @@ const makeStore: MakeStore<RootState> = (context: Context) => {
   return store;
 };
 
-export const wrapper = createWrapper<RootState>(makeStore, { debug: false });
+export const wrapper = createWrapper<RootState>(makeStore, {
+  debug: process.env.NEXT_REDUX_DEBUG_FLAG
+    ? parseInt(process.env.NEXT_REDUX_DEBUG_FLAG) == 1
+    : false,
+});
