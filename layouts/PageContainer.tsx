@@ -5,6 +5,7 @@ import PageMeta from "../shared/lib/types/page-meta";
 import PageFooter from "../components/PageFooter";
 import PageHeader from "../components/PageHeader";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import ScrollTop from "../components/ScrollTop";
 
 interface PageContainerProps {
   meta: PageMeta;
@@ -36,10 +37,12 @@ const PageContainer = (props: PageContainerProps) => {
         )}
       </Head>
       <Container maxWidth="md" className={classes.root}>
+        <div id="back-to-top-anchor" />
         <PageHeader />
         {props.children}
       </Container>
       <PageFooter />
+      <ScrollTop />
     </>
   );
 };
