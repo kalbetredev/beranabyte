@@ -1,7 +1,7 @@
 interface PageMeta {
   title: string;
   description: string;
-  date: Date;
+  date?: Date;
 }
 
 export default PageMeta;
