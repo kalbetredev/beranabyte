@@ -10,7 +10,6 @@ import {
 import React, { Dispatch, useState } from "react";
 import Drawer from "./Drawer";
 import PagesNavigator from "./PageNavigator";
-import pages from "../shared/data/pages";
 import { Theme, makeStyles, createStyles } from "@material-ui/core/styles";
 import ElevationScroll from "./ElevationScroll";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -19,6 +18,13 @@ import AppBarTitle from "./AppBarTitle";
 import { useDispatch } from "react-redux";
 import { ThemeActionTypes } from "../redux/theme/types";
 import { toggleDarkMode } from "../redux/theme/actions";
+import useSWR from "swr";
+import fetcher from "../shared/lib/utils/fetcher";
+import {
+  HomePage,
+  ProjectsPage,
+  pagesFromCategories,
+} from "../shared/data/pages";
 
 const useAppBarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const AppBar: React.FC = () => {
+const AppBar = () => {
   const appBarClasses = useAppBarStyles();
   const classes = useStyles();
   const theme = useTheme();
@@ -57,6 +63,12 @@ const AppBar: React.FC = () => {
   const toggleDarkThemeDispatch = useDispatch<Dispatch<ThemeActionTypes>>();
   const toggleDarkTheme = () => toggleDarkThemeDispatch(toggleDarkMode());
   const isLightTheme = theme.palette.type === "light";
+
+  const { data } = useSWR(`/api/blogs`, fetcher);
+  const categories = data?.categories;
+  const pages = categories
+    ? [HomePage, ...pagesFromCategories(categories), ProjectsPage]
+    : [HomePage, ProjectsPage];
 
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent

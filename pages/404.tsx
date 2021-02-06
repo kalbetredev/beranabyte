@@ -1,6 +1,6 @@
 import PageError from "../components/PageError";
 import PageContainer from "../layouts/PageContainer";
-import PageMeta from "../shared/lib/types/page-meta";
+import PageMeta from "../shared/lib/types/PageMeta";
 
 const PageNotFound = () => {
   const meta: PageMeta = {

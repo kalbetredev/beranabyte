@@ -1,4 +1,4 @@
-import BlogMetaRepository from "../../types/blogmeta-repository";
+import BlogMetaRepository from "./BlogMetaRepository";
 import firebaseDb from "../../utils/firebase";
 
 const VIEW_COLLECTION = firebaseDb.collection("views");

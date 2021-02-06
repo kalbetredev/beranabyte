@@ -6,18 +6,18 @@ import {
   Divider,
 } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
-import Head from "next/head";
 import React from "react";
 import BlogCollection from "../components/BlogCollection";
 import LinkGroup from "../components/LinkGroup";
 import SearchInput from "../components/SearchInput";
 import PageContainer from "../layouts/PageContainer";
-import FrontMatter from "../shared/lib/types/front-matter";
-import BlogRepositoryImpl from "../shared/lib/repository/BlogRepository";
-import PageMeta from "../shared/lib/types/page-meta";
+import FrontMatter from "../shared/lib/types/FrontMatter";
+import BlogRepositoryImpl from "../shared/lib/repository/blog/BlogRepositoryImpl";
+import PageMeta from "../shared/lib/types/PageMeta";
 import { convertFrontMatterToPageGroup } from "../shared/lib/utils/mdx-helpers";
+import { FEATURED } from "../constants/strings";
 interface IndexPageProps {
-  blogsFrontMatter: FrontMatter[];
+  featuredBlogsFrontMatter: FrontMatter[];
   mostViewedBlogPages: FrontMatter[];
   latestBlogPages: FrontMatter[];
 }
@@ -63,7 +63,10 @@ const Index = (props: IndexPageProps) => {
         </Grid>
         <Grid item container xs={12}>
           <Grid item className={classes.blogs}>
-            <BlogCollection title="Featured" posts={props.blogsFrontMatter} />
+            <BlogCollection
+              title={FEATURED}
+              blogs={props.featuredBlogsFrontMatter}
+            />
           </Grid>
           <Grid item className={classes.sidebar}>
             <Hidden smUp>
@@ -92,7 +95,7 @@ const Index = (props: IndexPageProps) => {
 
 export async function getStaticProps() {
   const blogRepository = BlogRepositoryImpl.getInstance();
-  const blogsFrontMatter: FrontMatter[] = await blogRepository.getBlogsFrontMatter();
+  const featuredBlogsFrontMatter: FrontMatter[] = await blogRepository.getFeaturedBlogsFrontMatter();
   const mostViewedBlogPages = await blogRepository.getMostViewedBlogsFrontMatter(
     5
   );
@@ -100,7 +103,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      blogsFrontMatter: blogsFrontMatter,
+      featuredBlogsFrontMatter: featuredBlogsFrontMatter,
       mostViewedBlogPages: mostViewedBlogPages,
       latestBlogPages: latestBlogPages,
     },

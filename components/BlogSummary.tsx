@@ -12,7 +12,7 @@ import Bullet from "./Bullet";
 import { format } from "date-fns";
 import numberFormat from "number-format.js";
 import useSWR from "swr";
-import FrontMatter from "../shared/lib/types/front-matter";
+import FrontMatter from "../shared/lib/types/FrontMatter";
 import FontSizes from "../constants/fontsizes";
 import fetcher from "../shared/lib/utils/fetcher";
 
@@ -76,7 +76,9 @@ const BlogSummary = (props: BlogSummaryCardProps) => {
   return (
     <Card elevation={0} className={classes.root}>
       <CardContent classes={contentClasses}>
-        <Link href={`/blog/${props.blogFrontMatter.slug}`}>
+        <Link
+          href={`/blog/${props.blogFrontMatter.category}/${props.blogFrontMatter.slug}`}
+        >
           <Typography className={classes.title} component="a">
             {props.blogFrontMatter.title}
           </Typography>

@@ -1,15 +1,9 @@
-import BlogMetaRepository from "../types/blogmeta-repository";
-import FirebaseBlogMetaRepositoryImpl from "./blog/firebase-blogmeta-repository";
-import FrontMatter from "../types/front-matter";
-import LocalMDXRepositoryImpl from "./mdx/local-mdx-repository";
-import MDX from "../types/mdx";
-
-interface BlogRepository {
-  getMostViewedBlogsFrontMatter(count: number): Promise<FrontMatter[]>;
-  getLatestBlogsFrontMatter(count: number): FrontMatter[];
-  getBlogBySlug(slug: string): Promise<MDX>;
-  getBlogsFrontMatter(): FrontMatter[];
-}
+import BlogMetaRepository from "../blogmeta/BlogMetaRepository";
+import FirebaseBlogMetaRepositoryImpl from "../blogmeta/FirebaseBlogMetaRepositoryImpl";
+import FrontMatter from "../../types/FrontMatter";
+import LocalMDXRepositoryImpl from "../mdx/LocalMDXRepositoryImpl";
+import MDX from "../../types/MDX";
+import BlogRepository from "./BlogRepository";
 
 class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
   private static instance: BlogRepositoryImpl;
@@ -29,15 +23,23 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
     return BlogRepositoryImpl.instance;
   }
 
+  getFeaturedBlogsFrontMatter(): FrontMatter[] {
+    return this.mdxRepository.getFeaturedBlogsFrontMatter();
+  }
+
+  getAllBlogCategories(): string[] {
+    return this.mdxRepository.getAllCategories();
+  }
+
   getAllSlugs(type: string): string[] {
-    return this.mdxRepository.getAllSlugs(type);
+    return this.mdxRepository.getAllSugs();
   }
 
   getBlogBySlug(slug: string): Promise<MDX> {
     return this.mdxRepository.getBySlug(this.MDX_TYPE, slug);
   }
 
-  getBlogsFrontMatter(): FrontMatter[] {
+  getAllBlogsFrontMatter(): FrontMatter[] {
     return this.mdxRepository.getAllFrontMatter(this.MDX_TYPE);
   }
 
@@ -45,7 +47,7 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
     const mostViewedBlogIds = await this.getMostViewedBlogs(count);
 
     const mostViewedBlogs: FrontMatter[] = [];
-    const blogsFrontMatter = this.getBlogsFrontMatter();
+    const blogsFrontMatter = this.getAllBlogsFrontMatter();
     mostViewedBlogIds.forEach((blogId) => {
       const blogFrontMatter = blogsFrontMatter.find(
         (matter) => matter.uuid === blogId
@@ -56,12 +58,12 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
     return mostViewedBlogs;
   }
 
-  private async getMostViewedBlogs(count: number): Promise<string[]> {
+  async getMostViewedBlogs(count: number): Promise<string[]> {
     return this.blogMetaRepository.getMostViewedBlogs(count);
   }
 
   getLatestBlogsFrontMatter(count: number): FrontMatter[] {
-    const blogsFrontMatter = this.getBlogsFrontMatter();
+    const blogsFrontMatter = this.getAllBlogsFrontMatter();
 
     const sortedBlogs = blogsFrontMatter
       .slice(
@@ -93,6 +95,18 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
 
   updateBlogViewCount(blogId: string) {
     this.blogMetaRepository.updateBlogViewCount(blogId);
+  }
+
+  getFrontMattersByCategory(category: string): FrontMatter[] {
+    return this.mdxRepository.getFrontMattersByCategory(category);
+  }
+
+  getBlog(category: string, slug: string): Promise<MDX> {
+    return this.mdxRepository.getBySlug(category, slug);
+  }
+
+  getSlugsByCategory(category: string): string[] {
+    return this.mdxRepository.getSlugsByCategory(category);
   }
 }
 

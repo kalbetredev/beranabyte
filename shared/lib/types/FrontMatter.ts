@@ -1,5 +1,6 @@
 interface FrontMatter {
   slug: string | null;
+  category: string | null;
   wordCount?: number;
   readingTime?: number;
   title: string;

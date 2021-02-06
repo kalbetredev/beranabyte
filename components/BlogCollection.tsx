@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import FontSizes from "../constants/fontsizes";
-import FrontMatter from "../shared/lib/types/front-matter";
+import FrontMatter from "../shared/lib/types/FrontMatter";
 import BlogSummary from "./BlogSummary";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface BlogCollectionProps {
   title: string;
-  posts: FrontMatter[];
+  blogs: FrontMatter[];
 }
 
 const BlogCollection = (props: BlogCollectionProps) => {
@@ -36,14 +36,14 @@ const BlogCollection = (props: BlogCollectionProps) => {
     <Grid container spacing={1} className={classes.root}>
       <Grid item xs={12}>
         <Typography variant="h1" className={classes.title}>
-          {props.title}
+          {props.title ?? props.blogs[0].category}
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Divider />
       </Grid>
 
-      {props.posts.map((post, index) => (
+      {props.blogs.map((post, index) => (
         <Grow in timeout={400 * index} key={index}>
           <Grid item key={index} xs={12}>
             <BlogSummary blogFrontMatter={post} />

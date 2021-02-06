@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import BlogRepositoryImpl from "../../../shared/lib/repository/BlogRepository";
+import BlogRepositoryImpl from "../../../shared/lib/repository/blog/BlogRepositoryImpl";
 
 type Response = {
   total: number;

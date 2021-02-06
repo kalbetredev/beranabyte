@@ -2,7 +2,7 @@ import { NextPageContext } from "next";
 import React from "react";
 import PageError from "../components/PageError";
 import PageContainer from "../layouts/PageContainer";
-import PageMeta from "../shared/lib/types/page-meta";
+import PageMeta from "../shared/lib/types/PageMeta";
 
 const statusCodes: { [code: number]: string } = {
   400: "Bad Request",

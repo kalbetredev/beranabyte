@@ -1,4 +1,4 @@
-import FrontMatter from "../types/front-matter";
+import FrontMatter from "../types/FrontMatter";
 import Page from "../model/Page";
 import { PageGroup } from "../model/PageGroup";
 
@@ -8,7 +8,11 @@ export function convertFrontMatterToPageGroup(
 ): PageGroup {
   const pages = pagesFrontMatter.map(
     (frontMatter) =>
-      new Page("", frontMatter.title, `/blog/${frontMatter.slug}` ?? "")
+      new Page(
+        "",
+        frontMatter.title,
+        `/blog/${frontMatter.category}/${frontMatter.slug}` ?? ""
+      )
   );
 
   return {

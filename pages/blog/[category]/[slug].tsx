@@ -14,16 +14,17 @@ import Box from "@material-ui/core/Box";
 import { parse } from "node-html-parser";
 import TwoLevelTableOfContent, {
   HeaderLevelIdPair,
-} from "../../components/TwoLevelTableOfContent";
-import BlogRepositoryImpl from "../../shared/lib/repository/BlogRepository";
-import Bullet from "../../components/Bullet";
-import BlogViewCounter from "../../components/BlogViewCounter";
-import MDXComponents from "../../components/MDX/MDXComponents";
-import FontSizes from "../../constants/fontsizes";
-import { LightGrey } from "../../constants/colors";
-import MDX from "../../shared/lib/types/mdx";
-import PageMeta from "../../shared/lib/types/page-meta";
-import PageContainer from "../../layouts/PageContainer";
+} from "../../../components/TwoLevelTableOfContent";
+import BlogRepositoryImpl from "../../../shared/lib/repository/blog/BlogRepositoryImpl";
+import Bullet from "../../../components/Bullet";
+import BlogViewCounter from "../../../components/BlogViewCounter";
+import MDXComponents from "../../../components/MDX/MDXComponents";
+import FontSizes from "../../../constants/fontsizes";
+import { LightGrey } from "../../../constants/colors";
+import MDX from "../../../shared/lib/types/MDX";
+import PageMeta from "../../../shared/lib/types/PageMeta";
+import PageContainer from "../../../layouts/PageContainer";
+import { Params } from "next/dist/next-server/server/router";
 
 interface BlogProps {
   mdx: MDX;
@@ -106,33 +107,40 @@ const Blog = (props: BlogProps) => {
   );
 };
 
-interface Params {
-  slug: string;
-}
-
 export async function getStaticPaths() {
-  const slugs = BlogRepositoryImpl.getInstance().getAllSlugs("blog");
+  const repository = BlogRepositoryImpl.getInstance();
+  const categories = repository.getAllBlogCategories();
+
+  const paths = [];
+  categories.map((category) => {
+    const categorySlugs = repository.getSlugsByCategory(category);
+    categorySlugs.map((slug) => {
+      paths.push({
+        params: {
+          category: category,
+          slug: slug,
+        },
+      });
+    });
+  });
 
   return {
-    paths: slugs.map((slug) => ({
-      params: {
-        slug: slug,
-      },
-    })),
+    paths: paths,
     fallback: false,
   };
 }
 
 export async function getStaticProps({ params }: { params: Params }) {
-  const post = await BlogRepositoryImpl.getInstance().getBlogBySlug(
+  const blog = await BlogRepositoryImpl.getInstance().getBlog(
+    params.category,
     params.slug
   );
 
-  const headers = getHeadersForTOC(post.mdxSource.renderedOutput);
+  const headers = getHeadersForTOC(blog.mdxSource.renderedOutput);
 
   return {
     props: {
-      mdx: { mdxSource: post.mdxSource, fontMatter: post.fontMatter },
+      mdx: { mdxSource: blog.mdxSource, fontMatter: blog.fontMatter },
       headers: headers,
     },
   };

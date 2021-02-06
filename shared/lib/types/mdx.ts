@@ -1,5 +1,5 @@
 import { MdxRemote } from "next-mdx-remote/types";
-import FrontMatter from "./front-matter";
+import FrontMatter from "./FrontMatter";
 
 interface MDX {
   mdxSource: MdxRemote.Source;

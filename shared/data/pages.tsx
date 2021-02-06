@@ -6,36 +6,66 @@ import {
   PythonBrandIcon,
   ReactBrandIcon,
 } from "../../icons";
+import { FEATURED } from "../../constants/strings";
 
-const Pages: Page[] = [
-  new Page("Home", "Home", "/", undefined),
+export const HomePage = new Page("Home", "Home", "/", undefined);
+export const ProjectsPage = new Page(
+  "Projects",
+  "Projects",
+  "/projects",
+  undefined
+);
 
-  new Page("Blog", "JavaScript", "/blog/js", <JavaScriptBrandIcon />),
-  new Page("Blog", "NextJS", "/blog/nextjs", <NextJsBrandIcon />),
-  new Page("Blog", "React", "/blog/react", <ReactBrandIcon />),
-  new Page("Blog", "Algorithms", "/blog/algorithms", undefined),
-  new Page("Blog", "Python", "/blog/python", <PythonBrandIcon />),
-  new Page("Blog", "Machine Learning", "/blog/ml", undefined),
-  new Page("Blog", "Artificial Intelligence", "/blog/ai", undefined),
-  new Page("Blog", "Web Dev", "/blog/web-dev", undefined),
-  new Page("Blog", "Tech Things", "/blog/tech-things", undefined),
-  new Page("Blog", "Java", "/blog/java", <JavaBrandIcon />),
+export const ProfilePage = new Page("", "My Profile", "/", undefined);
+export const MyAccountPage = new Page("", "My Account", "/", undefined);
+export const SignInPage = new Page("", "Sign In", "/", undefined);
 
-  new Page("Projects", "Projects", "/projects", undefined),
+export function pagesFromCategories(categories: string[]): Page[] {
+  const pages: Page[] = [];
+  categories
+    .filter((category) => category !== FEATURED)
+    .forEach((category) => {
+      pages.push(new Page("Blog", category, `/blog/${category}`));
+    });
+
+  return batchFormatPages(pages);
+}
+
+export function batchFormatPages(pages: Page[]): Page[] {
+  return pages.map((page) => formatPage(page));
+}
+
+export function formatPage(page: Page): Page {
+  KnownPages.forEach((knownPage) => {
+    if (knownPage.label.toLowerCase() === page.label.toLowerCase()) {
+      page.label = knownPage.label;
+      page.icon = knownPage.icon;
+      return page;
+    }
+  });
+
+  return page;
+}
+
+const KnownPages: { label: string; icon?: JSX.Element }[] = [
+  {
+    label: "JavaScript",
+    icon: <JavaScriptBrandIcon />,
+  },
+  {
+    label: "NextJS",
+    icon: <NextJsBrandIcon />,
+  },
+  {
+    label: "React",
+    icon: <ReactBrandIcon />,
+  },
+  {
+    label: "Python",
+    icon: <PythonBrandIcon />,
+  },
+  {
+    label: "Java",
+    icon: <JavaBrandIcon />,
+  },
 ];
-
-export const SignInPage = new Page("About", "About", "/user/signin", undefined);
-export const ProfilePage = new Page(
-  "About",
-  "About",
-  "/user/profile",
-  undefined
-);
-export const MyAccountPage = new Page(
-  "About",
-  "About",
-  "/user/myaccount",
-  undefined
-);
-
-export default Pages;
