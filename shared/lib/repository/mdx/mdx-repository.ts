@@ -1,5 +1,5 @@
-import FrontMatter from "../../model/mdx/front-matter";
-import MDX from "../../model/mdx/mdx";
+import FrontMatter from "../../types/front-matter";
+import MDX from "../../types/mdx";
 
 interface MDXRepository {
   getAllSlugs(type: string): string[];

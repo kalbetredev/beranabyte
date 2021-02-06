@@ -1,4 +1,4 @@
-import FrontMatter from "../model/mdx/front-matter";
+import FrontMatter from "../types/front-matter";
 import Page from "../model/Page";
 import { PageGroup } from "../model/PageGroup";
 

@@ -12,7 +12,7 @@ import BlogCollection from "../components/BlogCollection";
 import LinkGroup from "../components/LinkGroup";
 import SearchInput from "../components/SearchInput";
 import PageContainer from "../layouts/PageContainer";
-import FrontMatter from "../shared/lib/model/mdx/front-matter";
+import FrontMatter from "../shared/lib/types/front-matter";
 import BlogRepositoryImpl from "../shared/lib/repository/BlogRepository";
 import PageMeta from "../shared/lib/types/page-meta";
 import { convertFrontMatterToPageGroup } from "../shared/lib/utils/mdx-helpers";

@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import FontSizes from "../constants/fontsizes";
-import FrontMatter from "../shared/lib/model/mdx/front-matter";
+import FrontMatter from "../shared/lib/types/front-matter";
 import BlogSummary from "./BlogSummary";
 
 const useStyles = makeStyles((theme: Theme) =>

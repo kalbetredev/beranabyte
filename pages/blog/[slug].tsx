@@ -21,7 +21,7 @@ import BlogViewCounter from "../../components/BlogViewCounter";
 import MDXComponents from "../../components/MDX/MDXComponents";
 import FontSizes from "../../constants/fontsizes";
 import { LightGrey } from "../../constants/colors";
-import MDX from "../../shared/lib/model/mdx/mdx";
+import MDX from "../../shared/lib/types/mdx";
 import PageMeta from "../../shared/lib/types/page-meta";
 import PageContainer from "../../layouts/PageContainer";
 

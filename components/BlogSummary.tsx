@@ -12,7 +12,7 @@ import Bullet from "./Bullet";
 import { format } from "date-fns";
 import numberFormat from "number-format.js";
 import useSWR from "swr";
-import FrontMatter from "../shared/lib/model/mdx/front-matter";
+import FrontMatter from "../shared/lib/types/front-matter";
 import FontSizes from "../constants/fontsizes";
 import fetcher from "../shared/lib/utils/fetcher";
 

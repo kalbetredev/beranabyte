@@ -1,8 +1,8 @@
-import BlogMetaRepository from "../model/blog/blogmeta-repository";
-import FirebaseBlogMetaRepositoryImpl from "../model/blog/firebase-blogmeta-repository";
-import FrontMatter from "../model/mdx/front-matter";
+import BlogMetaRepository from "../types/blogmeta-repository";
+import FirebaseBlogMetaRepositoryImpl from "./blog/firebase-blogmeta-repository";
+import FrontMatter from "../types/front-matter";
 import LocalMDXRepositoryImpl from "./mdx/local-mdx-repository";
-import MDX from "../model/mdx/mdx";
+import MDX from "../types/mdx";
 
 interface BlogRepository {
   getMostViewedBlogsFrontMatter(count: number): Promise<FrontMatter[]>;

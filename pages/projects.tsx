@@ -6,7 +6,7 @@ import LinkGroup from "../components/LinkGroup";
 import ProjectCollection from "../components/ProjectCollection";
 import PageContainer from "../layouts/PageContainer";
 import { OpenSourceProjects } from "../shared/data/projects";
-import FrontMatter from "../shared/lib/model/mdx/front-matter";
+import FrontMatter from "../shared/lib/types/front-matter";
 import PageMeta from "../shared/lib/types/page-meta";
 import { convertFrontMatterToPageGroup } from "../shared/lib/utils/mdx-helpers";
 
