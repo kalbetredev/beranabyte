@@ -93,8 +93,10 @@ const Index = (props: IndexPageProps) => {
 export async function getStaticProps() {
   const blogRepository = BlogRepositoryImpl.getInstance();
   const blogsFrontMatter: FrontMatter[] = await blogRepository.getBlogsFrontMatter();
-  const mostViewedBlogPages = blogRepository.getMostViewedBlogsFrontMatter(3);
-  const latestBlogPages = blogRepository.getLatestBlogsFrontMatter(3);
+  const mostViewedBlogPages = await blogRepository.getMostViewedBlogsFrontMatter(
+    5
+  );
+  const latestBlogPages = blogRepository.getLatestBlogsFrontMatter(5);
 
   return {
     props: {

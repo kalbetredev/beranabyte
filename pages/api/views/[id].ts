@@ -24,8 +24,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<Response>) => {
 
 async function getTotalViewCount(blogId: string): Promise<number> {
   const repository = BlogRepositoryImpl.getInstance();
-  const totalViewCount = await repository.getBlogViewCountAsync(
-    blogId as string
-  );
+  const totalViewCount = await repository.getBlogViewCount(blogId as string);
   return totalViewCount;
 }

@@ -5,7 +5,7 @@ import LocalMDXRepositoryImpl from "./mdx/local-mdx-repository";
 import MDX from "../model/mdx/mdx";
 
 interface BlogRepository {
-  getMostViewedBlogsFrontMatter(count: number): FrontMatter[];
+  getMostViewedBlogsFrontMatter(count: number): Promise<FrontMatter[]>;
   getLatestBlogsFrontMatter(count: number): FrontMatter[];
   getBlogBySlug(slug: string): Promise<MDX>;
   getBlogsFrontMatter(): FrontMatter[];
@@ -41,70 +41,58 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
     return this.mdxRepository.getAllFrontMatter(this.MDX_TYPE);
   }
 
-  getMostViewedBlogsFrontMatter(count: number): FrontMatter[] {
-    const blogsFrontMatter = this.mdxRepository.getAllFrontMatter(
-      this.MDX_TYPE
-    );
+  async getMostViewedBlogsFrontMatter(count: number): Promise<FrontMatter[]> {
+    const mostViewedBlogIds = await this.getMostViewedBlogs(count);
 
-    //TODO: Access Firebase to get view count for each of the blogs
-    //TODO: Take the 5 of the most viewed blogs
-
-    // Sample
-    const mostViewedBlogs = [
-      {
-        slug: "2019",
-        title: "2019 Year in Review",
-        publishedAt: "2019-12-26",
-        uuid: "ADFEIAD858EADFEFA",
-      },
-      {
-        slug: "backend",
-        title: "Which Back End Should I Use As A Front-End Developer?",
-        publishedAt: "2020-08-09",
-        uuid: "ADFEIwAD858EADFEFA",
-      },
-      {
-        slug: "test",
-        title: "Test Blog",
-        publishedAt: "2020-08-09",
-        uuid: "ADFxxEIwAD858EADFEFA",
-      },
-    ];
+    const mostViewedBlogs: FrontMatter[] = [];
+    const blogsFrontMatter = this.getBlogsFrontMatter();
+    mostViewedBlogIds.forEach((blogId) => {
+      const blogFrontMatter = blogsFrontMatter.find(
+        (matter) => matter.uuid === blogId
+      );
+      if (blogFrontMatter) mostViewedBlogs.push(blogFrontMatter);
+    });
 
     return mostViewedBlogs;
   }
 
+  private async getMostViewedBlogs(count: number): Promise<string[]> {
+    return this.blogMetaRepository.getMostViewedBlogs(count);
+  }
+
   getLatestBlogsFrontMatter(count: number): FrontMatter[] {
-    const blogsFrontMatter = this.mdxRepository.getAllFrontMatter(
-      this.MDX_TYPE
-    );
+    const blogsFrontMatter = this.getBlogsFrontMatter();
 
-    const blogs = blogsFrontMatter.map((frontMatter) => {
-      return {
-        publishedAt: new Date(frontMatter.publishedAt),
-        uuid: frontMatter.uuid,
-      };
+    const sortedBlogs = blogsFrontMatter
+      .slice(
+        0,
+        count > blogsFrontMatter.length ? blogsFrontMatter.length : count
+      )
+      .map((frontMatter) => {
+        return {
+          uuid: frontMatter.uuid,
+          publishedAt: new Date(frontMatter.publishedAt),
+        };
+      })
+      .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
+
+    const latestBlogsFrontMatter: FrontMatter[] = [];
+    sortedBlogs.forEach((blogId) => {
+      const blogFrontMatter = blogsFrontMatter.find(
+        (matter) => matter.uuid === blogId.uuid
+      );
+      if (blogFrontMatter) latestBlogsFrontMatter.push(blogFrontMatter);
     });
 
-    //TODO: Implement Sorting
-    blogs.sort((a, b) => {
-      if (a.publishedAt < b.publishedAt) return 1;
-      else if (a.publishedAt > b.publishedAt) return -1;
-      else return 0;
-    });
-
-    return blogsFrontMatter.filter(
-      (frontMatter) =>
-        blogs.filter((blog) => blog.uuid === frontMatter.uuid).length === 1
-    );
+    return latestBlogsFrontMatter;
   }
 
-  getBlogViewCountAsync(blogId: string): Promise<number> {
-    return this.blogMetaRepository.getBlogViewCountAsync(blogId);
+  getBlogViewCount(blogId: string): Promise<number> {
+    return this.blogMetaRepository.getBlogViewCount(blogId);
   }
 
-  updateBlogViewCount(blogId: string): Promise<void> {
-    return this.blogMetaRepository.updateBlogViewCount(blogId);
+  updateBlogViewCount(blogId: string) {
+    this.blogMetaRepository.updateBlogViewCount(blogId);
   }
 }
 
