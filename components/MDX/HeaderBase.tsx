@@ -2,7 +2,6 @@ import { Box, createStyles, makeStyles, Theme } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { InsertLink } from "@material-ui/icons";
 import React, { useState } from "react";
-import { LightGrey } from "../../constants/colors";
 import FontSizes from "../../constants/fontsizes";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     anchorIcon: {
       position: "absolute",
-      color: LightGrey,
+      color: theme.palette.secondary.main,
       top: 0,
       left: -20,
     },

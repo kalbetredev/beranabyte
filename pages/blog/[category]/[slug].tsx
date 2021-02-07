@@ -20,7 +20,6 @@ import Bullet from "../../../components/Bullet";
 import BlogViewCounter from "../../../components/BlogViewCounter";
 import MDXComponents from "../../../components/MDX/MDXComponents";
 import FontSizes from "../../../constants/fontsizes";
-import { LightGrey } from "../../../constants/colors";
 import MDX from "../../../shared/lib/types/MDX";
 import PageMeta from "../../../shared/lib/types/PageMeta";
 import PageContainer from "../../../layouts/PageContainer";
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     subheader: {
       fontSize: FontSizes.title,
-      color: LightGrey,
+      color: theme.palette.text.secondary,
       display: "inline-block",
     },
     iconButton: {

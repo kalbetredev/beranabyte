@@ -2,7 +2,6 @@ import Grid from "@material-ui/core/Grid";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { BlurCircular } from "@material-ui/icons";
 import React from "react";
-import { LightGrey } from "../../constants/colors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     liIcon: {
       margin: 5,
-      color: LightGrey,
+      color: theme.palette.secondary.main,
     },
   })
 );

@@ -1,7 +1,6 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import React from "react";
-import { LightGrey } from "../../constants/colors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingBottom: 12,
       },
       "& td, th": {
-        borderBottom: `1px solid ${LightGrey}`,
+        borderBottom: `1px solid ${theme.palette.secondary.main}`,
         padding: 8,
       },
     },
