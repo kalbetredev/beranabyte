@@ -54,9 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     mainContent: {
       width: "100%",
-      paddingRight: 24,
       [theme.breakpoints.up("sm")]: {
         width: "calc(100% - 175px)",
+        paddingRight: 24,
       },
     },
   })
