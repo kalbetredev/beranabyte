@@ -16,7 +16,7 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
   private constructor() {
     this.mdxRepository = new LocalMDXRepositoryImpl();
     this.blogMetaRepository =
-      process.env.BLOG_META_DB == "remote"
+      process.env.BLOG_META_DB && process.env.BLOG_META_DB == "remote"
         ? new FirebaseBlogMetaRepositoryImpl()
         : new TestBlogMetaRepositoryImpl();
   }
