@@ -14,9 +14,6 @@ import BlogSummary from "./BlogSummary";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      width: "100%",
-    },
     title: {
       fontSize: FontSizes.header,
       textTransform: "uppercase",
@@ -33,7 +30,7 @@ const BlogCollection = (props: BlogCollectionProps) => {
   const classes = useStyles();
 
   return (
-    <Grid container spacing={1} className={classes.root}>
+    <Grid container spacing={1}>
       <Grid item xs={12}>
         <Typography variant="h1" className={classes.title}>
           {props.title ?? props.blogs[0].category}
