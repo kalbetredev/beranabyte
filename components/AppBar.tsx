@@ -14,7 +14,7 @@ import { Theme, makeStyles, createStyles } from "@material-ui/core/styles";
 import ElevationScroll from "./ElevationScroll";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Brightness3, WbSunny } from "@material-ui/icons";
-import AppBarTitle from "./AppBarTitle";
+import BrandLogo from "./BrandLogo";
 import { useDispatch } from "react-redux";
 import { ThemeActionTypes } from "../redux/theme/types";
 import { toggleDarkMode } from "../redux/theme/actions";
@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     menuButton: {
-      marginRight: theme.spacing(2),
       "&:focus": {
         outline: "none !important",
       },
@@ -105,7 +104,7 @@ const AppBar = () => {
                   pages={pages}
                 />
               </Hidden>
-              <AppBarTitle title="BeranaByte" />
+              <BrandLogo />
               <Hidden only="xs">
                 <PagesNavigator pages={pages} />
               </Hidden>
