@@ -21,9 +21,9 @@ interface CustomDrawerProps {
   children?: React.ReactNode;
 }
 
-const listItemTextStyles = makeStyles({
-  primary: {
-    fontSize: FontSizes.menuListItem,
+const useStyles = makeStyles({
+  list: {
+    minWidth: "calc((100vw) / 2)",
   },
 });
 
@@ -37,6 +37,7 @@ const headerListItemTextStyles = makeStyles({
 });
 
 const Drawer: React.FC<CustomDrawerProps> = (props: CustomDrawerProps) => {
+  const classes = useStyles();
   const headerListItemTextClasses = headerListItemTextStyles();
 
   const navMenus: MenuItem[] = [];
@@ -65,7 +66,7 @@ const Drawer: React.FC<CustomDrawerProps> = (props: CustomDrawerProps) => {
   return (
     <MuiDrawer open={props.open} onClose={props.onClose}>
       {props.children}
-      <List>
+      <List className={classes.list}>
         <ListItem>
           <UserAccount alwaysShow={true} />
         </ListItem>
