@@ -1,6 +1,7 @@
 import { grey, red, teal } from "@material-ui/core/colors";
 
 export const BrandColor = teal[500];
+export const LightBrandColor = teal[300];
 export const DarkBackground = grey[900];
 export const DarkGrey = grey[600];
 export const LightGrey = grey[300];

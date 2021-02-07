@@ -4,6 +4,7 @@ import {
   DarkBackground,
   ErrorColor,
   BrandColor,
+  LightBrandColor,
 } from "../../constants/colors";
 
 const DarkTheme = createMuiTheme({
@@ -20,6 +21,30 @@ const DarkTheme = createMuiTheme({
     },
     background: {
       default: DarkBackground,
+    },
+  },
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        "*": {
+          "scrollbar-width": "thin",
+        },
+        "*::-webkit-scrollbar": {
+          width: "5px",
+          height: "5px",
+        },
+        "*::-webkit-scrollbar-track": {
+          backgroundColor: DarkGrey,
+        },
+        "*::-webkit-scrollbar-thumb": {
+          backgroundColor: BrandColor,
+        },
+        "::-webkit-scrollbar-thumb": {
+          "&:hover": {
+            backgroundColor: LightBrandColor,
+          },
+        },
+      },
     },
   },
 });
