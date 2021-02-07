@@ -4,16 +4,21 @@ import FrontMatter from "../../types/FrontMatter";
 import LocalMDXRepositoryImpl from "../mdx/LocalMDXRepositoryImpl";
 import MDX from "../../types/MDX";
 import BlogRepository from "./BlogRepository";
+import MDXRepository from "../mdx/MDXRepository";
+import TestBlogMetaRepositoryImpl from "../blogmeta/TestBlogMetaRepositoryImpl";
 
 class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
   private static instance: BlogRepositoryImpl;
-  private mdxRepository: LocalMDXRepositoryImpl;
-  private blogMetaRepository: FirebaseBlogMetaRepositoryImpl;
+  private mdxRepository: MDXRepository;
+  private blogMetaRepository: BlogMetaRepository;
   private MDX_TYPE = "blog";
 
   private constructor() {
     this.mdxRepository = new LocalMDXRepositoryImpl();
-    this.blogMetaRepository = new FirebaseBlogMetaRepositoryImpl();
+    this.blogMetaRepository =
+      process.env.BLOG_META_DB == "remote"
+        ? new FirebaseBlogMetaRepositoryImpl()
+        : new TestBlogMetaRepositoryImpl();
   }
 
   public static getInstance(): BlogRepositoryImpl {
