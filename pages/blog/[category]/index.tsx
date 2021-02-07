@@ -55,8 +55,8 @@ const BlogCategory = (props: BlogCategoryProps) => {
         <Grid item container xs={12}>
           <Grid item className={classes.blogs}>
             <BlogCollection
-              category={props.category}
-              posts={props.categoryFrontMatters}
+              title={props.category}
+              blogs={props.categoryFrontMatters}
             />
           </Grid>
         </Grid>
