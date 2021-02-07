@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       borderRadius: 5,
-      overflow: "hidden",
     },
     header: {
       backgroundColor:
@@ -79,6 +78,7 @@ const CodeBlock = ({ children, className }: Props) => {
               padding: "15px",
               margin: 0,
               backgroundColor: codeBackground,
+              overflow: "auto",
             }}
           >
             {tokens.map((line, i) => (
