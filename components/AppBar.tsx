@@ -14,7 +14,7 @@ import { Theme, makeStyles, createStyles } from "@material-ui/core/styles";
 import ElevationScroll from "./ElevationScroll";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Brightness3, WbSunny } from "@material-ui/icons";
-import BrandLogo from "./BrandLogo";
+import Logo from "./Logo";
 import { useDispatch } from "react-redux";
 import { ThemeActionTypes } from "../redux/theme/types";
 import { toggleDarkMode } from "../redux/theme/actions";
@@ -63,7 +63,7 @@ const AppBar = () => {
   const toggleDarkTheme = () => toggleDarkThemeDispatch(toggleDarkMode());
   const isLightTheme = theme.palette.type === "light";
 
-  const { data } = useSWR(`/api/blogs`, fetcher);
+  const { data } = useSWR(`/api/blog-categories`, fetcher);
   const categories = data?.categories;
   const pages = categories
     ? [HomePage, ...pagesFromCategories(categories), ProjectsPage]
@@ -104,7 +104,7 @@ const AppBar = () => {
                   pages={pages}
                 />
               </Hidden>
-              <BrandLogo />
+              <Logo />
               <Hidden only="xs">
                 <PagesNavigator pages={pages} />
               </Hidden>
