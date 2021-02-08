@@ -24,6 +24,8 @@ import MDX from "../../../shared/lib/types/MDX";
 import PageMeta from "../../../shared/lib/types/PageMeta";
 import PageContainer from "../../../layouts/PageContainer";
 import { Params } from "next/dist/next-server/server/router";
+import BlogComments from "../../../components/BlogComments";
+import Comment from "../../../shared/lib/model/Comment";
 
 interface BlogProps {
   mdx: MDX;
@@ -95,6 +97,7 @@ const Blog = (props: BlogProps) => {
             </IconButton>
           </Box>
           {content}
+          <BlogComments comments={sampleComments} />
         </Box>
         {props.headers.length > 0 ? (
           <Hidden xsDown>
@@ -165,3 +168,24 @@ function getHeadersForTOC(renderedOutput: string): HeaderLevelIdPair[] {
 }
 
 export default Blog;
+
+// Sample Comments
+const sampleComments: Comment[] = [
+  {
+    author: "Kalkidan Betre",
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    date: new Date(),
+    replies: [
+      {
+        author: "Kalkidan Betre",
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+        date: new Date(),
+      },
+      {
+        author: "Kalkidan Betre",
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+        date: new Date(),
+      },
+    ],
+  },
+];

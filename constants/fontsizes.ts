@@ -12,6 +12,7 @@ const FontSizes = {
   smallButton: "0.7em",
   paragraph: "0.9em",
   description: "0.8em",
+  comment: "0.85em",
   menuListItem: "0.9em",
   sectionListItem: "0.82em",
   footerLink: "0.85em",
