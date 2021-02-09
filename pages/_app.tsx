@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import AppTheme from "../shared/theme/app-theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import "../shared/styles/globals.css";
@@ -10,6 +10,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { wrapper } from "../redux/store";
 import Head from "next/head";
 import { AppProps } from "next/app";
+import { ProviderAlert } from "../shared/lib/utils/useAlert";
 
 function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -35,7 +36,9 @@ function MyApp(props: AppProps) {
       <ThemeProvider theme={theme}>
         <MDXProvider components={MDXComponents}>
           <CssBaseline />
-          <Component {...pageProps} />
+          <ProviderAlert>
+            <Component {...pageProps} />
+          </ProviderAlert>
         </MDXProvider>
       </ThemeProvider>
     </>
