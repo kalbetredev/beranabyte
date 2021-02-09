@@ -25,6 +25,7 @@ import {
   ProjectsPage,
   pagesFromCategories,
 } from "../shared/data/pages";
+import Box from "@material-ui/core/Box";
 
 const useAppBarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -105,6 +106,7 @@ const AppBar = () => {
                 />
               </Hidden>
               <Logo />
+              <Box display="flex" style={{ flexGrow: 1 }} />
               <Hidden only="xs">
                 <PagesNavigator pages={pages} />
               </Hidden>
