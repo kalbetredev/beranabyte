@@ -1,8 +1,10 @@
 class Comment {
   constructor(
+    public blogId: string,
+    public commentId: string,
     public author: string,
     public text: string,
-    public date: Date,
+    public date: string,
     public replies?: Comment[]
   ) {}
 }

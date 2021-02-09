@@ -82,11 +82,11 @@ const CommentItem = (props: CommentItemProps) => {
     </Grid>
   );
 
-  const commentContent = (author: string, text: string, date: Date) => (
+  const commentContent = (author: string, text: string, date: string) => (
     <>
       <Typography className={classes.name}>
         {author} {<Bullet />}
-        {format(date, "MMM d, yyyy")}
+        {format(new Date(date), "MMM d, yyyy")}
       </Typography>
       <Typography className={classes.commentText}>{text}</Typography>
     </>

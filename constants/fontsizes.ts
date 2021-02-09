@@ -17,6 +17,7 @@ const FontSizes = {
   sectionListItem: "0.82em",
   footerLink: "0.85em",
   footerGroupHeader: "1em",
+  input: "0.9em",
 };
 
 export default FontSizes;

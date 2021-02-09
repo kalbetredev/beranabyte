@@ -97,7 +97,7 @@ const Blog = (props: BlogProps) => {
             </IconButton>
           </Box>
           {content}
-          <BlogComments comments={sampleComments} />
+          <BlogComments blogId={props.mdx.fontMatter.uuid} />
         </Box>
         {props.headers.length > 0 ? (
           <Hidden xsDown>
@@ -168,24 +168,3 @@ function getHeadersForTOC(renderedOutput: string): HeaderLevelIdPair[] {
 }
 
 export default Blog;
-
-// Sample Comments
-const sampleComments: Comment[] = [
-  {
-    author: "Kalkidan Betre",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    date: new Date(),
-    replies: [
-      {
-        author: "Kalkidan Betre",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        date: new Date(),
-      },
-      {
-        author: "Kalkidan Betre",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        date: new Date(),
-      },
-    ],
-  },
-];

@@ -1,6 +1,8 @@
 import BlogMetaRepository from "./BlogMetaRepository";
-import firebaseDb from "../../utils/firebase";
+import firebaseAdmin from "../../utils/firebase-admin";
+import Comment from "../../model/Comment";
 
+const firebaseDb = firebaseAdmin.firestore();
 const VIEW_COLLECTION = firebaseDb.collection("views");
 const VIEW_COUNT_FILED = "viewCount";
 
@@ -46,6 +48,21 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
     }
 
     return blogsWithCount.map((blog) => blog.id).slice(0, count);
+  }
+
+  getBlogComments(blogId: string): Promise<Comment[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  addBlogComment(blogId: string, comment: string): Promise<Comment[]> {
+    throw new Error("Method not implemented.");
+  }
+  addCommentReply(
+    blogId: string,
+    commentId: string,
+    reply: string
+  ): Promise<Comment[]> {
+    throw new Error("Method not implemented.");
   }
 }
 

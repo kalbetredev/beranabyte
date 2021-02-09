@@ -6,6 +6,7 @@ import MDX from "../../types/MDX";
 import BlogRepository from "./BlogRepository";
 import MDXRepository from "../mdx/MDXRepository";
 import TestBlogMetaRepositoryImpl from "../blogmeta/TestBlogMetaRepositoryImpl";
+import Comment from "../../model/Comment";
 
 class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
   private static instance: BlogRepositoryImpl;
@@ -112,6 +113,22 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
 
   getSlugsByCategory(category: string): string[] {
     return this.mdxRepository.getSlugsByCategory(category);
+  }
+
+  getBlogComments(blogId: string): Promise<Comment[]> {
+    return this.blogMetaRepository.getBlogComments(blogId);
+  }
+
+  addBlogComment(blogId: string, comment: string): Promise<Comment[]> {
+    return this.blogMetaRepository.addBlogComment(blogId, comment);
+  }
+
+  addCommentReply(
+    blogId: string,
+    commentId: string,
+    reply: string
+  ): Promise<Comment[]> {
+    return this.blogMetaRepository.addCommentReply(blogId, commentId, reply);
   }
 }
 
