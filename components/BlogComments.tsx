@@ -11,12 +11,13 @@ import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import { Send } from "@material-ui/icons";
 import React from "react";
+import useSWR from "swr";
 import FontSizes from "../constants/fontsizes";
-import Comment from "../shared/lib/model/Comment";
+import fetcher from "../shared/lib/utils/fetcher";
 import CommentItem from "./CommentItem";
 
 interface BlogCommentsProps {
-  comments: Comment[];
+  blogId: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,6 +38,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const BlogComments = (props: BlogCommentsProps) => {
   const classes = useStyles();
+  const { data } = useSWR([`/api/blogs-meta/${props.blogId}`], fetcher);
+  const comments = data?.comments ?? [];
 
   return (
     <Grid container spacing={2}>
@@ -46,8 +49,8 @@ const BlogComments = (props: BlogCommentsProps) => {
       <Grid item xs={12}>
         <Divider />
       </Grid>
-      {props.comments.length > 0
-        ? props.comments.map((comment, index) => (
+      {comments.length > 0
+        ? comments.map((comment, index) => (
             <Grid item xs={12} key={index}>
               <CommentItem comment={comment} />
             </Grid>
