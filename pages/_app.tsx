@@ -10,7 +10,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { wrapper } from "../redux/store";
 import Head from "next/head";
 import { AppProps } from "next/app";
-import { ProviderAlert } from "../shared/lib/utils/useAlert";
+import { ProvideAlert } from "../shared/lib/utils/useAlert";
+import { ProvideAuth } from "../shared/lib/utils/useAuth";
 
 function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -33,14 +34,16 @@ function MyApp(props: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <ThemeProvider theme={theme}>
-        <MDXProvider components={MDXComponents}>
-          <CssBaseline />
-          <ProviderAlert>
-            <Component {...pageProps} />
-          </ProviderAlert>
-        </MDXProvider>
-      </ThemeProvider>
+      <ProvideAuth>
+        <ThemeProvider theme={theme}>
+          <MDXProvider components={MDXComponents}>
+            <CssBaseline />
+            <ProvideAlert>
+              <Component {...pageProps} />
+            </ProvideAlert>
+          </MDXProvider>
+        </ThemeProvider>
+      </ProvideAuth>
     </>
   );
 }
