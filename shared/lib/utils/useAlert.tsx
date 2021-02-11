@@ -17,7 +17,7 @@ interface AlertState {
 
 const AlertContext = createContext(null);
 
-export const ProviderAlert = ({ children }) => {
+export const ProvideAlert = ({ children }) => {
   const [state, setState] = useState<AlertState>({
     isOpen: false,
     severity: "success",
