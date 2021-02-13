@@ -8,12 +8,12 @@ interface PageViewCounterProps {
 }
 
 const BlogViewCounter = (props: PageViewCounterProps) => {
-  const { data } = useSWR(`/api/views/${props.blogId}`, fetcher);
+  const { data } = useSWR(`/api/blogs-meta/${props.blogId}/views`, fetcher);
   const views = data?.total;
 
   useEffect(() => {
     const registerView = () =>
-      fetch(`/api/views/${props.blogId}`, {
+      fetch(`/api/blogs-meta/${props.blogId}/views`, {
         method: "POST",
       });
 

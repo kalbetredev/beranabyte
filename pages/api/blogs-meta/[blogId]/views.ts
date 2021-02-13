@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import BlogRepositoryImpl from "../../../shared/lib/repository/blog/BlogRepositoryImpl";
+import BlogRepositoryImpl from "../../../../shared/lib/repository/blog/BlogRepositoryImpl";
 
 type Response = {
   total: number;
@@ -7,17 +7,20 @@ type Response = {
 
 export default async (req: NextApiRequest, res: NextApiResponse<Response>) => {
   const repository = BlogRepositoryImpl.getInstance();
+  const {
+    query: { blogId },
+  } = req;
 
   if (req.method === "POST") {
-    await repository.updateBlogViewCount(req.query.id as string);
+    await repository.updateBlogViewCount(blogId as string);
     return res.status(200).json({
-      total: await getTotalViewCount(req.query.id as string),
+      total: await getTotalViewCount(blogId as string),
     });
   }
 
   if (req.method === "GET") {
     return res.status(200).json({
-      total: await getTotalViewCount(req.query.id as string),
+      total: await getTotalViewCount(blogId as string),
     });
   }
 };

@@ -2,37 +2,33 @@ import {
   makeStyles,
   Theme,
   createStyles,
-  Avatar,
   Box,
   Grid,
-  Typography,
   IconButton,
   Divider,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import FontSizes from "../constants/fontsizes";
-import Bullet from "./Bullet";
-import { format } from "date-fns";
 import TextField from "@material-ui/core/TextField";
 import { Close, Reply, Send } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import Comment from "../shared/lib/model/Comment";
+import { withAuthDialog } from "./Authentication";
+import useAuth from "../shared/lib/utils/useAuth";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import CommentContent from "./CommentContent";
+import UserAvatar from "./UserAvatar";
 
 interface CommentItemProps {
   comment: Comment;
+  mutate: () => Promise<any>;
+  openAuthDialog?: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    avatar: {
-      width: 20,
-      height: 20,
-    },
     avatarContainer: {
       width: 28,
-    },
-    avatarText: {
-      fontSize: 14,
     },
     commentContainer: {
       width: "calc(100% - 32px)",
@@ -43,21 +39,23 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: 5,
       paddingLeft: 10,
     },
-    name: {
-      fontSize: FontSizes.caption,
-      color: theme.palette.text.secondary,
-    },
-    commentText: {
-      fontSize: FontSizes.subtitle,
-    },
     repliesContainer: {
       marginTop: 12,
     },
-    iconButton: {
+    iconButtonWrapper: {
       marginLeft: theme.spacing(1),
+      position: "relative",
+    },
+    iconButton: {
       "&:focus": {
         outline: "none !important",
       },
+    },
+    progress: {
+      position: "absolute",
+      zIndex: 1,
+      top: 0,
+      left: 0,
     },
     replyButton: {
       padding: "0 5px",
@@ -71,36 +69,70 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const CommentItem = (props: CommentItemProps) => {
   const classes = useStyles();
+  const inputRef = useRef(null);
+  const [sending, setSending] = useState(false);
+
+  const auth = useAuth();
   const [toggleReply, setToggleReply] = useState(false);
   const { comment } = props;
 
-  const authorAvatar = (name: string) => (
-    <Grid item className={classes.avatarContainer} container justify="center">
-      <Avatar className={classes.avatar}>
-        <Typography className={classes.avatarText}>{name[0]}</Typography>
-      </Avatar>
-    </Grid>
-  );
-
-  const commentContent = (author: string, text: string, date: string) => (
-    <>
-      <Typography className={classes.name}>
-        {author} {<Bullet />}
-        {format(new Date(date), "MMM d, yyyy")}
-      </Typography>
-      <Typography className={classes.commentText}>{text}</Typography>
-    </>
-  );
+  const onSendComment = async () => {
+    if (!auth.user) props.openAuthDialog();
+    else if (inputRef.current.value != "") {
+      setSending(true);
+      const idToken = await auth.getUserIdToken();
+      if (idToken) {
+        const blogId = props.comment.blogId;
+        const commentId = props.comment.commentId;
+        fetch(`/api/blogs-meta/${blogId}/comments/${commentId}`, {
+          body: JSON.stringify({
+            reply: inputRef.current.value,
+            idToken: idToken,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+        })
+          .then(() => {
+            props.mutate();
+            setSending(false);
+          })
+          .catch(() => {
+            alert({
+              severity: "error",
+              message: "Failed to verify your authentication. Please Try Again",
+              duration: 3000,
+            });
+            setSending(false);
+          });
+      } else {
+        alert({
+          severity: "error",
+          message: "Failed to verify your authentication. Please Try Again",
+          duration: 3000,
+        });
+        setSending(false);
+      }
+      inputRef.current.value = "";
+    }
+  };
 
   return (
     <Grid container>
-      {authorAvatar(comment.author)}
+      <Grid item className={classes.avatarContainer} container justify="center">
+        <UserAvatar userUid={comment.author} />
+      </Grid>
       <Grid item className={classes.commentContainer}>
         <Box className={classes.comment}>
           <Grid container>
             <Grid item xs={12} container>
               <Grid item xs={12}>
-                {commentContent(comment.author, comment.text, comment.date)}
+                <CommentContent
+                  author={comment.author}
+                  text={comment.text}
+                  date={comment.date}
+                />
               </Grid>
               <Grid item xs={12}>
                 {toggleReply ? (
@@ -141,6 +173,7 @@ const CommentItem = (props: CommentItemProps) => {
                         variant="outlined"
                         fullWidth
                         margin="dense"
+                        inputRef={inputRef}
                         inputProps={{
                           style: {
                             fontSize: FontSizes.comment,
@@ -150,9 +183,21 @@ const CommentItem = (props: CommentItemProps) => {
                       />
                     </Grid>
                     <Grid item>
-                      <IconButton className={classes.iconButton}>
-                        <Send fontSize="small" />
-                      </IconButton>
+                      <div className={classes.iconButtonWrapper}>
+                        <IconButton
+                          className={classes.iconButton}
+                          onClick={onSendComment}
+                          disabled={sending}
+                        >
+                          <Send fontSize="small" />
+                        </IconButton>
+                        {sending && (
+                          <CircularProgress
+                            size={44}
+                            className={classes.progress}
+                          />
+                        )}
+                      </div>
                     </Grid>
                   </Grid>
                 </form>
@@ -170,10 +215,21 @@ const CommentItem = (props: CommentItemProps) => {
             <Grid container className={classes.repliesContainer} spacing={1}>
               {comment.replies.map((reply, index) => (
                 <Grid key={index} item container>
-                  {authorAvatar(reply.author)}
+                  <Grid
+                    item
+                    className={classes.avatarContainer}
+                    container
+                    justify="center"
+                  >
+                    <UserAvatar userUid={reply.author} />
+                  </Grid>
                   <Grid item className={classes.commentContainer}>
                     <Box className={classes.comment}>
-                      {commentContent(reply.author, reply.text, reply.date)}
+                      <CommentContent
+                        author={reply.author}
+                        text={reply.text}
+                        date={reply.date}
+                      />
                     </Box>
                   </Grid>
                 </Grid>
@@ -186,4 +242,4 @@ const CommentItem = (props: CommentItemProps) => {
   );
 };
 
-export default CommentItem;
+export default withAuthDialog(CommentItem);

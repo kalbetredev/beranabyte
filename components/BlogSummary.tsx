@@ -64,7 +64,10 @@ interface BlogSummaryCardProps {
 }
 
 const BlogSummary = (props: BlogSummaryCardProps) => {
-  const { data } = useSWR(`/api/views/${props.blogFrontMatter.uuid}`, fetcher);
+  const { data } = useSWR(
+    `/api/blogs-meta/${props.blogFrontMatter.uuid}/views`,
+    fetcher
+  );
   const views = data?.total;
   const viewsMessage = views
     ? `${numberFormat("#,###.", views)} views`
