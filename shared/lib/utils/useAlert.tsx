@@ -45,7 +45,6 @@ export const ProvideAlert = ({ children }) => {
       message: string;
       duration: number;
     }) => {
-      console.log(severity, message, duration);
       setState({
         isOpen: true,
         severity: severity,
