@@ -59,6 +59,10 @@ function useAuthProvider() {
     else setUser(false);
   };
 
+  const getUserIdToken = (): Promise<string> => {
+    return firebaseAuth.currentUser.getIdToken(true).then((idToken) => idToken);
+  };
+
   useEffect(() => {
     const unsubscribe = firebaseAuth.onAuthStateChanged(handleAuthStateChanged);
 
@@ -99,7 +103,7 @@ function useAuthProvider() {
       .doc(uid)
       .get()
       .then((userData) => {
-        if (userData.data()) setUser(userData);
+        if (userData.data()) setUser(userData.data());
         else setUser(false);
       });
   };
@@ -111,6 +115,7 @@ function useAuthProvider() {
     signOut,
     sendPasswordResetEmail,
     confirmPasswordReset,
+    getUserIdToken,
   };
 }
 
