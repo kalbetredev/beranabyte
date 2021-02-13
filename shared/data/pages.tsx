@@ -16,9 +16,7 @@ export const ProjectsPage = new Page(
   undefined
 );
 
-export const ProfilePage = new Page("", "My Profile", "/", undefined);
-export const MyAccountPage = new Page("", "My Account", "/", undefined);
-export const SignInPage = new Page("", "Sign In", "/", undefined);
+export const SignInPage = new Page("", "Sign In", "/account", undefined);
 
 export function pagesFromCategories(categories: string[]): Page[] {
   const pages: Page[] = [];
