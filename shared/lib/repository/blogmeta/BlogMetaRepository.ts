@@ -5,12 +5,18 @@ interface BlogMetaRepository {
   updateBlogViewCount(blogId: string);
   getMostViewedBlogs(count: number): Promise<string[]>;
   getBlogComments(blogId: string): Promise<Comment[]>;
-  addBlogComment(blogId: string, comment: string): Promise<Comment[]>;
+  addBlogComment(
+    blogId: string,
+    comment: string,
+    userIdToken: string
+  ): Promise<string | null>;
   addCommentReply(
     blogId: string,
     commentId: string,
-    reply: string
-  ): Promise<Comment[]>;
+    reply: string,
+    userIdToken: string
+  ): Promise<string | null>;
+  getUserName(userId: string): Promise<string>;
 }
 
 export default BlogMetaRepository;

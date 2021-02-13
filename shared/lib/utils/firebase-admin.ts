@@ -11,4 +11,6 @@ if (!admin.apps.length) {
   });
 }
 
-export default admin;
+export const firebaseAdminAuth = admin.auth();
+export const firestoreAdminDb = admin.firestore();
+export const serverTimestamp = admin.firestore.FieldValue.serverTimestamp();

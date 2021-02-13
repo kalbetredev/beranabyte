@@ -5,9 +5,11 @@ class TestBlogMetaRepositoryImpl implements BlogMetaRepository {
   getBlogViewCount(blogId: string): Promise<number> {
     return new Promise((res, rej) => res(1));
   }
+
   updateBlogViewCount(blogId: string) {
     console.log("Updated View Count");
   }
+
   getMostViewedBlogs(count: number): Promise<string[]> {
     return new Promise((res, rej) =>
       res(["ADFEIAD858EADFEFA", "ADFxxEIwAD858EADFEFA"])
@@ -44,15 +46,24 @@ class TestBlogMetaRepositoryImpl implements BlogMetaRepository {
     return new Promise((res, rej) => res(sampleComments));
   }
 
-  addBlogComment(blogId: string, comment: string): Promise<Comment[]> {
+  addBlogComment(
+    blogId: string,
+    comment: string,
+    userIdToken: string
+  ): Promise<string | null> {
     throw new Error("Method not implemented.");
   }
 
   addCommentReply(
     blogId: string,
     commentId: string,
-    reply: string
-  ): Promise<Comment[]> {
+    reply: string,
+    userIdToken: string
+  ): Promise<string | null> {
+    throw new Error("Method not implemented.");
+  }
+
+  getUserName(userId: string): Promise<string> {
     throw new Error("Method not implemented.");
   }
 }

@@ -119,16 +119,30 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
     return this.blogMetaRepository.getBlogComments(blogId);
   }
 
-  addBlogComment(blogId: string, comment: string): Promise<Comment[]> {
-    return this.blogMetaRepository.addBlogComment(blogId, comment);
+  addBlogComment(
+    blogId: string,
+    comment: string,
+    userIdToken: string
+  ): Promise<string | null> {
+    return this.blogMetaRepository.addBlogComment(blogId, comment, userIdToken);
   }
 
   addCommentReply(
     blogId: string,
     commentId: string,
-    reply: string
-  ): Promise<Comment[]> {
-    return this.blogMetaRepository.addCommentReply(blogId, commentId, reply);
+    reply: string,
+    userIdToken: string
+  ): Promise<string | null> {
+    return this.blogMetaRepository.addCommentReply(
+      blogId,
+      commentId,
+      reply,
+      userIdToken
+    );
+  }
+
+  getUserName(userId: string): Promise<string> {
+    return this.blogMetaRepository.getUserName(userId);
   }
 }
 
