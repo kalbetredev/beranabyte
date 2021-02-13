@@ -50,8 +50,14 @@ const useStyles = makeStyles((theme: Theme) =>
         outline: "none !important",
       },
     },
-    iconButton: {
-      backgroundColor: "rgba(0, 0, 0, 0.05)",
+    accountButton: {
+      padding: 5,
+      "&:focus": {
+        outline: "none !important",
+      },
+    },
+    themeSwitchButton: {
+      backgroundColor: "rgba(0, 0, 0, 0.03)",
       padding: 5,
       "&:focus": {
         outline: "none !important",
@@ -159,11 +165,7 @@ const AppBar = () => {
                 </Box>
               ) : (
                 <Link href="/account">
-                  <IconButton
-                    size="medium"
-                    className={classes.iconButton}
-                    color="secondary"
-                  >
+                  <IconButton size="medium" className={classes.accountButton}>
                     <AccountCircle />
                   </IconButton>
                 </Link>
@@ -176,7 +178,7 @@ const AppBar = () => {
                 }
               >
                 <IconButton
-                  className={classes.iconButton}
+                  className={classes.themeSwitchButton}
                   size="medium"
                   onClick={toggleDarkTheme}
                 >
