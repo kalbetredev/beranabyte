@@ -84,7 +84,8 @@ const AuthContent = (props: AuthContentProps) => {
           message: "Your account has been created.",
           duration: 3000,
         });
-        if (props.redirectToHome) router.push("/");
+        props.redirectToHome && router.push("/");
+        props.onClose && props.onClose();
         setLoading(false);
       })
       .catch((error) => {
@@ -109,6 +110,7 @@ const AuthContent = (props: AuthContentProps) => {
         });
         if (props.redirectToHome) router.push("/");
         setLoading(false);
+        props.onClose && props.onClose();
       })
       .catch((error) => {
         alert({
