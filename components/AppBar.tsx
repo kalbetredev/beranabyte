@@ -6,6 +6,7 @@ import {
   IconButton,
   useTheme,
   Tooltip,
+  Menu,
 } from "@material-ui/core";
 import React, { Dispatch, useState } from "react";
 import Drawer from "./Drawer";
@@ -13,7 +14,7 @@ import PagesNavigator from "./PageNavigator";
 import { Theme, makeStyles, createStyles } from "@material-ui/core/styles";
 import ElevationScroll from "./ElevationScroll";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Brightness3, WbSunny } from "@material-ui/icons";
+import { AccountCircle, Brightness3, WbSunny } from "@material-ui/icons";
 import Logo from "./Logo";
 import { useDispatch } from "react-redux";
 import { ThemeActionTypes } from "../redux/theme/types";
@@ -26,6 +27,10 @@ import {
   pagesFromCategories,
 } from "../shared/data/pages";
 import Box from "@material-ui/core/Box";
+import UserAvatar from "./UserAvatar";
+import useAuth from "../shared/lib/utils/useAuth";
+import UserAccount from "./UserAccount";
+import Link from "next/link";
 
 const useAppBarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,9 +50,24 @@ const useStyles = makeStyles((theme: Theme) =>
         outline: "none !important",
       },
     },
-    themeSwitchBtn: {
+    iconButton: {
       backgroundColor: "rgba(0, 0, 0, 0.05)",
       padding: 5,
+      "&:focus": {
+        outline: "none !important",
+      },
+    },
+    userAvatar: {
+      paddingRight: theme.spacing(1),
+    },
+    menu: {
+      "& ul": {
+        borderTop: `2px solid ${theme.palette.primary.main}`,
+        borderRadius: 4,
+      },
+    },
+    menuItem: {
+      padding: theme.spacing(1),
       "&:focus": {
         outline: "none !important",
       },
@@ -56,6 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const AppBar = () => {
+  const auth = useAuth();
   const appBarClasses = useAppBarStyles();
   const classes = useStyles();
   const theme = useTheme();
@@ -64,7 +85,7 @@ const AppBar = () => {
   const toggleDarkTheme = () => toggleDarkThemeDispatch(toggleDarkMode());
   const isLightTheme = theme.palette.type === "light";
 
-  const { data } = useSWR(`/api/blog-categories`, fetcher);
+  const { data } = useSWR(`/api/blogs-meta/categories`, fetcher);
   const categories = data?.categories;
   const pages = categories
     ? [HomePage, ...pagesFromCategories(categories), ProjectsPage]
@@ -82,6 +103,16 @@ const AppBar = () => {
       return;
     }
     setDrawerOpen(open);
+  };
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -110,6 +141,33 @@ const AppBar = () => {
               <Hidden only="xs">
                 <PagesNavigator pages={pages} />
               </Hidden>
+
+              {auth.user ? (
+                <Box className={classes.userAvatar}>
+                  <UserAvatar userUid={auth.user?.uid} onClick={handleClick} />
+                  <Menu
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    className={classes.menu}
+                  >
+                    <Box className={classes.menuItem}>
+                      <UserAccount alwaysShow />
+                    </Box>
+                  </Menu>
+                </Box>
+              ) : (
+                <Link href="/account">
+                  <IconButton
+                    size="medium"
+                    className={classes.iconButton}
+                    color="secondary"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </Link>
+              )}
               <Tooltip
                 title={
                   isLightTheme
@@ -118,7 +176,7 @@ const AppBar = () => {
                 }
               >
                 <IconButton
-                  className={classes.themeSwitchBtn}
+                  className={classes.iconButton}
                   size="medium"
                   onClick={toggleDarkTheme}
                 >
