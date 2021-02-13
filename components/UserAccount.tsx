@@ -1,23 +1,17 @@
 import {
-  Avatar,
   Box,
   Button,
   Typography,
-  Hidden,
   makeStyles,
   createStyles,
-  Menu,
-  MenuItem,
+  Grid,
 } from "@material-ui/core";
 import Link from "next/link";
 import { Theme } from "@material-ui/core/styles";
-import { useState } from "react";
-import { ProfilePage, MyAccountPage, SignInPage } from "../shared/data/pages";
-import Router from "next/router";
+import { SignInPage } from "../shared/data/pages";
 import FontSizes from "../constants/fontsizes";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/rootReducer";
-import { logoutUser } from "../redux/user/actions";
+import useAuth from "../shared/lib/utils/useAuth";
+import UserAvatar from "./UserAvatar";
 
 interface UserAccountProps {
   alwaysShow?: boolean;
@@ -28,7 +22,7 @@ const textStyles = makeStyles({
     fontSize: FontSizes.caption,
   },
   userNameText: {
-    fontSize: FontSizes.subtitle,
+    fontSize: FontSizes.title,
   },
 });
 
@@ -42,104 +36,73 @@ const useStyles = makeStyles((theme: Theme) =>
         background: theme.palette.primary.main,
       },
     },
-    smallAvatar: {
-      width: theme.spacing(3),
-      height: theme.spacing(3),
-    },
   })
 );
 
-const UserAccount: React.FC<UserAccountProps> = (props: UserAccountProps) => {
-  const userAccountState = useSelector((state: RootState) => state.userAccount);
-  const dispatch = useDispatch();
-
+const UserAccount: React.FC<UserAccountProps> = () => {
+  const auth = useAuth();
   const typographyClasses = textStyles();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    handleClose();
-    dispatch(logoutUser());
-    if (userAccountState.isAuthenticated) Router.replace("/");
+  const handleSignOut = () => {
+    auth.signOut();
   };
 
   return (
     <>
-      {userAccountState.isAuthenticated ? (
-        <Box
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "end",
-          }}
-        >
-          <Avatar
-            className={classes.smallAvatar}
-            src={userAccountState.accountPictureUrl}
-            onClick={handleClick}
-          />
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <Link href={ProfilePage.href} passHref>
-              <MenuItem dense onClick={handleClose}>
-                Profile
-              </MenuItem>
-            </Link>
-            <Link href={MyAccountPage.href} passHref>
-              <MenuItem dense onClick={handleClose}>
-                My account
-              </MenuItem>
-            </Link>
-            <MenuItem dense onClick={handleLogout}>
-              Logout
-            </MenuItem>
-          </Menu>
-          <Hidden smDown={props.alwaysShow ? false : true}>
+      {auth.user ? (
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
             <Box
               style={{
                 display: "flex",
-                flexDirection: "column",
-                alignItems: "start",
-                justifyContent: "start",
-                padding: 5,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "end",
               }}
             >
-              <Typography className={typographyClasses.welcomeText}>
-                Welcome
-              </Typography>
-              <Typography className={typographyClasses.userNameText}>
-                {userAccountState.userName}
-              </Typography>
+              <UserAvatar userUid={auth.user?.uid} size={"medium"} />
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "start",
+                  justifyContent: "start",
+                  padding: 5,
+                }}
+              >
+                <Typography className={typographyClasses.welcomeText}>
+                  Welcome
+                </Typography>
+                <Typography className={typographyClasses.userNameText}>
+                  {auth.user?.userName}
+                </Typography>
+              </Box>
             </Box>
-          </Hidden>
-        </Box>
-      ) : (
-        <Hidden xsDown={props.alwaysShow ? false : true}>
-          <Link href={SignInPage.href} passHref>
+          </Grid>
+          <Grid item xs={12} container justify="flex-end">
             <Button
               disableTouchRipple
               size="small"
               variant="text"
               className={classes.signInButton}
+              onClick={handleSignOut}
             >
-              SignIn
+              SignOut
             </Button>
-          </Link>
-        </Hidden>
+          </Grid>
+        </Grid>
+      ) : (
+        <Link href={SignInPage.href} passHref>
+          <Button
+            disableTouchRipple
+            size="small"
+            variant="text"
+            className={classes.signInButton}
+          >
+            SignIn
+          </Button>
+        </Link>
       )}
     </>
   );
