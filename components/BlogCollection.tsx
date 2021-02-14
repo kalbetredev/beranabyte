@@ -10,6 +10,7 @@ import {
 import React from "react";
 import FontSizes from "../constants/fontsizes";
 import FrontMatter from "../shared/lib/types/FrontMatter";
+import { removeNonAlphaNumeric } from "../shared/lib/utils/text-transform";
 import BlogSummary from "./BlogSummary";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,7 +34,7 @@ const BlogCollection = (props: BlogCollectionProps) => {
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <Typography variant="h1" className={classes.title}>
-          {props.title ?? props.blogs[0].category}
+          {removeNonAlphaNumeric(props.title ?? props.blogs[0].category)}
         </Typography>
       </Grid>
       <Grid item xs={12}>

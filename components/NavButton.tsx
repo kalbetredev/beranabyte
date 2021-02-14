@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import SubMenuContainer from "./SubMenuContainer";
+import { removeNonAlphaNumeric } from "../shared/lib/utils/text-transform";
 
 interface NavButtonProps {
   pages: Page[];
@@ -114,7 +115,7 @@ const NavButton: React.FC<NavButtonProps> = (props: NavButtonProps) => {
                           className={classes.inActiveText}
                           noWrap
                         >
-                          {page.label}
+                          {removeNonAlphaNumeric(page.label)}
                         </Typography>
                       </Button>
                     </Link>
