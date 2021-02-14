@@ -65,9 +65,10 @@ interface AuthContentProps {
 }
 
 const AuthContent = (props: AuthContentProps) => {
-  const { handleSubmit, register, errors } = useForm();
+  const useFormMethods = useForm();
   const [loading, setLoading] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
+  const { handleSubmit } = useFormMethods;
 
   const classes = useStyles();
   const auth = useAuth();
@@ -163,9 +164,7 @@ const AuthContent = (props: AuthContentProps) => {
             label="User Name"
             placeholder=""
             type="name"
-            errorMessage="Please enter your user name"
-            register={register}
-            errors={errors}
+            useFormMethods={useFormMethods}
           />
         </Grid>
       ) : null}
@@ -176,9 +175,7 @@ const AuthContent = (props: AuthContentProps) => {
           label="Email Address"
           placeholder=""
           type="email"
-          errorMessage="Please enter your email"
-          register={register}
-          errors={errors}
+          useFormMethods={useFormMethods}
         />
       </Grid>
       <Grid className={classes.gridRow} item xs={12}>
@@ -187,9 +184,7 @@ const AuthContent = (props: AuthContentProps) => {
           label="Password"
           placeholder=""
           type="password"
-          errorMessage="Please enter your password"
-          register={register}
-          errors={errors}
+          useFormMethods={useFormMethods}
         />
       </Grid>
       <Grid className={classes.gridRow} item xs={12}>

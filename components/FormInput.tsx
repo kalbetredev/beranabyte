@@ -11,20 +11,57 @@ import {
   createStyles,
 } from "@material-ui/core";
 import { Cancel, Error } from "@material-ui/icons";
-import { useState } from "react";
-import { DeepMap, FieldError } from "react-hook-form";
+import { useRef } from "react";
+import { RegisterOptions, UseFormMethods } from "react-hook-form";
 import FontSizes from "../constants/fontsizes";
 
 type InputType = "password" | "email" | "name";
+
+const passwordFieldOptions: RegisterOptions = {
+  required: {
+    value: true,
+    message: "Password is required",
+  },
+  minLength: {
+    value: 6,
+    message: "Min Length should be 6",
+  },
+};
+
+const emailFieldOptions: RegisterOptions = {
+  required: {
+    value: true,
+    message: "Email is required",
+  },
+  pattern: {
+    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+    message: "Invalid Email Address",
+  },
+};
+
+const nameFieldOptions: RegisterOptions = {
+  required: {
+    value: true,
+    message: "User Name is required",
+  },
+  minLength: {
+    value: 4,
+    message: "Min Length should be 4",
+  },
+};
+
+const getOptions = (type: InputType): RegisterOptions => {
+  if (type === "password") return passwordFieldOptions;
+  else if (type === "email") return emailFieldOptions;
+  else return nameFieldOptions;
+};
 
 interface FormInputProps {
   label: string;
   name: string;
   placeholder: string;
   type: InputType;
-  errorMessage: string;
-  register: any;
-  errors: DeepMap<Record<string, any>, FieldError>;
+  useFormMethods: UseFormMethods<Record<string, any>>;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -51,8 +88,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const FormInput = (props: FormInputProps) => {
   const classes = useStyles();
-  const { name, register, errors } = props;
-  const [inputValue, setInputValue] = useState("");
+  const inputRef = useRef(null);
+  const { label, name, placeholder, type, useFormMethods } = props;
+  const { register, errors, clearErrors } = useFormMethods;
+
+  const handleClearInput = () => {
+    inputRef.current.value = "";
+    inputRef.current.focus();
+    clearErrors(name);
+  };
 
   return (
     <>
@@ -61,28 +105,27 @@ const FormInput = (props: FormInputProps) => {
         component="label"
         htmlFor={name}
       >
-        {props.label}
+        {label}
       </Typography>
       <FormControl fullWidth>
         <InputBase
           className={classes.input}
-          aria-label={props.label}
+          aria-label={label}
           name={name}
-          type={props.type}
-          value={inputValue}
-          placeholder={props.placeholder}
-          onChange={(e) => setInputValue(e.target.value)}
-          inputRef={register({
-            required: props.errorMessage,
-          })}
+          type={type === "password" ? "password" : "text"}
+          placeholder={placeholder}
+          inputRef={(e) => {
+            register(e, getOptions(type));
+            inputRef.current = e;
+          }}
           inputProps={{ autoComplete: "off" }}
           endAdornment={
             <InputAdornment position="end">
-              {inputValue.length > 0 ? (
+              {inputRef.current && inputRef.current.value.length > 0 ? (
                 <IconButton
                   size="medium"
                   className={classes.cancelBtn}
-                  onClick={() => setInputValue("")}
+                  onClick={handleClearInput}
                 >
                   <Cancel fontSize="small" />
                 </IconButton>
