@@ -5,12 +5,16 @@ import React from "react";
 import LinkGroup from "../components/LinkGroup";
 import ProjectCollection from "../components/ProjectCollection";
 import PageContainer from "../layouts/PageContainer";
-import { OpenSourceProjects } from "../shared/data/projects";
-import FrontMatter from "../shared/lib/types/FrontMatter";
 import PageMeta from "../shared/lib/types/PageMeta";
 import { convertFrontMatterToPageGroup } from "../shared/lib/utils/mdx-helpers";
+import fs from "fs";
+import path from "path";
+import Project from "../shared/lib/types/Project";
+import FrontMatter from "../shared/lib/types/FrontMatter";
+import BlogRepositoryImpl from "../shared/lib/repository/blog/BlogRepositoryImpl";
 
 interface ProjectsProps {
+  openSourceProjects: Project[];
   relatedBlogs: FrontMatter[];
 }
 
@@ -52,7 +56,7 @@ const Projects = (props: ProjectsProps) => {
           <Grid item className={classes.projects}>
             <ProjectCollection
               title="Open Source"
-              projects={OpenSourceProjects}
+              projects={props.openSourceProjects}
             />
           </Grid>
           <Grid item className={classes.sidebar}>
@@ -74,33 +78,23 @@ const Projects = (props: ProjectsProps) => {
 };
 
 export async function getStaticProps() {
-  //TODO: get this data from repository
+  const root = process.cwd();
+  const projectsJSONFile = path.join(
+    root,
+    "shared/data/projects",
+    "opensource.json"
+  );
+  const data = fs.readFileSync(projectsJSONFile, "utf-8");
+  const openSourceProjects = JSON.parse(data);
 
-  // Sample
-  const projectRelatedBlogs = [
-    {
-      slug: "2019",
-      title: "2019 Year in Review",
-      publishedAt: "2019-12-26",
-      uuid: "ADFEIAD858EADFEFA",
-    },
-    {
-      slug: "backend",
-      title: "Which Back End Should I Use As A Front-End Developer?",
-      publishedAt: "2020-08-09",
-      uuid: "ADFEIwAD858EADFEFA",
-    },
-    {
-      slug: "test",
-      title: "Test Blog",
-      publishedAt: "2020-08-09",
-      uuid: "ADFxxEIwAD858EADFEFA",
-    },
-  ];
+  const relatedBlogsFrontMatters = BlogRepositoryImpl.getInstance().getFrontMattersByCategory(
+    "project-related"
+  );
 
   return {
     props: {
-      relatedBlogs: projectRelatedBlogs,
+      openSourceProjects: openSourceProjects,
+      relatedBlogs: relatedBlogsFrontMatters,
     },
   };
 }

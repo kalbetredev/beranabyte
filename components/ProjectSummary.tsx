@@ -12,7 +12,7 @@ import { Theme } from "@material-ui/core/styles";
 import { GitHub } from "@material-ui/icons";
 import React from "react";
 import FontSizes from "../constants/fontsizes";
-import Project from "../shared/lib/model/Project";
+import Project from "../shared/lib/types/Project";
 
 interface ProjectSummaryProps {
   project: Project;
