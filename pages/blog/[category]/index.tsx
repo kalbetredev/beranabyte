@@ -7,6 +7,10 @@ import PageContainer from "../../../layouts/PageContainer";
 import BlogRepositoryImpl from "../../../shared/lib/repository/blog/BlogRepositoryImpl";
 import FrontMatter from "../../../shared/lib/types/FrontMatter";
 import PageMeta from "../../../shared/lib/types/PageMeta";
+import {
+  capitalize,
+  removeNonAlphaNumeric,
+} from "../../../shared/lib/utils/text-transform";
 
 interface BlogCategoryProps {
   category: string;
@@ -40,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const BlogCategory = (props: BlogCategoryProps) => {
   const classes = useStyles();
   const meta: PageMeta = {
-    title: props.category,
+    title: capitalize(removeNonAlphaNumeric(props.category)),
     description: "",
   };
 
