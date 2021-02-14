@@ -20,6 +20,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import FormInput from "./FormInput";
 import IconButton from "@material-ui/core/IconButton";
 import { Close } from "@material-ui/icons";
+import FontSizes from "../constants/fontsizes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,6 +35,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     submitBtn: {
       width: "100%",
+    },
+    textBtn: {
+      fontSize: FontSizes.subtitle,
+      textTransform: "capitalize",
+      "&:hover": {
+        color: theme.palette.primary.main,
+        background: theme.palette.background.paper,
+      },
     },
     loadingWrapper: {
       margin: 0,
@@ -64,10 +73,16 @@ interface AuthContentProps {
   onClose?: () => void;
 }
 
+enum ContentType {
+  SIGN_IN,
+  SIGN_UP,
+  PASSWORD_RESET,
+}
+
 const AuthContent = (props: AuthContentProps) => {
   const useFormMethods = useForm();
   const [loading, setLoading] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(true);
+  const [contentType, setContentType] = useState(ContentType.SIGN_IN);
   const { handleSubmit } = useFormMethods;
 
   const classes = useStyles();
@@ -123,10 +138,44 @@ const AuthContent = (props: AuthContentProps) => {
       });
   };
 
+  const sendPasswordResetLink = (email) => {
+    setLoading(true);
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        alert({
+          severity: "success",
+          message: "Password Reset Link Sent",
+          duration: 3000,
+        });
+        if (props.redirectToHome) router.push("/");
+        setLoading(false);
+        props.onClose && props.onClose();
+      })
+      .catch((error) => {
+        alert({
+          severity: "error",
+          message: error.message,
+          duration: 6000,
+        });
+        setLoading(false);
+      });
+  };
+
+  const getSubmitBtnName = (): string => {
+    return contentType === ContentType.SIGN_IN
+      ? "Sign In"
+      : contentType === ContentType.SIGN_UP
+      ? "Sign Up"
+      : "Send Password Reset Link";
+  };
+
   const onSubmit = handleSubmit((data) =>
-    isSignIn
+    contentType === ContentType.SIGN_IN
       ? signIn(data["email"], data["pass"])
-      : signUp(data["name"], data["email"], data["pass"])
+      : contentType === ContentType.SIGN_UP
+      ? signUp(data["name"], data["email"], data["pass"])
+      : sendPasswordResetLink(data["email"])
   );
 
   return (
@@ -157,7 +206,8 @@ const AuthContent = (props: AuthContentProps) => {
           ) : null}
         </Box>
       </Grid>
-      {!isSignIn ? (
+
+      {contentType === ContentType.SIGN_UP ? (
         <Grid className={classes.gridRow} item xs={12}>
           <FormInput
             name="name"
@@ -178,15 +228,19 @@ const AuthContent = (props: AuthContentProps) => {
           useFormMethods={useFormMethods}
         />
       </Grid>
-      <Grid className={classes.gridRow} item xs={12}>
-        <FormInput
-          name="pass"
-          label="Password"
-          placeholder=""
-          type="password"
-          useFormMethods={useFormMethods}
-        />
-      </Grid>
+
+      {contentType !== ContentType.PASSWORD_RESET ? (
+        <Grid className={classes.gridRow} item xs={12}>
+          <FormInput
+            name="pass"
+            label="Password"
+            placeholder=""
+            type="password"
+            useFormMethods={useFormMethods}
+          />
+        </Grid>
+      ) : null}
+
       <Grid className={classes.gridRow} item xs={12}>
         <div className={classes.loadingWrapper}>
           <Button
@@ -197,24 +251,56 @@ const AuthContent = (props: AuthContentProps) => {
             className={classes.submitBtn}
             disabled={loading}
           >
-            {isSignIn ? "Sign In" : "Sign Up"}
+            {getSubmitBtnName()}
           </Button>
           {loading && (
             <CircularProgress size={24} className={classes.buttonProgress} />
           )}
         </div>
       </Grid>
-      <Grid className={classes.gridRow} item xs={12}>
-        <Button
-          variant="outlined"
-          size="small"
-          className={classes.submitBtn}
-          onClick={() => setIsSignIn(!isSignIn)}
-          disabled={loading}
-        >
-          {isSignIn ? "Register" : "I have an Account"}
-        </Button>
-      </Grid>
+
+      {contentType !== ContentType.PASSWORD_RESET ? (
+        <Grid className={classes.gridRow} item xs={12}>
+          <Button
+            variant="outlined"
+            size="small"
+            className={classes.submitBtn}
+            onClick={() =>
+              setContentType(
+                contentType === ContentType.SIGN_IN
+                  ? ContentType.SIGN_UP
+                  : ContentType.SIGN_IN
+              )
+            }
+            disabled={loading}
+          >
+            {contentType === ContentType.SIGN_IN
+              ? "Register"
+              : "I have an Account"}
+          </Button>
+        </Grid>
+      ) : null}
+
+      {contentType !== ContentType.SIGN_UP ? (
+        <Grid item xs={12} container justify="flex-end">
+          <Button
+            variant="text"
+            size="small"
+            className={classes.textBtn}
+            onClick={() =>
+              setContentType(
+                contentType === ContentType.PASSWORD_RESET
+                  ? ContentType.SIGN_IN
+                  : ContentType.PASSWORD_RESET
+              )
+            }
+          >
+            {contentType !== ContentType.PASSWORD_RESET
+              ? "I Forgot My Password"
+              : "Sign In"}
+          </Button>
+        </Grid>
+      ) : null}
     </Grid>
   );
 };

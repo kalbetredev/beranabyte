@@ -39,7 +39,6 @@ function useAuthProvider() {
     });
   };
 
-  //TODO: Password Rest Form
   const sendPasswordResetEmail = (email) => {
     return firebaseAuth.sendPasswordResetEmail(email).then(() => {
       return true;
