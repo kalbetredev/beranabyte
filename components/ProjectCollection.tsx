@@ -41,7 +41,7 @@ const ProjectCollection = (props: ProjectSummaryProps) => {
       {props.projects.map((project, index) => (
         <Grow in timeout={400 * index} key={index}>
           <Grid item xs={12}>
-            <ProjectSummary project={project} />
+            <ProjectSummary index={index + 1} project={project} />
           </Grid>
         </Grow>
       ))}
