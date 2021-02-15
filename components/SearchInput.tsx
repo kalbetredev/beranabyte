@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   makeStyles,
   Theme,
@@ -10,6 +10,15 @@ import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import FontSizes from "../constants/fontsizes";
+import { Cancel, Close } from "@material-ui/icons";
+import InputAdornment from "@material-ui/core/InputAdornment";
+
+interface SearchInputProps {
+  onChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  onSearchCleared: () => void;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,18 +40,27 @@ const useStyles = makeStyles((theme: Theme) =>
         outline: "none !important",
       },
     },
+    clearBtn: {
+      width: 6,
+      height: 6,
+      color: theme.palette.secondary.main,
+    },
   })
 );
 
-const onSubmit = (event: React.FormEvent) => {
-  event.preventDefault();
-  console.log("Submit");
-};
-
-const SearchInput = () => {
+const SearchInput = (props: SearchInputProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const [focus, setFocus] = useState(false);
+  const inputRef = useRef(null);
+  const [showClearSearch, setShowClearSearch] = useState(false);
+
+  const handleClearInput = () => {
+    inputRef.current.value = "";
+    inputRef.current.focus();
+    setShowClearSearch(false);
+    props.onSearchCleared();
+  };
 
   const borderColor = focus
     ? theme.palette.primary.main
@@ -50,27 +68,35 @@ const SearchInput = () => {
 
   return (
     <Paper
-      component="form"
       className={classes.root}
       elevation={focus ? 1 : 0}
       style={{ border: `1px solid ${borderColor}` }}
     >
+      <SearchIcon fontSize="small" />
       <InputBase
         className={classes.input}
         placeholder="Search blogs"
         inputProps={{ "aria-label": "search blogs" }}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
-        onSubmit={onSubmit}
+        inputRef={inputRef}
+        onChange={(e) => {
+          if (e.target.value.length > 0) setShowClearSearch(true);
+          else setShowClearSearch(false);
+          props.onChange(e);
+        }}
       />
-      <IconButton
-        type="submit"
-        className={classes.iconButton}
-        aria-label="search"
-        onClick={onSubmit}
-      >
-        <SearchIcon fontSize="small" />
-      </IconButton>
+      {showClearSearch ? (
+        <IconButton
+          size="medium"
+          className={classes.clearBtn}
+          onClick={handleClearInput}
+        >
+          <Cancel fontSize="small" />
+        </IconButton>
+      ) : (
+        <span />
+      )}
     </Paper>
   );
 };

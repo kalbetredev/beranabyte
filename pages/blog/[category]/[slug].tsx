@@ -25,7 +25,6 @@ import PageMeta from "../../../shared/lib/types/PageMeta";
 import PageContainer from "../../../layouts/PageContainer";
 import { Params } from "next/dist/next-server/server/router";
 import BlogComments from "../../../components/BlogComments";
-import Comment from "../../../shared/lib/model/Comment";
 
 interface BlogProps {
   mdx: MDX;
