@@ -1,5 +1,3 @@
-import FrontMatter from "./FrontMatter";
-
 interface Project {
   title: string;
   summary: string;

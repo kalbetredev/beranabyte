@@ -7,6 +7,7 @@ import {
   makeStyles,
   Button,
   Grid,
+  Box,
 } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import { Theme } from "@material-ui/core/styles";
@@ -14,6 +15,7 @@ import { GitHub } from "@material-ui/icons";
 import React from "react";
 import FontSizes from "../constants/fontsizes";
 import Project from "../shared/lib/types/Project";
+import Bullet from "./Bullet";
 
 interface ProjectSummaryProps {
   index: number;
@@ -35,7 +37,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     summary: {
       fontSize: FontSizes.subtitle,
-      minHeight: 35,
     },
     tagIcon: {
       height: "100%",
@@ -44,8 +45,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       color: theme.palette.text.secondary,
+      fontSize: FontSizes.subtitle,
+      textTransform: "capitalize",
       "&:hover": {
         color: theme.palette.primary.main,
+        backgroundColor: theme.palette.background.default,
       },
       "&:focus": {
         outline: "none !important",
@@ -70,6 +74,13 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       paddingTop: 15,
     },
+    tags: {
+      fontSize: FontSizes.caption,
+      display: "inline",
+    },
+    tagsContainer: {
+      marginTop: 5,
+    },
   })
 );
 
@@ -88,12 +99,24 @@ const ProjectSummary = (props: ProjectSummaryProps) => {
         </Grid>
         <Grid item className={classes.contentCol}>
           <CardContent className={classes.content}>
-            <Typography className={classes.title} gutterBottom>
+            <Typography className={classes.title}>
               {props.project.title}
             </Typography>
             <Typography className={classes.summary} color="textSecondary">
               {props.project.summary}
             </Typography>
+            <Box className={classes.tagsContainer}>
+              {props.project.tags.map((tag, index) => (
+                <Typography
+                  key={index}
+                  color="textSecondary"
+                  className={classes.tags}
+                >
+                  {`#${tag}`}
+                  {index < props.project.tags.length - 1 ? <Bullet /> : null}
+                </Typography>
+              ))}
+            </Box>
           </CardContent>
           <CardActions className={classes.actions}>
             <Button
@@ -101,8 +124,12 @@ const ProjectSummary = (props: ProjectSummaryProps) => {
               size="small"
               color="secondary"
               className={classes.button}
+              component="a"
+              href={props.project.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Github
+              Checkout On Github
             </Button>
           </CardActions>
         </Grid>

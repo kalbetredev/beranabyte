@@ -1,32 +1,20 @@
 [
   {
-    "title": "Decorated JFrame",
-    "summary": "Consectetur nam, deleniti quibusdam ducimus exercitationem a veritatis id incidunt, fugiat qui reprehenderit",
-    "githubLink": "",
-    "tags": ""
+    "title": "CustomDecoratedJFrame",
+    "summary": "Custom decorated JFrame with default windows standard behavior",
+    "githubLink": "https://github.com/kalbetredev/CustomDecoratedJFrame",
+    "tags": ["Java", "Windows"]
   },
   {
-    "title": "Custom Decorated JFrame",
-    "summary": "Consectetur nam, deleniti quibusdam ducimus exercitationem a veritatis id incidunt, fugiat qui reprehenderit",
-    "githubLink": "",
-    "tags": ""
+    "title": "Game of Life",
+    "summary": "A Simple web app made with Dart to visualize Conway's Game of Life. To build this project you need a Dart SDK",
+    "githubLink": "https://github.com/kalbetredev/game_of_life",
+    "tags": ["Dart", "Game"]
   },
   {
-    "title": "Custom Decorated JFrame",
-    "summary": "Consectetur nam, deleniti quibusdam ducimus exercitationem a veritatis id incidunt, fugiat qui reprehenderit",
-    "githubLink": "",
-    "tags": ""
-  },
-  {
-    "title": "Custom Decorated JFrame",
-    "summary": "Consectetur nam, deleniti quibusdam ducimus exercitationem a veritatis id incidunt, fugiat qui reprehenderit",
-    "githubLink": "",
-    "tags": ""
-  },
-  {
-    "title": "Custom Decorated JFrame",
-    "summary": "Consectetur nam, deleniti quibusdam ducimus exercitationem a veritatis id incidunt, fugiat qui reprehenderit",
-    "githubLink": "",
-    "tags": ""
+    "title": "Tower of Hanoi Game",
+    "summary": "A console Tower of Hanoi Game made with Python",
+    "githubLink": "https://github.com/kalbetredev/Tower_of_Hanoi_Game",
+    "tags": ["Python", "Game"]
   }
 ]
