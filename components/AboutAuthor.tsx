@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import FontSizes from "../constants/fontsizes";
+import { mySummary } from "../shared/data/extras/mysummary";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,11 +55,7 @@ const AboutAuthor = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography className={classes.description}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim,
-            vero? At repellendus mollitia, iusto eum facilis recusandae neque
-            pariatur itaque facere adipisci,
-          </Typography>
+          <Typography className={classes.description}>{mySummary}</Typography>
         </Grid>
       </Grid>
     </Grid>

@@ -4,13 +4,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles";
 import { createStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import LinkGroup from "./LinkGroup";
 import AboutAuthor from "./AboutAuthor";
-import { Facebook, Telegram, Twitter, YouTube } from "@material-ui/icons";
+import {
+  Email,
+  Facebook,
+  GitHub,
+  LinkedIn,
+  Telegram,
+} from "@material-ui/icons";
 import FontSizes from "../constants/fontsizes";
-import FooterLinks from "../shared/data/footerlinks";
-import { PageGroup } from "../shared/lib/model/PageGroup";
-import Hidden from "@material-ui/core/Hidden";
+import {
+  myLinkedinLink,
+  myTelegramLink,
+  myFacebookLink,
+  myMailLink,
+  myGithubLink,
+} from "../shared/data/extras/mysummary";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,30 +31,21 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "48px 0",
     },
     copyText: {
+      marginTop: 15,
       fontSize: FontSizes.subtitle,
     },
-    smallAvatar: {
-      width: 50,
-      height: 50,
-    },
-    userNameText: {
-      fontSize: FontSizes.title,
-    },
     aboutAuthor: {
-      marginBottom: 32,
       [theme.breakpoints.up("sm")]: {
         paddingRight: 15,
-        marginRight: 15,
         borderRight: `1px solid ${theme.palette.secondary.main}`,
       },
-      [theme.breakpoints.down("xs")]: {
-        paddingTop: 30,
-        marginBottom: 30,
-      },
     },
-    mainContent: {
-      [theme.breakpoints.down("xs")]: {
-        flexDirection: "column-reverse",
+    linkHeader: {
+      fontSize: FontSizes.subtitle,
+    },
+    linksContainer: {
+      [theme.breakpoints.up("sm")]: {
+        paddingLeft: 15,
       },
     },
   })
@@ -60,33 +60,59 @@ const PageFooter: React.FC = () => {
       <Container maxWidth="md">
         <Box component="footer" className={classes.footer}>
           <Grid container justify="space-between">
-            <Grid item container className={classes.mainContent}>
-              <Grid item xs={12} sm={6}>
-                <Box className={classes.aboutAuthor}>
-                  <AboutAuthor />
-                  <IconButton>
-                    <Telegram style={{ color: "#0088CC" }} />
-                  </IconButton>
-                  <IconButton>
-                    <Facebook style={{ color: "#3B5998" }} />
-                  </IconButton>
-                  <IconButton>
-                    <YouTube style={{ color: "#C4202B" }} />
-                  </IconButton>
-                  <IconButton>
-                    <Twitter style={{ color: "#00ACEE" }} />
-                  </IconButton>
-                </Box>
+            <Grid item container>
+              <Grid item xs={12} sm={6} className={classes.aboutAuthor}>
+                <AboutAuthor />
               </Grid>
-              <Hidden smUp>
-                <Divider />
-              </Hidden>
-              <Grid item container xs={12} sm={6}>
-                {FooterLinks.map((group: PageGroup, index) => (
-                  <Grid item xs={12} sm={6} key={index}>
-                    <LinkGroup pageGroup={group} />
-                  </Grid>
-                ))}
+              <Grid
+                item
+                container
+                xs={12}
+                sm={6}
+                justify="flex-start"
+                alignItems="center"
+                className={classes.linksContainer}
+              >
+                <IconButton
+                  component="a"
+                  href={myGithubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <GitHub />
+                </IconButton>
+                <IconButton
+                  component="a"
+                  href={myLinkedinLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <LinkedIn style={{ color: "#0077B5" }} />
+                </IconButton>
+                <IconButton
+                  component="a"
+                  href={myTelegramLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Telegram style={{ color: "#0088CC" }} />
+                </IconButton>
+                <IconButton
+                  component="a"
+                  href={myMailLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Email style={{ color: "#EA4335" }} />
+                </IconButton>
+                <IconButton
+                  component="a"
+                  href={myFacebookLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Facebook style={{ color: "#3B5998" }} />
+                </IconButton>
               </Grid>
             </Grid>
             <Grid item xs={12} container justify="center">
