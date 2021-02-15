@@ -144,6 +144,10 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
   getUserName(userId: string): Promise<string> {
     return this.blogMetaRepository.getUserName(userId);
   }
+
+  getAllBlogs(): [string, FrontMatter[]][] {
+    return this.mdxRepository.getAllBlogs();
+  }
 }
 
 export default BlogRepositoryImpl;

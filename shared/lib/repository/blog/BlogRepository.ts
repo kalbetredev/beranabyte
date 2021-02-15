@@ -11,6 +11,7 @@ interface BlogRepository {
   getAllBlogCategories(): string[];
   getFrontMattersByCategory(category: string): FrontMatter[];
   getSlugsByCategory(category: string): string[];
+  getAllBlogs(): [string, FrontMatter[]][];
 }
 
 export default BlogRepository;

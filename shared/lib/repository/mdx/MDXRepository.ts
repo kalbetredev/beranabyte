@@ -9,6 +9,7 @@ interface MDXRepository {
   getBySlug(category: string, slug: string): Promise<MDX>;
   getFrontMattersByCategory(category: string): FrontMatter[];
   getAllFrontMatter(type: string): FrontMatter[];
+  getAllBlogs(): [string, FrontMatter[]][];
 }
 
 export default MDXRepository;

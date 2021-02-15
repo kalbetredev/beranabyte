@@ -112,6 +112,18 @@ class LocalMDXRepositoryImpl implements MDXRepository {
     });
     return allFrontMatters;
   }
+
+  getAllBlogs(): [string, FrontMatter[]][] {
+    const categories = this.getAllCategories();
+    const blogsMap: Map<string, FrontMatter[]> = new Map();
+
+    categories.forEach((category) => {
+      const categoryFrontMatters = this.getFrontMattersByCategory(category);
+      blogsMap.set(category, categoryFrontMatters);
+    });
+
+    return Array.from(blogsMap.entries());
+  }
 }
 
 export default LocalMDXRepositoryImpl;
