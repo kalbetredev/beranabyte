@@ -1,22 +1,24 @@
-import Grid from "@material-ui/core/Grid";
+import { Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { BlurCircular } from "@material-ui/icons";
 import React from "react";
+import FontSizes from "../../constants/fontsizes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    ul: {
+    listRoot: {
       padding: 0,
-      listStyle: "none",
-      width: "100%",
+      paddingLeft: 25,
+      margin: 0,
     },
     li: {
-      margin: 5,
-      marginLeft: 0,
+      marginBottom: 20,
+      "&::marker": {
+        fontSize: FontSizes.paragraph,
+      },
     },
-    liIcon: {
-      margin: 5,
-      color: theme.palette.secondary.main,
+    text: {
+      fontSize: FontSizes.paragraph,
+      lineHeight: "1.8em",
     },
   })
 );
@@ -25,19 +27,17 @@ export const LI = (props: any) => {
   const classes = useStyles();
   return (
     <li className={classes.li}>
-      <Grid container justify="flex-start">
-        <Grid item>
-          <BlurCircular fontSize="small" className={classes.liIcon} />
-        </Grid>
-        <Grid item xs container style={{ paddingTop: 6 }}>
-          {props.children}
-        </Grid>
-      </Grid>
+      <Typography className={classes.text}>{props.children}</Typography>
     </li>
   );
 };
 
 export const UL = (props: any) => {
   const classes = useStyles();
-  return <ul className={classes.ul}>{props.children}</ul>;
+  return <ul className={classes.listRoot}>{props.children}</ul>;
+};
+
+export const OL = (props: any) => {
+  const classes = useStyles();
+  return <ol className={classes.listRoot}>{props.children}</ol>;
 };
