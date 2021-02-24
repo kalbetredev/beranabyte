@@ -4,9 +4,13 @@ import { H2, H3, H4 } from "./HeaderBase";
 import { LI, UL } from "./List";
 import MDXLink from "./MDXLink";
 import { Table } from "./Table";
+import ImageCaption from "./ImageCaption";
+import CenterContent from "./CenterContent";
 
 const MDXComponents = {
   Image,
+  ImageCaption,
+  CenterContent,
   a: MDXLink,
   h2: H2,
   h3: H3,
