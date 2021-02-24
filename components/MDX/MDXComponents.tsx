@@ -6,6 +6,7 @@ import MDXLink from "./MDXLink";
 import { Table } from "./Table";
 import ImageCaption from "./ImageCaption";
 import CenterContent from "./CenterContent";
+import Paragraph from "./Paragraph";
 
 const MDXComponents = {
   Image,
@@ -19,6 +20,7 @@ const MDXComponents = {
   li: LI,
   ul: UL,
   table: Table,
+  p: Paragraph,
 };
 
 export default MDXComponents;
