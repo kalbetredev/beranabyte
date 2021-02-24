@@ -7,6 +7,7 @@ const FontSizes = {
   title: "1em",
   subtitle: "0.85em",
   caption: "0.7em",
+  imageCaption: "0.9em",
   navigationButton: "0.9em",
   button: "0.9em",
   smallButton: "0.7em",
