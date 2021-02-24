@@ -11,7 +11,9 @@ const signin = () => {
 
   const meta: PageMeta = {
     title: "Sign In to BeranaByte",
-    description: "Authentication",
+    description: "Sign In to BeranaByte to share and collaborate on ideas.",
+    type: "website",
+    image: "/static/images/banner.png",
   };
 
   if (auth.user) router.push("/");

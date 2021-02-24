@@ -46,7 +46,10 @@ const Projects = (props: ProjectsProps) => {
   const classes = useStyles();
   const meta: PageMeta = {
     title: "Projects",
-    description: "",
+    description:
+      "Open source and private projects that I am currently working.",
+    type: "blog",
+    image: "/static/images/banner.png",
   };
 
   return (

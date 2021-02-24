@@ -74,8 +74,10 @@ const Blog = (props: BlogProps) => {
   const classes = useStyles();
   const meta: PageMeta = {
     title: props.mdx.fontMatter.title,
-    description: "",
+    description: props.mdx.fontMatter.summary,
     date: new Date(props.mdx.fontMatter.publishedAt),
+    type: "blog",
+    image: props.mdx.fontMatter.image,
   };
   const router = useRouter();
   console.log(router);

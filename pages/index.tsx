@@ -14,7 +14,10 @@ interface IndexPageProps {
 const Index = (props: IndexPageProps) => {
   const meta: PageMeta = {
     title: "BeranaByte",
-    description: "",
+    description:
+      "Blog / portfolio website where you can find blogs and projects on most recent technologies on software development and other tech things.",
+    type: "website",
+    image: "/static/images/banner.png",
   };
 
   return (
