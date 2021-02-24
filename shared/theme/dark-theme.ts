@@ -47,6 +47,9 @@ const DarkTheme = createMuiTheme({
       },
     },
   },
+  typography: {
+    fontFamily: `"Raleway", "Roboto", "Helvetica", "Arial", sans-serif`,
+  },
 });
 
 export default DarkTheme;

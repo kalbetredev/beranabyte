@@ -1,13 +1,26 @@
 import { ServerStyleSheets } from "@material-ui/core/styles";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import React from "react";
-import AppTheme from "../shared/theme/app-theme";
-
 export class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
         <Head>
+          <link
+            rel="preload"
+            href="/fonts/raleway-v19-latin-regular.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="preload"
+            href="/fonts/raleway-v19-latin-700.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

@@ -4,6 +4,7 @@ import {
   LightBrandColor,
   ErrorColor,
   LightGrey,
+  DarkGrey,
   White,
 } from "../../constants/colors";
 
@@ -21,6 +22,9 @@ const LightTheme = createMuiTheme({
     },
     background: {
       default: White,
+    },
+    text: {
+      secondary: DarkGrey,
     },
   },
   overrides: {
@@ -46,6 +50,9 @@ const LightTheme = createMuiTheme({
         },
       },
     },
+  },
+  typography: {
+    fontFamily: `"Raleway", "Roboto", "Helvetica", "Arial", sans-serif`,
   },
 });
 
