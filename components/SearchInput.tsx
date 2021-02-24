@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       marginLeft: theme.spacing(1),
-      fontSize: FontSizes.paragraph,
+      fontSize: FontSizes.searchInput,
       flex: 1,
     },
     iconButton: {
