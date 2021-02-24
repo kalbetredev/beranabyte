@@ -1,8 +1,8 @@
 const FontSizes = {
-  h1: "2.2em",
-  h2: "1.5em",
-  h3: "1.3em",
-  h4: "1.1em",
+  h1: "2.5em",
+  h2: "2em",
+  h3: "1.7em",
+  h4: "1.3em",
   header: "1.2em",
   title: "1em",
   subtitle: "0.85em",
