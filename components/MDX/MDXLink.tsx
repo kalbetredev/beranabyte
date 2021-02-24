@@ -6,11 +6,8 @@ import React from "react";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     link: {
-      textDecoration: "none",
-      color: theme.palette.primary.main,
+      textDecoration: "underline",
       "&:hover": {
-        textDecoration: "none",
-        fontWeight: "bold",
         color: theme.palette.primary.main,
       },
     },
