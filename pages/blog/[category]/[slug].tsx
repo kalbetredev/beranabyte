@@ -9,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import hydrate from "next-mdx-remote/hydrate";
 import React from "react";
 import { format } from "date-fns";
-import Share from "@material-ui/icons/Share";
 import Box from "@material-ui/core/Box";
 import { parse } from "node-html-parser";
 import TwoLevelTableOfContent, {
@@ -25,6 +24,12 @@ import PageMeta from "../../../shared/lib/types/PageMeta";
 import PageContainer from "../../../layouts/PageContainer";
 import { Params } from "next/dist/next-server/server/router";
 import BlogComments from "../../../components/BlogComments";
+import { Facebook, LinkedIn } from "@material-ui/icons";
+import {
+  generateFacebookShareLink,
+  generateLinkedInShareLink,
+} from "../../../shared/lib/utils/shareLink";
+import { useRouter } from "next/router";
 
 interface BlogProps {
   mdx: MDX;
@@ -69,9 +74,13 @@ const Blog = (props: BlogProps) => {
   const classes = useStyles();
   const meta: PageMeta = {
     title: props.mdx.fontMatter.title,
-    description: "",
+    description: props.mdx.fontMatter.summary,
     date: new Date(props.mdx.fontMatter.publishedAt),
+    type: "blog",
+    image: props.mdx.fontMatter.image,
   };
+  const router = useRouter();
+  console.log(router);
 
   return (
     <PageContainer meta={meta}>
@@ -91,8 +100,23 @@ const Blog = (props: BlogProps) => {
               {<Bullet />}{" "}
               <BlogViewCounter blogId={props.mdx.fontMatter.uuid} />
             </Typography>
-            <IconButton className={classes.iconButton}>
-              <Share fontSize="small" />
+            <IconButton
+              className={classes.iconButton}
+              component="a"
+              href={generateFacebookShareLink(router.asPath)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Facebook />
+            </IconButton>
+            <IconButton
+              className={classes.iconButton}
+              component="a"
+              href={generateLinkedInShareLink(router.asPath)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkedIn />
             </IconButton>
           </Box>
           {content}

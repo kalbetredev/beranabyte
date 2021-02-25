@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     userNameText: {
       fontSize: FontSizes.footerGroupHeader,
+      fontWeight: 700,
     },
     description: {
       fontSize: FontSizes.subtitle,
-      color: theme.palette.text.secondary,
     },
   })
 );

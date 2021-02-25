@@ -6,6 +6,7 @@ import PageFooter from "../components/PageFooter";
 import PageHeader from "../components/PageHeader";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import ScrollTop from "../components/ScrollTop";
+import { useRouter } from "next/router";
 
 interface PageContainerProps {
   meta: PageMeta;
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const PageContainer = (props: PageContainerProps) => {
   const { meta } = props;
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <>
@@ -35,6 +37,18 @@ const PageContainer = (props: PageContainerProps) => {
             content={meta.date.toDateString()}
           />
         )}
+        <meta
+          property="og:url"
+          content={`https://www.beranabyte.com${router.asPath}`}
+        />
+        <meta property="og:type" content={meta.type} />
+        <meta property="og:site_name" content="BeranaByte" />
+        <meta property="og:description" content={meta.description} />
+        <meta property="og:title" content={meta.title} />
+        <meta
+          property="og:image"
+          content={`https://www.beranabyte.com${meta.image}`}
+        />
       </Head>
       <Container maxWidth="md" className={classes.root}>
         <div id="back-to-top-anchor" />

@@ -20,7 +20,9 @@ interface BlogCategoryProps {
 const BlogCategory = (props: BlogCategoryProps) => {
   const meta: PageMeta = {
     title: capitalize(removeNonAlphaNumeric(props.category)),
-    description: "",
+    description: `Collection of blogs on ${props.category}`,
+    type: "blog",
+    image: "/static/images/banner.png",
   };
 
   return (

@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       borderRadius: 5,
+      marginBottom: 30,
     },
     header: {
       backgroundColor:
