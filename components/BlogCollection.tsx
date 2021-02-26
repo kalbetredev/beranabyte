@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       fontSize: FontSizes.header,
       textTransform: "uppercase",
+      fontWeight: 700,
     },
     emptyResult: {
       marginTop: 10,

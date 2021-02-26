@@ -28,15 +28,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     groupHeader: {
       fontSize: FontSizes.footerGroupHeader,
+      fontWeight: 700,
     },
     link: {
       cursor: "pointer",
       fontSize: FontSizes.footerLink,
       textDecoration: "none",
-      color: theme.palette.text.secondary,
       "&:hover": {
         textDecoration: "none",
-        fontWeight: "bold",
         color: theme.palette.primary.main,
       },
     },
