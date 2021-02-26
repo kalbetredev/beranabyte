@@ -1,0 +1,363 @@
+---
+title: Customizing the Title bar of an Application Window
+publishedAt: Mon Feb 24 2020 03:00:00 GMT+0300 (East Africa Time)
+summary: Custom Decorated Desktop App Window with default windows standard behavior
+image: /static/images/java/customdecoratedwindow/banner.jpg
+uuid:
+---
+
+<CenterContent>
+  <Image
+    alt={`Custom Decorated Desktop App`}
+    src={`/static/images/blog/java/customdecoratedwindow/banner.png`}
+    width={700}
+    height={404}
+    priority
+  />
+  <ImageCaption caption="intellij-community IDE with a customized title bar" />
+</CenterContent>
+
+(Originally Published On [Medium](https://medium.com/swlh/customizing-the-title-bar-of-an-application-window-50a4ac3ed27e))
+
+Recently, most modern windows desktop applications have a custom framed window by ditching or modifying the default windows title bar. These **_arguably_** enhances the look of the GUI. Such apps include popular IDEs like Intellij IDEA, Visual Studio, VS Code and also Office apps.
+
+If you are like me obsessed with these great looking applications and wondered how to do it, well keep on reading.
+
+The method that we will see below might not be exactly how the above desktop applications did it, but at least it will give you the exact behavior and full control of your desktop application window.
+
+## Some basics about Desktop Application Windows
+
+Before we dig in to it, lets have some basic understanding of how Windows renders an application window.
+
+An [application window](https://docs.microsoft.com/en-us/windows/win32/winmsg/about-windows#desktop-window) has two components: a **_Non-Client Area_** and a **_Client Area_**. The **_Non-Client_** area is composed of the _title bar, icon, window border and the caption buttons_ and the rest is the client area where you add your application user controls (buttons, test boxes …).
+
+Another important point to note is that an [application window](https://docs.microsoft.com/en-us/windows/win32/winmsg/about-windows#desktop-window) has several attributes including a class name, window name, window handle, window style, extended window style … etc..
+
+These attributes help us to determine how the window is displayed and how it will interact with the user, which is very crucial to our goal. Additionally, every window has a [**_window procedure_**](https://docs.microsoft.com/en-us/windows/win32/winmsg/window-procedures), a function that processes all message sent or posted to all the windows of the class.
+
+These messages determine how the application window is displayed and how it interacts with inputs. Hence, by intercepting these messages we can get full control of our window (at least that is the idea).
+
+_I highly recommend you to go through the above links to get the full picture._
+
+## Custom Decorations in Desktop Application Windows
+
+The techniques that we are going to discuss here work for various programming languages that can load native libraries (of Windows of course).
+
+Implementing this in C++ is relatively easy because we are dealing with native libraries, assuming that we have a basic understanding of how applications windows are displayed and how to handle window messages.
+
+But here, we will be doing this using **Java**, specifically SWING. But I am sure once you get the hang of it you can implement custom decorations for JavaFX and also other programming languages such as C# using the same techniques.
+
+Custom decorated desktop application windows in **Java** can be achieved in there ways.
+
+1. The first is just **_setting the JFrame to be undecorated_** (with the setUndecrated function) and then **_implement everything_** (resizing, moving and snapping).
+2. The second method is setting the **_JFrame to be undecorated_** and then use the **_getRootPane_** function on the JFrame object to get its **_RootPane_**, and call the **_setWindowDecorationStyle(JRootPane.FRAME)_** on the RootPane itself. This will give you the implementation of resizing and dragging, all you need to add is the snap behavior. By default the title bar and border you get is Java’s default look and feel so you will need to change that. Also you will have to deal with is adding user controls to the title bar of the JRootPane.
+3. The other method is **_using Java Native Access (JNA)_**. In this method native libraries are loaded and default behaviors for the application window are implemented by the Window itself through integration of custom window procedures. Hence, **_all the default windows behaviors are reserved_** plus we will have a custom decorated window.
+
+## Custom Decorated Window Using Undecorated JFrame
+
+When we set the JFrame to be undecorated, the Non-Client area will not be rendered and the Client area occupies the whole application window.
+
+The major pitfall of using this method would be it requires a lot of work to get everything working (**_I have done this for JavaFX and if you are interested let me know on the comments and I will share it_**).
+
+Let me go through the basic points on how to do it. Once you make your JFrame undecorated, you will have a blank canvas (or panel) to put everything from title bar to your application controls.
+
+First you can implement the moving by detecting your mouse location and setting your window position accordingly. Then to implement the resizing feature, you need to think of the “hot spots” on the edge of the application window. There are 8 : _N, S, E, W, NW, NE, SW & SE_.
+
+You can calculate the location of the mouse relative to the application window or you can add thin JPanles at each location and detect whether the mouse is Hovered (to change the curser) or Dragged (to actually resize the window).
+
+Next step is to implement the window snap feature. For these you’ll need to have an **_additional transparent window_** to act like the one you see when you move a window close to the edges of the screen and you can show or hide the transparent window accordingly.
+
+<CenterContent>
+  <Image
+    alt={`Windows Snap Imitation Using Transparent Window`}
+    src={`/static/images/blog/java/customdecoratedwindow/windows_snap.png`}
+    width={700}
+    height={393}
+    priority
+  />
+  <ImageCaption caption="Windows Snap Imitation Using Transparent Window" />
+</CenterContent>
+
+Then **_when the user lets go of the mouse_** you can change the **_size and location of your window to be the same as the transparent window_**, if the application window is snapping to the edges.
+
+But be reminded that **_this is just imitation_**, and snap assist of windows will not detect your application window.
+
+Now the good part; let’s see how to do this so that we don’t have to implement all the default behaviors of application windows.
+
+## Custom Decorated Window Using Java Native Access (JNA)
+
+When using this method, we will be entering the realm of windows native libraries. This is made possible by the use of JNA.
+
+The first thing that we need to do is to download jna and jna-platform jar files. You can download the latest files from [Java Native Access (JNA) GitHub Repository](https://github.com/java-native-access/jna) . Scroll down to the Download Section of the **_README.md_** file and you will find the jar files.
+
+I will be using Intellij IDEA Community to create the project, but you can use any IDE you like. Once you have created your project and setup the dependencies (jna and jna-platform) we are good to go.
+
+The first thing that we need to do is to create an interface that extends the User32 interface provided by jna.platform.win32.User32. We are doing this to add few functions that are not provided by jna User32 interface.
+
+```java
+interface User32Ex extends User32 {
+   int GWLP_WNDPROC = -4;
+   LONG_PTR SetWindowLong(HWND hWnd, int nIndex, WindowProc wndProc);
+   LONG_PTR SetWindowLong(HWND hWnd, int nIndex, LONG_PTR wndProc);
+   LONG_PTR SetWindowLongPtr(HWND hWnd, int nIndex, WindowProc wndProc);
+   LONG_PTR SetWindowLongPtr(HWND hWnd, int nIndex, LONG_PTR wndProc);
+   LRESULT CallWindowProc(LONG_PTR proc, HWND hWnd, int uMsg, WPARAM uParam, LPARAM lParam);
+}
+```
+
+The constant [**_GWLP_WNDPROC_**](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptra) is an offset value that is used to set a new address for the window procedure.
+
+The [**_SetWindowLongPtr_**](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptra) function will allow us to set our **_custom window procedure_** for our application window, so that we can determine how to handle the selected messages that we will be intercepting.
+
+The **_CallWindowProc_** function will allow us to call the **_default window procedure_**, this is useful because we are not going to handle all the messages (we will only handle few messages and let the rest of the messages be handled by windows).
+
+Next, we will create a custom window decoration procedure class that extends from **_WinUser.WindowProc_** of jna. This class will have a custom callback function and a hit testing function.
+
+```java
+public class CustomDecorationWindowProc implements WinUser.WindowProc {
+	final int WM_NCCALCSIZE = 0x0083;
+	final int WM_NCHITTEST = 0x0084;
+
+	final User32Ex INSTANCEEx;
+	WinDef.HWND hwnd = new WinDef.HWND();
+	BaseTSD.LONG_PTR defWndProc;
+
+	public CustomDecorationWindowProc() { /* ... */ }
+
+	public void init(WinDef.HWND hwnd) { /* ... */ }
+
+	@Override
+	public LRESULT callback(HWND hwnd, int uMsg, WPARAM wparam, LPARAM lparam) { /* ... */ }
+
+	LRESULT BorderLessHitTest(HWND hWnd, int message, WPARAM wParam, LPARAM lParam) { /* ... */ }
+}
+```
+
+The first two constants **_WM_NCCALCSIZE_** _and_ **_WM_NCHITTEST_** are message values that get sent by windows.
+
+**_WM_NCCALCSIZE_** is called by windows before painting the Non-Client area (the border and the title bar) and **_WM_NCHITTEST_** is sent by windows to determine which area is currently receiving mouse events there by enabling us to implement resizing and moving.
+
+HWND variable hwnd will be used to store the window handle for the application and the LONG_PTR variable defWndProc will be used to store the pointer to the default window procedure so that we can call it whenever necessary.
+
+The **_Constructor_** and the init function will be used to load the native library and also initialize the variables defined above. As you can see below i am loading the native library in the constructor and initializing the rest of the variables on the **_init_** function.
+
+I am doing this to make sure the native library is loaded before the window is visible and then initialize the class after the window is visible (because the handle HWND of the window can only be determined after the JFrame is visible in java)
+
+```java
+public CustomDecorationWindowProc() {
+	INSTANCEEx = (User32Ex) Native.load("user32", User32Ex.class, W32APIOptions.DEFAULT_OPTIONS);
+}
+
+public void init(WinDef.HWND hwnd) {
+	this.hwnd = hwnd;
+	if(is64Bit())
+		defWndProc=INSTANCEEx.SetWindowLongPtr(hwnd, User32Ex.GWLP_WNDPROC, this);
+	else
+		defWndProc=INSTANCEEx.SetWindowLong(hwnd, User32Ex.GWLP_WNDPROC, this);
+	INSTANCEEx.SetWindowPos(hwnd, hwnd, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+}
+```
+
+Then, we will define the callback function that actually processes our selected messages: **_WM_NCCALCSIZE, WM_NCHITTEST_** and **_WM_DESTROY_**.
+
+```java
+public LRESULT callback(HWND hwnd, int uMsg, WPARAM wparam, LPARAM lparam) {
+	LRESULT lresult;
+	switch (uMsg) {
+		case WM_NCCALCSIZE:
+			return new LRESULT(0);
+		case WM_NCHITTEST:
+			lresult = this.BorderLessHitTest(hwnd, uMsg, wparam, lparam);
+			if (lresult.intValue() == new LRESULT(0).intValue()) {
+				return INSTANCEEx.CallWindowProc(defWndProc, hwnd, uMsg, wparam, lparam);
+			}
+			return lresult;
+		case WM_DESTROY:
+			if(is64Bit())
+				INSTANCEEx.SetWindowLongPtr(hwnd, User32Ex.GWLP_WNDPROC, defWndProc);
+			else
+				INSTANCEEx.SetWindowLong(hwnd, User32Ex.GWLP_WNDPROC, defWndProc);
+			return new LRESULT(0);
+		default:
+			lresult = INSTANCEEx.CallWindowProc(defWndProc, hwnd, uMsg, wparam, lparam);
+			return lresult;
+   }
+}
+```
+
+From the above code snippet you can see that I am returning 0 for **_WM_NCCALCSIZE,_** [this will cause windows not to draw the Non-Client area and thereby effectively making all the window our client area](https://docs.microsoft.com/en-us/windows/win32/dwm/customframe#removing-the-standard-frame).
+
+For the case of **_WM_NCHITTEST_**, we have a **_BorderLessHitTest_** function that determines which area is used for resize and which area is used for dragging (including windows snap).
+
+The **_CallWindowProc_** function is used to pass messages that are not handled by our custom callback function to the **_default windows procedure_**.
+
+For the case of **_WM_DESTROY_**, [we set the default window procedure back to its default](https://docs.microsoft.com/en-us/windows/win32/winmsg/using-window-procedures). The **_defWndProc_** variable is set when we call **_SetWindowLongPtr_** to assign our custom window procedure, because this function returns a pointer to the default window procedure.
+
+So as you can realize by now, the most important line here is the line of code that calls the **_BorderLessHitTest()_** function. This function is written based on **_[Custom Window Frame Using DWM Appendix C: HitTestNCA](https://docs.microsoft.com/en-us/windows/win32/dwm/customframe#removing-the-standard-frame)_**.
+
+```java
+LRESULT BorderLessHitTest(HWND hWnd, int message, WPARAM wParam, LPARAM lParam) {
+	int borderOffset = CustomDecorationParameters.getMaximizedWindowFrameThickness();
+	int borderThickness = CustomDecorationParameters.getFrameResizeBorderThickness();
+
+	WinDef.POINT ptMouse = new WinDef.POINT();
+	RECT rcWindow = new RECT();
+	User32.INSTANCE.GetCursorPos(ptMouse);
+	User32.INSTANCE.GetWindowRect(hWnd, rcWindow);
+
+	int uRow = 1, uCol = 1;
+	boolean fOnResizeBorder = false, fOnFrameDrag = false;
+
+	int topOffset = CustomDecorationParameters.getTitleBarHeight() == 0 ? borderThickness : CustomDecorationParameters.getTitleBarHeight();
+	if (ptMouse.y >= rcWindow.top && ptMouse.y < rcWindow.top + topOffset + borderOffset) {
+		fOnResizeBorder = (ptMouse.y < (rcWindow.top + borderThickness));  // Top Resizing
+		if (!fOnResizeBorder) {
+			fOnFrameDrag =
+				(ptMouse.y <= rcWindow.top + CustomDecorationParameters.getTitleBarHeight() + borderOffset)
+				&& (ptMouse.x < (rcWindow.right - (CustomDecorationParameters.getControlBoxWidth() + borderOffset + CustomDecorationParameters.getExtraRightReservedWidth())))
+				&& (ptMouse.x > (rcWindow.left + CustomDecorationParameters.getIconWidth() + borderOffset + CustomDecorationParameters.getExtraLeftReservedWidth()));
+		}
+		uRow = 0; // Top Resizing or Caption Moving
+	} else if (ptMouse.y < rcWindow.bottom && ptMouse.y >= rcWindow.bottom - borderThickness)
+		uRow = 2; // Bottom Resizing
+	if (ptMouse.x >= rcWindow.left && ptMouse.x < rcWindow.left + borderThickness)
+		uCol = 0; // Left Resizing
+	else if (ptMouse.x < rcWindow.right && ptMouse.x >= rcWindow.right - borderThickness)
+		uCol = 2; // Right Resizing
+
+	final int HTTOPLEFT = 13, HTTOP = 12, HTCAPTION = 2, HTTOPRIGHT = 14, HTLEFT = 10, HTNOWHERE = 0, HTRIGHT = 11, HTBOTTOMLEFT = 16, HTBOTTOM = 15, HTBOTTOMRIGHT = 17, HTSYSMENU = 3;
+	int[][] hitTests = {
+		{HTTOPLEFT, fOnResizeBorder ? HTTOP : fOnFrameDrag ? HTCAPTION : HTNOWHERE, HTTOPRIGHT},
+		{HTLEFT, HTNOWHERE, HTRIGHT},
+		{HTBOTTOMLEFT, HTBOTTOM, HTBOTTOMRIGHT},
+	};
+
+	return new LRESULT(hitTests[uRow][uCol]);
+}
+```
+
+This function has a return value of the various locations on the application window such as **_HTTOPLEFT_**, **_HTTOP_** … etc. You can determine the location of the mouse and based on that return these values so that windows can take care of the resizing.
+
+Next you can determine the location of your **_custom caption_** and return **_HTCAPTION_** and for other areas we return **_HTNOWHERE_**.
+
+You can also return **_HTSYSMENU_** to display the system menu shown when a desktop application icon (at the top-left corner) is clicked.
+
+By the way these constants are integers. You can checkout the documentation about [**_WM_NCHITTEST messages_**](https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-nchittest).
+
+The hit testing algorithm depends on what you consider to be a caption area and a resize area. Especially when you place user controls on an area that you consider to be a caption area you must return **HTNOWHERE** when the mouse is over the area that your controls are so that the default behavior of your controls is kept.
+
+For our case, to help me with this calculation, I have defined a **_CustomDecorationParameters_** class to hold by custom values. Which can be modified when the windows gets updated.
+
+```java
+public class CustomDecorationParameters {
+   private static AtomicInteger titleBarHeight = new AtomicInteger(27);
+   private static AtomicInteger controlBoxWidth = new AtomicInteger(150);
+   private static AtomicInteger iconWidth = new AtomicInteger(40);
+   private static AtomicInteger extraLeftReservedWidth = new AtomicInteger(0);
+   private static AtomicInteger extraRightReservedWidth = new AtomicInteger(0);
+   private static AtomicInteger maximizedWindowFrameThickness = new AtomicInteger(10);
+   private static AtomicInteger frameResizeBorderThickness = new AtomicInteger(4);
+   private static AtomicInteger frameBorderThickness = new AtomicInteger(1);
+	...
+}
+```
+
+For example, the **_iconWidth_** will be used to determine how wide the application icon is from the **_top-left corner_** and the **_extraLeftReservedArea_** variable is used to exclude a specified area from the left of the top-left corner, so that we can place user controls such as a **_Menu bar_**.
+
+<CenterContent>
+  <Image
+    alt={`application window title bar sections`}
+    src={`/static/images/blog/java/customdecoratedwindow/titlebar_hittest.png`}
+    width={700}
+    height={189}
+    priority
+  />
+  <ImageCaption caption="Application window title bar sections" />
+</CenterContent>
+
+You can update these [AtomicInteger](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicInteger.html) variables according to the behavior of your application window. For instance, if you dynamically add user controls on the caption area, then you need to update these variables.
+
+## Implementation of the Custom Decoration
+
+The reset of the code would not require any native interaction. First of all, let’s make a **_CustomJFrame_** class that extends **_JFrame_** to make it easier to deal with the **_theme_** of the JFrame as well as hide the implementation of Custom Decoration on the JFrame.
+
+```java
+public class CustomJFrame extends JFrame {
+   final Theme theme;
+   final CustomDecorationWindowProc windowProcEx;
+   private ControlBoxJButton closeBtn, minimizeBtn, restoreButton;
+   /*...*/
+
+   public CustomJFrame(Theme theme, String title) throws HeadlessException {
+      super(title);
+      this.theme = theme;
+      windowProcEx = new CustomDecorationWindowProc();
+      initializeFrame();
+   }
+
+   public CustomJFrame(Theme theme, String title, WindowFrameType windowFrameType){
+      this(theme,title);
+      this.windowFrameType = windowFrameType;
+      initializeFrame();
+   }
+
+   @Override
+   public void setVisible(boolean b) {
+      super.setVisible(b);
+      windowProcEx.init(getHwnd());
+   }
+
+   private WinDef.HWND getHwnd(){
+      WinDef.HWND hwnd = new WinDef.HWND();
+      hwnd.setPointer(Native.getComponentPointer(this));
+      return hwnd;
+   }
+
+   public ControlBoxJButton getRestoreButton() {
+      return restoreButton;
+   }
+
+   ...
+}
+```
+
+If you are wondering about the first **Theme** variable ‘**theme** it is just a simple interface that defines **getter methods** so that various themes can be created and applied to the JFrame easily (Please refer the [project code base](https://github.com/kalbetredev/CustomDecoratedJFrame) on GitHub).
+
+For our example, I have made a **DarkTheme** (check out the **DarkTheme.java**). The rest of the code I think is easier to understand.
+
+Just one reminder is that the handle of the window can only be **_determined after the JFrame is set visible_**.
+
+## Demo App
+
+I have made a simple demo on the project to demonstrate the usage of the custom decoration. You can find the code on [Github](https://github.com/kalbetredev/CustomDecoratedJFrame).
+
+<CenterContent>
+  <Image
+    alt={`Demo App with custom title bar`}
+    src={`/static/images/blog/java/customdecoratedwindow/demo_app.png`}
+    width={603}
+    height={419}
+    priority
+  />
+  <ImageCaption caption="Demo App with custom title bar" />
+</CenterContent>
+
+First, I initialized the **_CustomJFrame_** with a theme and a title. Then I made my own custom **_Minimize, Maximize / Restore and Close button_**.
+
+I have made a separate class **_ControlBoxJButton_** and overridden **_paintComponent_** function to draw the icons. You can also use an icon (PNG, bmp, svg …)
+
+Next, we can place anything anywhere as long as we **_update the hit-testing algorithm_** when we place user-controls on the top caption as I have mentioned earlier.
+
+## Checkout the Demo on GitHub
+
+[https://github.com/kalbetredev/CustomDecoratedJFrame](https://github.com/kalbetredev/CustomDecoratedJFrame)
+
+## What’s Next
+
+Well, that is about it. Of course, there is a bunch of code that I haven’t posted here but you can refer the project code on Github ([CustomDecoratedJFrame](https://github.com/kalbetredev/CustomDecoratedJFrame)).
+
+You can apply any customization to the project to suite your GUI design. Keep in mind that, if you are making a cross platform application make sure to **_check whether the platform is windows_** before you use the custom decoration, you can do this easily using **JNA**.
+
+Well I had fun making this project and writing this blog as well. I hope it’s useful for someone out there. You are more than welcome to leave me a comment or any question you might have.
+
+Happy Coding!
