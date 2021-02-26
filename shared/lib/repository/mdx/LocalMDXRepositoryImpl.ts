@@ -1,4 +1,4 @@
-import FrontMatter from "../../types/FrontMatter";
+import FrontMatter, { FRONTMATTER_KEYS } from "../../types/FrontMatter";
 import MDX from "../../types/MDX";
 import MDXRepository from "./MDXRepository";
 import fs, { readdirSync } from "fs";
@@ -9,7 +9,7 @@ import renderToString from "next-mdx-remote/render-to-string";
 import readingTime from "reading-time";
 import { FEATURED } from "../../../../constants/strings";
 
-const BLOG_ROOT_DIR = "shared/data/blog";
+export const BLOG_ROOT_DIR = "shared/data/blog";
 class LocalMDXRepositoryImpl implements MDXRepository {
   root = process.cwd();
   rootPath = path.join(this.root, BLOG_ROOT_DIR);
@@ -72,11 +72,11 @@ class LocalMDXRepositoryImpl implements MDXRepository {
           category: category,
           wordCount: content.split(/\s+/gu).length,
           readingTime: readingTime(content).minutes,
-          title: data["title"],
-          publishedAt: data["publishedAt"],
-          summary: data["summary"],
-          image: data["image"],
-          uuid: data["uuid"],
+          title: data[FRONTMATTER_KEYS.title],
+          publishedAt: data[FRONTMATTER_KEYS.publishedAt],
+          summary: data[FRONTMATTER_KEYS.summary],
+          image: data[FRONTMATTER_KEYS.image],
+          uuid: data[FRONTMATTER_KEYS.uuid],
         },
       });
     });
@@ -93,11 +93,11 @@ class LocalMDXRepositoryImpl implements MDXRepository {
       return {
         slug: postSlug.replace(".mdx", ""),
         category: category,
-        title: data["title"],
-        publishedAt: data["publishedAt"],
-        summary: data["summary"],
-        image: data["image"],
-        uuid: data["uuid"],
+        title: data[FRONTMATTER_KEYS.title],
+        publishedAt: data[FRONTMATTER_KEYS.publishedAt],
+        summary: data[FRONTMATTER_KEYS.summary],
+        image: data[FRONTMATTER_KEYS.image],
+        uuid: data[FRONTMATTER_KEYS.uuid],
       };
     });
   }
