@@ -10,4 +10,12 @@ interface FrontMatter {
   uuid: string;
 }
 
+export const FRONTMATTER_KEYS = {
+  title: "title",
+  publishedAt: "publishedAt",
+  summary: "summary",
+  image: "image",
+  uuid: "uuid",
+};
+
 export default FrontMatter;

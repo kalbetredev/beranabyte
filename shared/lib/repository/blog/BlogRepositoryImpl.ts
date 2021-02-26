@@ -7,19 +7,30 @@ import BlogRepository from "./BlogRepository";
 import MDXRepository from "../mdx/MDXRepository";
 import TestBlogMetaRepositoryImpl from "../blogmeta/TestBlogMetaRepositoryImpl";
 import Comment from "../../model/Comment";
+import MDXUuidChecker from "../mdx/MDXUuidChecker";
 
 class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
   private static instance: BlogRepositoryImpl;
+  private mdxUuidChecker: MDXUuidChecker;
   private mdxRepository: MDXRepository;
   private blogMetaRepository: BlogMetaRepository;
   private MDX_TYPE = "blog";
 
   private constructor() {
+    this.mdxUuidChecker = new MDXUuidChecker();
     this.mdxRepository = new LocalMDXRepositoryImpl();
-    this.blogMetaRepository =
-      process.env.BLOG_META_DB && process.env.BLOG_META_DB == "remote"
-        ? new FirebaseBlogMetaRepositoryImpl()
-        : new TestBlogMetaRepositoryImpl();
+    this.blogMetaRepository = this.isRemote()
+      ? new FirebaseBlogMetaRepositoryImpl()
+      : new TestBlogMetaRepositoryImpl();
+    this.runUuidGenerator();
+  }
+
+  isRemote() {
+    return process.env.BLOG_META_DB && process.env.BLOG_META_DB == "remote";
+  }
+
+  async runUuidGenerator() {
+    if (this.isRemote()) await this.mdxUuidChecker.run();
   }
 
   public static getInstance(): BlogRepositoryImpl {

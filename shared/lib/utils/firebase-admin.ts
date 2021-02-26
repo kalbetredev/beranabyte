@@ -11,6 +11,8 @@ if (!admin.apps.length) {
   });
 }
 
-export const firebaseAdminAuth = admin.auth();
-export const firestoreAdminDb = admin.firestore();
-export const serverTimestamp = admin.firestore.FieldValue.serverTimestamp();
+export const FirebaseAdminAuth = admin.auth();
+export const FirestoreAdminDb = admin.firestore();
+export const ServerTimestamp = admin.firestore.FieldValue.serverTimestamp();
+export const UsersCollection = FirestoreAdminDb.collection("users");
+export const BlogMetaCollection = FirestoreAdminDb.collection("blogs-meta");

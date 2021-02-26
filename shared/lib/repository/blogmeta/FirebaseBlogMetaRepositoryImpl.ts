@@ -1,20 +1,19 @@
 import BlogMetaRepository from "./BlogMetaRepository";
 import {
-  firebaseAdminAuth,
-  firestoreAdminDb,
-  serverTimestamp,
+  FirebaseAdminAuth,
+  ServerTimestamp,
+  UsersCollection,
+  BlogMetaCollection,
 } from "../../utils/firebase-admin";
 import Comment from "../../model/Comment";
 
-const USERS_COLLECTION = firestoreAdminDb.collection("users");
-const BLOG_META_COLLECTION = firestoreAdminDb.collection("blogs-meta");
 const COMMENTS_COLLECTION_NAME = "comments";
 const REPLIES_COLLECTION_NAME = "replies";
 const VIEW_COUNT_FILED = "viewCount";
 
 class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
   async getBlogViewCount(blogId: string): Promise<number> {
-    const blogRef = BLOG_META_COLLECTION.doc(blogId);
+    const blogRef = BlogMetaCollection.doc(blogId);
     const blog = await blogRef.get();
 
     if (blog.exists) {
@@ -30,14 +29,14 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
 
   async updateBlogViewCount(blogId: string) {
     let viewCount = await this.getBlogViewCount(blogId);
-    const blogRef = BLOG_META_COLLECTION.doc(blogId);
+    const blogRef = BlogMetaCollection.doc(blogId);
     blogRef.set({
       viewCount: ++viewCount,
     });
   }
 
   async getMostViewedBlogs(count: number): Promise<string[]> {
-    const blogs = await BLOG_META_COLLECTION.get();
+    const blogs = await BlogMetaCollection.get();
 
     const blogsWithCount: { id: string; viewCount: number }[] = [];
     await blogs.docs.forEach((doc) => {
@@ -58,7 +57,7 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
 
   async getBlogComments(blogId: string): Promise<Comment[]> {
     const comments: Comment[] = [];
-    const blogComments = BLOG_META_COLLECTION.doc(blogId).collection(
+    const blogComments = BlogMetaCollection.doc(blogId).collection(
       COMMENTS_COLLECTION_NAME
     );
 
@@ -71,7 +70,7 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
     const commentRepliesSnapshots = new Map();
 
     for (let commentId of commentIds) {
-      const repliesSnapshot = await BLOG_META_COLLECTION.doc(blogId)
+      const repliesSnapshot = await BlogMetaCollection.doc(blogId)
         .collection(COMMENTS_COLLECTION_NAME)
         .doc(commentId)
         .collection(REPLIES_COLLECTION_NAME)
@@ -123,11 +122,10 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
     comment: string,
     userIdToken: string
   ): Promise<string | null> {
-    return firebaseAdminAuth
-      .verifyIdToken(userIdToken)
+    return FirebaseAdminAuth.verifyIdToken(userIdToken)
       .then((decodedToken) => {
         const uid = decodedToken.uid;
-        const newCommentRef = BLOG_META_COLLECTION.doc(blogId)
+        const newCommentRef = BlogMetaCollection.doc(blogId)
           .collection(COMMENTS_COLLECTION_NAME)
           .doc();
 
@@ -135,7 +133,7 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
           commentId: newCommentRef.id,
           userUid: uid,
           comment: comment,
-          timestamp: serverTimestamp,
+          timestamp: ServerTimestamp,
         };
 
         return newCommentRef
@@ -158,11 +156,10 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
     reply: string,
     userIdToken: string
   ): Promise<string | null> {
-    return firebaseAdminAuth
-      .verifyIdToken(userIdToken)
+    return FirebaseAdminAuth.verifyIdToken(userIdToken)
       .then((decodedToken) => {
         const uid = decodedToken.uid;
-        const newReplyRef = BLOG_META_COLLECTION.doc(blogId)
+        const newReplyRef = BlogMetaCollection.doc(blogId)
           .collection(COMMENTS_COLLECTION_NAME)
           .doc(commentId)
           .collection(REPLIES_COLLECTION_NAME)
@@ -172,7 +169,7 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
           replyId: newReplyRef.id,
           userUid: uid,
           reply: reply,
-          timestamp: serverTimestamp,
+          timestamp: ServerTimestamp,
         };
 
         return newReplyRef
@@ -190,7 +187,7 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
   }
 
   async getUserName(userId: string): Promise<string> {
-    const userRef = USERS_COLLECTION.doc(userId);
+    const userRef = UsersCollection.doc(userId);
     const user = await userRef.get();
     if (user.exists) {
       return user.data()["userName"];
