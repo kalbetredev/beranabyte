@@ -70,7 +70,7 @@ const BlogSummary = (props: BlogSummaryCardProps) => {
   );
   const views = data?.total;
   const viewsMessage = views
-    ? `${numberFormat("#,###.", views)} views`
+    ? `${numberFormat("#,###.", views)} ${views == 1 ? "view" : "views"}`
     : "Just Published";
 
   const classes = useStyles();

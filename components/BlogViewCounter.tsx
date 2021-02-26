@@ -21,7 +21,11 @@ const BlogViewCounter = (props: PageViewCounterProps) => {
   }, [props.blogId]);
 
   return (
-    <span>{views ? `${format("#,###.", views)} Views` : "Just Published"}</span>
+    <span>
+      {views
+        ? `${format("#,###.", views)} ${views == 1 ? "view" : "views"}`
+        : ""}
+    </span>
   );
 };
 
