@@ -7,11 +7,11 @@ interface BlogRepository {
   getBlogBySlug(slug: string): Promise<MDX>;
   getBlog(category: string, slug: string): Promise<MDX>;
   getAllBlogsFrontMatter(): FrontMatter[];
-  getFeaturedBlogsFrontMatter(): FrontMatter[];
   getAllBlogCategories(): string[];
   getFrontMattersByCategory(category: string): FrontMatter[];
   getSlugsByCategory(category: string): string[];
   getAllBlogs(): [string, FrontMatter[]][];
+  getProjectRelatedBlogs(): FrontMatter[];
 }
 
 export default BlogRepository;

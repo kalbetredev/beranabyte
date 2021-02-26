@@ -90,9 +90,7 @@ export async function getStaticProps() {
   const data = fs.readFileSync(projectsJSONFile, "utf-8");
   const openSourceProjects = JSON.parse(data);
 
-  const relatedBlogsFrontMatters = BlogRepositoryImpl.getInstance().getFrontMattersByCategory(
-    "project-related"
-  );
+  const relatedBlogsFrontMatters = BlogRepositoryImpl.getInstance().getProjectRelatedBlogs();
 
   return {
     props: {

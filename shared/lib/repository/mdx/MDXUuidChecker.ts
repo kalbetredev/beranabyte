@@ -1,9 +1,9 @@
 import fs, { readdirSync } from "fs";
 import path from "path";
-import { BLOG_ROOT_DIR } from "./LocalMDXRepositoryImpl";
 import matter from "gray-matter";
 import { FRONTMATTER_KEYS } from "../../types/FrontMatter";
 import { BlogMetaCollection } from "../../utils/firebase-admin";
+import { BLOG_ROOT_DIR } from "./Directories";
 
 class MDXUuidChecker {
   root = process.cwd();

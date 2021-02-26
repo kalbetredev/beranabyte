@@ -8,8 +8,8 @@ import MDXComponents from "../../../../components/MDX/MDXComponents";
 import renderToString from "next-mdx-remote/render-to-string";
 import readingTime from "reading-time";
 import { FEATURED } from "../../../../constants/strings";
+import { BLOG_ROOT_DIR, SHARED_DATA_ROOT_DIR } from "./Directories";
 
-export const BLOG_ROOT_DIR = "shared/data/blog";
 class LocalMDXRepositoryImpl implements MDXRepository {
   root = process.cwd();
   rootPath = path.join(this.root, BLOG_ROOT_DIR);
@@ -23,10 +23,17 @@ class LocalMDXRepositoryImpl implements MDXRepository {
   }
 
   getFeaturedBlogsFrontMatter(): FrontMatter[] {
-    const categories = this.getAllCategories();
-    if (categories.includes(FEATURED)) {
-      return this.getFrontMattersByCategory(FEATURED);
-    } else return [];
+    const blogs = this.getFeaturedBlogs();
+    return blogs.map(({ category, slug }) =>
+      this.getFrontMatter(category, slug)
+    );
+  }
+
+  getProjectRelatedBlogsFrontMatter(): FrontMatter[] {
+    const blogs = this.getProjectRelatedBlogs();
+    return blogs.map(({ category, slug }) =>
+      this.getFrontMatter(category, slug)
+    );
   }
 
   getAllSugs(): string[] {
@@ -84,22 +91,9 @@ class LocalMDXRepositoryImpl implements MDXRepository {
 
   getFrontMattersByCategory(category: string): FrontMatter[] {
     const files = fs.readdirSync(path.join(this.root, BLOG_ROOT_DIR, category));
-    return files.map((postSlug: string) => {
-      const source = fs.readFileSync(
-        path.join(this.root, BLOG_ROOT_DIR, category, postSlug),
-        "utf8"
-      );
-      const { data } = matter(source);
-      return {
-        slug: postSlug.replace(".mdx", ""),
-        category: category,
-        title: data[FRONTMATTER_KEYS.title],
-        publishedAt: data[FRONTMATTER_KEYS.publishedAt],
-        summary: data[FRONTMATTER_KEYS.summary],
-        image: data[FRONTMATTER_KEYS.image],
-        uuid: data[FRONTMATTER_KEYS.uuid],
-      };
-    });
+    return files.map((postSlug: string) =>
+      this.getFrontMatter(category, postSlug.replace(".mdx", ""))
+    );
   }
 
   getAllFrontMatter(type: string): FrontMatter[] {
@@ -122,7 +116,49 @@ class LocalMDXRepositoryImpl implements MDXRepository {
       blogsMap.set(category, categoryFrontMatters);
     });
 
+    blogsMap.set(FEATURED, this.getFeaturedBlogsFrontMatter());
+
     return Array.from(blogsMap.entries());
+  }
+
+  getFrontMatter(category: string, slug: string): FrontMatter {
+    const source = fs.readFileSync(
+      path.join(this.root, BLOG_ROOT_DIR, category, `${slug}.mdx`),
+      "utf8"
+    );
+    const { data } = matter(source);
+    return {
+      slug: slug.replace(".mdx", ""),
+      category: category,
+      title: data[FRONTMATTER_KEYS.title],
+      publishedAt: data[FRONTMATTER_KEYS.publishedAt],
+      summary: data[FRONTMATTER_KEYS.summary],
+      image: data[FRONTMATTER_KEYS.image],
+      uuid: data[FRONTMATTER_KEYS.uuid],
+    };
+  }
+
+  getFeaturedBlogs(): { category: string; slug: string }[] {
+    const featuredBlogsFile = fs.readFileSync(
+      path.join(this.root, SHARED_DATA_ROOT_DIR, "FeaturedBlogs.json"),
+      "utf-8"
+    );
+    const featuredBlogs: { category: string; slug: string }[] = JSON.parse(
+      featuredBlogsFile
+    );
+    return featuredBlogs;
+  }
+
+  getProjectRelatedBlogs(): { category: string; slug: string }[] {
+    const projectRelatedFile = fs.readFileSync(
+      path.join(this.root, SHARED_DATA_ROOT_DIR, "ProjectRelatedBlogs.json"),
+      "utf-8"
+    );
+    const projectRelatedBlogs: {
+      category: string;
+      slug: string;
+    }[] = JSON.parse(projectRelatedFile);
+    return projectRelatedBlogs;
   }
 }
 

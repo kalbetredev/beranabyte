@@ -4,6 +4,7 @@ import MDX from "../../types/MDX";
 interface MDXRepository {
   getAllCategories(): string[];
   getFeaturedBlogsFrontMatter(): FrontMatter[];
+  getProjectRelatedBlogsFrontMatter(): FrontMatter[];
   getAllSugs(): string[];
   getSlugsByCategory(category: string): string[];
   getBySlug(category: string, slug: string): Promise<MDX>;

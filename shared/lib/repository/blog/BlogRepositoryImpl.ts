@@ -40,10 +40,6 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
     return BlogRepositoryImpl.instance;
   }
 
-  getFeaturedBlogsFrontMatter(): FrontMatter[] {
-    return this.mdxRepository.getFeaturedBlogsFrontMatter();
-  }
-
   getAllBlogCategories(): string[] {
     return this.mdxRepository.getAllCategories();
   }
@@ -158,6 +154,10 @@ class BlogRepositoryImpl implements BlogRepository, BlogMetaRepository {
 
   getAllBlogs(): [string, FrontMatter[]][] {
     return this.mdxRepository.getAllBlogs();
+  }
+
+  getProjectRelatedBlogs(): FrontMatter[] {
+    return this.mdxRepository.getProjectRelatedBlogsFrontMatter();
   }
 }
 
