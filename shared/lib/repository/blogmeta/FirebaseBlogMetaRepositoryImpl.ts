@@ -19,12 +19,8 @@ class FirebaseBlogMetaRepositoryImpl implements BlogMetaRepository {
     if (blog.exists) {
       let count = (await blog.get(VIEW_COUNT_FILED)) as number;
       return count;
-    } else {
-      blogRef.set({
-        viewCount: 1,
-      });
-      return 1;
     }
+    return 1;
   }
 
   async updateBlogViewCount(blogId: string) {

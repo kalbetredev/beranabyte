@@ -54,7 +54,7 @@ class MDXUuidChecker {
   async getNewFirebaseDocumentUuid(): Promise<string> {
     const blogRef = BlogMetaCollection.doc();
     await blogRef.set({
-      viewCount: 0,
+      viewCount: 1,
     });
     return blogRef.id;
   }
