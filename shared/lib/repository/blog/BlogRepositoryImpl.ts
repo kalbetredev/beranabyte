@@ -2,7 +2,7 @@ import BlogMetaRepository from "../blogmeta/BlogMetaRepository";
 import FirebaseBlogMetaRepositoryImpl from "../blogmeta/FirebaseBlogMetaRepositoryImpl";
 import FrontMatter from "../../types/FrontMatter";
 import LocalMDXRepositoryImpl from "../mdx/LocalMDXRepositoryImpl";
-import MDX from "../../types/MDX";
+import MDX from "../../types/mdx";
 import BlogRepository from "./BlogRepository";
 import MDXRepository from "../mdx/MDXRepository";
 import TestBlogMetaRepositoryImpl from "../blogmeta/TestBlogMetaRepositoryImpl";
