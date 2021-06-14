@@ -1,5 +1,5 @@
 import FrontMatter, { FRONTMATTER_KEYS } from "../../types/FrontMatter";
-import MDX from "../../types/MDX";
+import MDX from "../../types/mdx";
 import MDXRepository from "./MDXRepository";
 import fs, { readdirSync } from "fs";
 import path from "path";
@@ -143,9 +143,8 @@ class LocalMDXRepositoryImpl implements MDXRepository {
       path.join(this.root, SHARED_DATA_ROOT_DIR, "FeaturedBlogs.json"),
       "utf-8"
     );
-    const featuredBlogs: { category: string; slug: string }[] = JSON.parse(
-      featuredBlogsFile
-    );
+    const featuredBlogs: { category: string; slug: string }[] =
+      JSON.parse(featuredBlogsFile);
     return featuredBlogs;
   }
 

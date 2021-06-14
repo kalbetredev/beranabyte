@@ -19,7 +19,7 @@ import Bullet from "../../../components/Bullet";
 import BlogViewCounter from "../../../components/BlogViewCounter";
 import MDXComponents from "../../../components/MDX/MDXComponents";
 import FontSizes from "../../../constants/fontsizes";
-import MDX from "../../../shared/lib/types/MDX";
+import MDX from "../../../shared/lib/types/mdx";
 import PageMeta from "../../../shared/lib/types/PageMeta";
 import PageContainer from "../../../layouts/PageContainer";
 import { Params } from "next/dist/next-server/server/router";
