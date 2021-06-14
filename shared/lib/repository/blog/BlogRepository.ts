@@ -1,5 +1,5 @@
 import FrontMatter from "../../types/FrontMatter";
-import MDX from "../../types/MDX";
+import MDX from "../../types/mdx";
 
 interface BlogRepository {
   getMostViewedBlogsFrontMatter(count: number): Promise<FrontMatter[]>;
