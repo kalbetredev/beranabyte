@@ -78,6 +78,9 @@ const useStyles = makeStyles((theme: Theme) =>
         outline: "none !important",
       },
     },
+    toolbar: {
+      minHeight: 0,
+    },
   })
 );
 
@@ -97,19 +100,18 @@ const AppBar = () => {
     ? [HomePage, ...pagesFromCategories(categories), ProjectsPage]
     : [HomePage, ProjectsPage];
 
-  const toggleDrawer = (open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+      setDrawerOpen(open);
+    };
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -126,7 +128,7 @@ const AppBar = () => {
       <ElevationScroll>
         <MuiAppBar classes={appBarClasses} position="fixed">
           <Container maxWidth="md">
-            <Toolbar disableGutters variant="dense">
+            <Toolbar disableGutters className={classes.toolbar}>
               <Hidden smUp>
                 <IconButton
                   edge="start"
