@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     toolbar: {
-      minHeight: 0,
+      minHeight: "0px !important",
     },
   })
 );
@@ -128,7 +128,7 @@ const AppBar = () => {
       <ElevationScroll>
         <MuiAppBar classes={appBarClasses} position="fixed">
           <Container maxWidth="md">
-            <Toolbar disableGutters className={classes.toolbar}>
+            <Toolbar disableGutters variant="dense" className={classes.toolbar}>
               <Hidden smUp>
                 <IconButton
                   edge="start"
