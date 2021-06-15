@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     toolbar: {
-      minHeight: "0px !important",
+      height: 46,
     },
   })
 );
