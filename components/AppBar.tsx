@@ -126,7 +126,7 @@ const AppBar = () => {
   return (
     <div className={classes.root}>
       <ElevationScroll>
-        <MuiAppBar classes={appBarClasses}>
+        <MuiAppBar classes={appBarClasses} position="fixed">
           <Container maxWidth="md">
             <Toolbar disableGutters variant="dense" className={classes.toolbar}>
               <Hidden smUp>

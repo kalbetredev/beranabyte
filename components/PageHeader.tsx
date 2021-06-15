@@ -3,7 +3,9 @@ import AppBar from "./AppBar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    toolbar: theme.mixins.toolbar,
+    toolbar: {
+      minHeight: theme.mixins.toolbar.minHeight,
+    },
   })
 );
 
@@ -13,7 +15,7 @@ const PageHeader: React.FC = () => {
   return (
     <>
       <AppBar />
-      {/* <div className={classes.toolbar} /> */}
+      <div className={classes.toolbar} />
     </>
   );
 };
