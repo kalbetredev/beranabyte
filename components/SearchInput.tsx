@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       width: "100%",
       backgroundColor: theme.palette.background.default,
-      marginTop: 10,
     },
     input: {
       marginLeft: theme.spacing(1),
