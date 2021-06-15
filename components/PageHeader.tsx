@@ -1,21 +1,21 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Toolbar } from "@material-ui/core";
 import AppBar from "./AppBar";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    toolbar: {
-      minHeight: theme.mixins.toolbar.minHeight,
-    },
-  })
-);
+// const useStyles = makeStyles((theme: Theme) =>
+//   createStyles({
+//     toolbar: theme.mixins.toolbar,
+//   })
+// );
 
 const PageHeader: React.FC = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <>
       <AppBar />
-      <div className={classes.toolbar} />
+      <Toolbar />
+      {/* <div className={classes.toolbar} /> */}
     </>
   );
 };
