@@ -4,7 +4,7 @@ import AppBar from "./AppBar";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     toolbar: {
-      height: 56,
+      height: "4rem",
     },
   })
 );
