@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      position: "sticky",
+      top: 0,
+      lef: 0,
+      zIndex: 9999,
     },
     menuButton: {
       "&:focus": {
@@ -126,7 +130,7 @@ const AppBar = () => {
   return (
     <div className={classes.root}>
       <ElevationScroll>
-        <MuiAppBar classes={appBarClasses} position="fixed">
+        <MuiAppBar classes={appBarClasses}>
           <Container maxWidth="md">
             <Toolbar disableGutters variant="dense" className={classes.toolbar}>
               <Hidden smUp>
