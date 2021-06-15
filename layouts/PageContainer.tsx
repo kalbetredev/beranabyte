@@ -50,9 +50,9 @@ const PageContainer = (props: PageContainerProps) => {
           content={`https://www.beranabyte.com${meta.image}`}
         />
       </Head>
+      <PageHeader />
       <Container maxWidth="md" className={classes.root}>
         <div id="back-to-top-anchor" />
-        <PageHeader />
         {props.children}
       </Container>
       <PageFooter />
