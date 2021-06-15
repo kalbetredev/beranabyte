@@ -1,7 +1,7 @@
 {
   "name": "beranabyte",
   "description": "A Blog and Portfolio Website",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Kalkidan Betre",
     "email": "kalbetre.dev@outlook.com",
@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p $PORT",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",

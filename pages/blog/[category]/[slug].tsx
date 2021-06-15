@@ -80,7 +80,6 @@ const Blog = (props: BlogProps) => {
     image: props.mdx.fontMatter.image,
   };
   const router = useRouter();
-  console.log(router);
 
   return (
     <PageContainer meta={meta}>

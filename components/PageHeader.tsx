@@ -3,7 +3,9 @@ import AppBar from "./AppBar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    toolbar: theme.mixins.toolbar,
+    toolbar: {
+      height: 65,
+    },
   })
 );
 

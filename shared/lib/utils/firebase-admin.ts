@@ -1,14 +1,10 @@
 import admin from "firebase-admin";
 
-const { privateKey } = JSON.parse(process.env.FIREBASE_PRIVATE_KEY);
+const serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert({
-      project_id: "beranabyte-1fb86",
-      private_key: privateKey,
-      client_email: process.env.FIREBASE_CLIENT_EMAIL,
-    } as admin.ServiceAccount),
+    credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://beranabyte-1fb86.firebaseio.com",
   });
 }

@@ -10,8 +10,7 @@ import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import FontSizes from "../constants/fontsizes";
-import { Cancel, Close } from "@material-ui/icons";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import { Cancel } from "@material-ui/icons";
 
 interface SearchInputProps {
   onChange: (
