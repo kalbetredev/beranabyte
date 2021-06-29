@@ -1,7 +1,6 @@
 import Container from "@material-ui/core/Container";
 import Head from "next/head";
-import React from "react";
-import PageMeta from "../shared/lib/types/PageMeta";
+import PageMeta from "../shared/lib/models/PageMeta";
 import PageFooter from "../components/PageFooter";
 import PageHeader from "../components/PageHeader";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
