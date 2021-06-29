@@ -1,4 +1,5 @@
 import { createStyles, makeStyles, Box, Theme } from "@material-ui/core";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,9 +16,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const Logo = () => {
   const classes = useStyles();
   return (
-    <Box className={classes.logoContainer}>
-      <img className={classes.logo} src="/logos/beranabyte.svg" />
-    </Box>
+    <Link href="/">
+      <Box className={classes.logoContainer}>
+        <img className={classes.logo} src="/logos/beranabyte.svg" />
+      </Box>
+    </Link>
   );
 };
 

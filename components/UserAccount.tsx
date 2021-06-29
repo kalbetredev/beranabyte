@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Theme } from "@material-ui/core/styles";
 import { SignInPage } from "../shared/data/pages";
 import FontSizes from "../constants/fontsizes";
-import useAuth from "../shared/lib/utils/useAuth";
+import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
 import UserAvatar from "./UserAvatar";
 
 interface UserAccountProps {
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const UserAccount: React.FC<UserAccountProps> = () => {
-  const auth = useAuth();
+  const auth: AuthProvider = useAuth();
   const typographyClasses = textStyles();
   const classes = useStyles();
 
@@ -61,7 +61,7 @@ const UserAccount: React.FC<UserAccountProps> = () => {
                 justifyContent: "end",
               }}
             >
-              <UserAvatar userUid={auth.user?.uid} size={"medium"} />
+              <UserAvatar userUid={auth.user?._id} size={"medium"} />
               <Box
                 style={{
                   display: "flex",
@@ -75,7 +75,7 @@ const UserAccount: React.FC<UserAccountProps> = () => {
                   Welcome
                 </Typography>
                 <Typography className={typographyClasses.userNameText}>
-                  {auth.user?.userName}
+                  {auth.user?.username}
                 </Typography>
               </Box>
             </Box>

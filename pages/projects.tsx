@@ -1,22 +1,19 @@
 import { makeStyles, Theme, Grid, createStyles } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Hidden from "@material-ui/core/Hidden";
-import React from "react";
 import LinkGroup from "../components/LinkGroup";
 import ProjectCollection from "../components/ProjectCollection";
 import PageContainer from "../layouts/PageContainer";
-import PageMeta from "../shared/lib/types/PageMeta";
+import PageMeta from "../shared/lib/models/PageMeta";
 import { convertFrontMatterToPageGroup } from "../shared/lib/utils/mdx-helpers";
-import fs from "fs";
-import path from "path";
-import Project from "../shared/lib/types/Project";
-import FrontMatter from "../shared/lib/types/FrontMatter";
-import BlogRepositoryImpl from "../shared/lib/repository/blog/BlogRepositoryImpl";
-
-interface ProjectsProps {
-  openSourceProjects: Project[];
-  relatedBlogs: FrontMatter[];
-}
+import Project from "../shared/lib/models/Project";
+import Blog from "../shared/lib/models/Blog";
+import useSWR from "swr";
+import fetcher from "../shared/lib/utils/fetcher";
+import {
+  PROJECTS_API_ROUTE,
+  PROJECTS_BLOGS_API_ROUTE,
+} from "../shared/lib/api/constants";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,8 +39,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Projects = (props: ProjectsProps) => {
+const Projects = () => {
   const classes = useStyles();
+  const { data: projectsData } = useSWR(PROJECTS_API_ROUTE, fetcher);
+  const openSourceProjects: Project[] = projectsData?.projects ?? [];
+
+  const { data: blogsData } = useSWR(PROJECTS_BLOGS_API_ROUTE, fetcher);
+  const relatedBlogs: Blog[] = blogsData?.blogs ?? [];
+
   const meta: PageMeta = {
     title: "Projects",
     description:
@@ -59,7 +62,7 @@ const Projects = (props: ProjectsProps) => {
           <Grid item className={classes.projects}>
             <ProjectCollection
               title="Open Source"
-              projects={props.openSourceProjects}
+              projects={openSourceProjects}
             />
           </Grid>
           <Grid item className={classes.sidebar}>
@@ -70,7 +73,7 @@ const Projects = (props: ProjectsProps) => {
               showOutline
               pageGroup={convertFrontMatterToPageGroup(
                 "Related Blogs",
-                props.relatedBlogs
+                relatedBlogs
               )}
             />
           </Grid>
@@ -79,25 +82,5 @@ const Projects = (props: ProjectsProps) => {
     </PageContainer>
   );
 };
-
-export async function getStaticProps() {
-  const root = process.cwd();
-  const projectsJSONFile = path.join(
-    root,
-    "shared/data/projects",
-    "opensource.json"
-  );
-  const data = fs.readFileSync(projectsJSONFile, "utf-8");
-  const openSourceProjects = JSON.parse(data);
-
-  const relatedBlogsFrontMatters = BlogRepositoryImpl.getInstance().getProjectRelatedBlogs();
-
-  return {
-    props: {
-      openSourceProjects: openSourceProjects,
-      relatedBlogs: relatedBlogsFrontMatters,
-    },
-  };
-}
 
 export default Projects;

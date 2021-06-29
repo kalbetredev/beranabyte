@@ -1,12 +1,12 @@
 import { Button, Typography, Box, Grid, ButtonProps } from "@material-ui/core";
-import Page from "../shared/lib/model/Page";
+import Page from "../shared/lib/models/Page";
 import Link from "next/link";
 import FontSizes from "../constants/fontsizes";
 import { useRouter } from "next/router";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import React from "react";
 import SubMenuContainer from "./SubMenuContainer";
 import { removeNonAlphaNumeric } from "../shared/lib/utils/text-transform";
+import { useState, useRef } from "react";
 
 interface NavButtonProps {
   pages: Page[];
@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const NavButton: React.FC<NavButtonProps> = (props: NavButtonProps) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
   const handleOpen = () => {

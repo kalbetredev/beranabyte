@@ -12,9 +12,8 @@ import {
 import Avatar from "@material-ui/core/Avatar";
 import { Theme } from "@material-ui/core/styles";
 import { GitHub } from "@material-ui/icons";
-import React from "react";
 import FontSizes from "../constants/fontsizes";
-import Project from "../shared/lib/types/Project";
+import Project from "../shared/lib/models/Project";
 import Bullet from "./Bullet";
 
 interface ProjectSummaryProps {
@@ -86,6 +85,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ProjectSummary = (props: ProjectSummaryProps) => {
   const classes = useStyles();
+  const tags = props.project.tags.split(",");
 
   return (
     <Card variant="elevation" elevation={0} className={classes.root}>
@@ -106,14 +106,14 @@ const ProjectSummary = (props: ProjectSummaryProps) => {
               {props.project.summary}
             </Typography>
             <Box className={classes.tagsContainer}>
-              {props.project.tags.map((tag, index) => (
+              {tags.map((tag, index) => (
                 <Typography
                   key={index}
                   color="textSecondary"
                   className={classes.tags}
                 >
                   {`#${tag}`}
-                  {index < props.project.tags.length - 1 ? <Bullet /> : null}
+                  {index < tags.length - 1 ? <Bullet /> : null}
                 </Typography>
               ))}
             </Box>

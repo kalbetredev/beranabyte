@@ -2,7 +2,7 @@ interface Project {
   title: string;
   summary: string;
   githubLink: string;
-  tags: string[];
+  tags: string;
 }
 
 export default Project;

@@ -1,13 +1,12 @@
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles";
 import { createStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import FontSizes from "../constants/fontsizes";
-import { PageGroup } from "../shared/lib/model/PageGroup";
-import Page from "../shared/lib/model/Page";
+import { PageGroup } from "../shared/lib/models/PageGroup";
+import Page from "../shared/lib/models/Page";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

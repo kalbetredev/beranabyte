@@ -6,13 +6,13 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import Page from "../shared/lib/model/Page";
+import Page from "../shared/lib/models/Page";
 import FontSizes from "../constants/fontsizes";
 import UserAccount from "./UserAccount";
 import NestedMenuList from "./NestedMenuList";
-import SingleLevelMenuItem from "../shared/lib/model/SingleLevelMenuItem";
-import MenuItem from "../shared/lib/model/MenuItem";
-import GroupMenuItem from "../shared/lib/model/GroupMenuItem";
+import SingleLevelMenuItem from "../shared/lib/models/SingleLevelMenuItem";
+import MenuItem from "../shared/lib/models/MenuItem";
+import GroupMenuItem from "../shared/lib/models/GroupMenuItem";
 
 interface CustomDrawerProps {
   pages: Page[];

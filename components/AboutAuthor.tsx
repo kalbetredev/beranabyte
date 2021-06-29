@@ -6,9 +6,11 @@ import {
   Theme,
   Grid,
 } from "@material-ui/core";
-import React from "react";
+import useSWR from "swr";
 import FontSizes from "../constants/fontsizes";
-import { mySummary } from "../shared/data/extras/mysummary";
+import { BIO_API_ROUTE } from "../shared/lib/api/constants";
+import { Bio } from "../shared/lib/models/Bio";
+import fetcher from "../shared/lib/utils/fetcher";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,6 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AboutAuthor = () => {
   const classes = useStyles();
+  const { data } = useSWR(BIO_API_ROUTE, fetcher);
+  const myBio: Bio = data?.bio ?? { summary: "..." };
 
   return (
     <Grid container className={classes.root}>
@@ -55,7 +59,9 @@ const AboutAuthor = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography className={classes.description}>{mySummary}</Typography>
+          <Typography className={classes.description}>
+            {myBio.summary}
+          </Typography>
         </Grid>
       </Grid>
     </Grid>

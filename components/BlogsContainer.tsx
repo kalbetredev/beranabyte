@@ -7,7 +7,16 @@ import {
   Theme,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import FrontMatter from "../shared/lib/types/FrontMatter";
+import useSWR from "swr";
+import { FEATURED } from "../constants/strings";
+import Blog from "../shared/lib/models/Blog";
+import {
+  BLOGS_API_ROUTE,
+  BLOGS_FEATURED_API_ROUTE,
+  BLOGS_LATEST_API_ROUTE,
+  BLOGS_POPULAR_API_ROUTE,
+} from "../shared/lib/api/constants";
+import fetcher from "../shared/lib/utils/fetcher";
 import { convertFrontMatterToPageGroup } from "../shared/lib/utils/mdx-helpers";
 import BlogCollection from "./BlogCollection";
 import LinkGroup from "./LinkGroup";
@@ -15,9 +24,6 @@ import SearchInput from "./SearchInput";
 
 interface BlogContainerProps {
   category: string;
-  blogsMap: Map<string, FrontMatter[]>;
-  mostViewedBlogPages: FrontMatter[];
-  latestBlogPages: FrontMatter[];
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,11 +52,26 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const BlogsContainer = (props: BlogContainerProps) => {
   const classes = useStyles();
-  const { category, blogsMap, mostViewedBlogPages, latestBlogPages } = props;
+  const { category } = props;
+
+  const BLOG_ROUTE =
+    category === FEATURED
+      ? BLOGS_FEATURED_API_ROUTE
+      : `${BLOGS_API_ROUTE}?category=${category}`;
+
+  const { data: popularBlogs } = useSWR(BLOGS_POPULAR_API_ROUTE, fetcher);
+  const { data: latestBlogs } = useSWR(BLOGS_LATEST_API_ROUTE, fetcher);
+  const { data: blogsInCategory } = useSWR(BLOG_ROUTE, fetcher);
+  const { data: allBlogs } = useSWR(BLOGS_API_ROUTE, fetcher);
+
+  const mostViewedBlogPages: Blog[] = popularBlogs?.blogs ?? [];
+  const latestBlogPages: Blog[] = latestBlogs?.blogs ?? [];
+  const blogs: Blog[] = blogsInCategory?.blogs ?? [];
+  const blogSummaries: Blog[] = allBlogs?.blogs ?? [];
+
   const [title, setTitle] = useState(category);
-  const [blogs, setBlogs] = useState(blogsMap.get(category));
   const [isSearching, setIsSearching] = useState(false);
-  const allBlogFrontMatters = Array.from(blogsMap.values()).flat();
+  const [searchResult, setSearchResult] = useState([]);
 
   const onSearchValueChanged = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -59,11 +80,11 @@ const BlogsContainer = (props: BlogContainerProps) => {
     if (searchKey.length > 0) {
       setIsSearching(true);
       setTitle(searchKey);
-      setBlogs(
-        allBlogFrontMatters.filter(
-          (frontMatter) =>
-            frontMatter.title.toLowerCase().includes(searchKey.toLowerCase()) ||
-            frontMatter.summary.toLowerCase().includes(searchKey.toLowerCase())
+      setSearchResult(
+        blogSummaries?.filter(
+          (blog: Blog) =>
+            blog.title.toLowerCase().includes(searchKey.toLowerCase()) ||
+            blog.summary.toLowerCase().includes(searchKey.toLowerCase())
         )
       );
     } else {
@@ -74,7 +95,7 @@ const BlogsContainer = (props: BlogContainerProps) => {
   const onSearchCleared = () => {
     setIsSearching(false);
     setTitle(category);
-    setBlogs(blogsMap.get(category));
+    setSearchResult([]);
   };
 
   return (
@@ -91,7 +112,7 @@ const BlogsContainer = (props: BlogContainerProps) => {
         <Grid item className={classes.blogs}>
           <BlogCollection
             title={title}
-            blogs={blogs}
+            blogs={isSearching ? searchResult : blogs}
             isSearching={isSearching}
           />
         </Grid>

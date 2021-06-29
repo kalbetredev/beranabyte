@@ -6,15 +6,11 @@ import {
   Theme,
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
 import Link from "next/link";
-import Bullet from "./Bullet";
 import { format } from "date-fns";
-import numberFormat from "number-format.js";
-import useSWR from "swr";
-import FrontMatter from "../shared/lib/types/FrontMatter";
 import FontSizes from "../constants/fontsizes";
-import fetcher from "../shared/lib/utils/fetcher";
+import Blog from "../shared/lib/models/Blog";
+import BlogViewCounter from "./BlogViewCounter";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,41 +56,29 @@ const contentStyles = makeStyles((theme: Theme) =>
 );
 
 interface BlogSummaryCardProps {
-  blogFrontMatter: FrontMatter;
+  blog: Blog;
 }
 
 const BlogSummary = (props: BlogSummaryCardProps) => {
-  const { data } = useSWR(
-    `/api/blogs-meta/${props.blogFrontMatter.uuid}/views`,
-    fetcher
-  );
-  const views = data?.total;
-  const viewsMessage = views
-    ? `${numberFormat("#,###.", views)} ${views == 1 ? "view" : "views"}`
-    : "Just Published";
-
+  const { blog } = props;
   const classes = useStyles();
   const contentClasses = contentStyles();
 
   return (
     <Card elevation={0} className={classes.root}>
       <CardContent classes={contentClasses}>
-        <Link
-          href={`/blog/${props.blogFrontMatter.category}/${props.blogFrontMatter.slug}`}
-        >
+        <Link href={`/blogs/${blog.category.toLowerCase()}/${blog._id}`}>
           <Typography className={classes.title} component="a">
-            {props.blogFrontMatter.title}
+            {blog.title}
           </Typography>
         </Link>
 
         <Typography className={classes.subheader}>
-          {format(new Date(props.blogFrontMatter.publishedAt), "MMM d, yyyy")}
-          {<Bullet />} {viewsMessage}
+          {format(new Date(blog.publishedAt), "MMM d, yyyy")}
+          {<BlogViewCounter blogId={blog._id} />}
         </Typography>
 
-        <Typography className={classes.description}>
-          {props.blogFrontMatter.summary}
-        </Typography>
+        <Typography className={classes.description}>{blog.summary}</Typography>
       </CardContent>
     </Card>
   );

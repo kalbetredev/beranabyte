@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import { useState, Fragment } from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -6,9 +6,9 @@ import Collapse from "@material-ui/core/Collapse";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import SingleLevelMenuItem from "../shared/lib/model/SingleLevelMenuItem";
-import MenuItem from "../shared/lib/model/MenuItem";
-import GroupMenuItem from "../shared/lib/model/GroupMenuItem";
+import SingleLevelMenuItem from "../shared/lib/models/SingleLevelMenuItem";
+import MenuItem from "../shared/lib/models/MenuItem";
+import GroupMenuItem from "../shared/lib/models/GroupMenuItem";
 import Link from "next/link";
 
 type ExpandedState = { expanded: boolean };
@@ -32,23 +32,21 @@ const NestedMenuList: React.FC<NestedListProps> = (props: NestedListProps) => {
   const classes = useStyles();
   const [menus, setMenus] = useState<MenuItem[]>(props.menus);
 
-  const toggleGroup = (index: number) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    const newMenus = [...menus];
-    const selectedMenu = menus[index];
-    if (selectedMenu instanceof GroupMenuItem) {
-      selectedMenu.isExpanded = !selectedMenu.isExpanded;
-      newMenus[index] = selectedMenu;
-      setMenus(newMenus);
-    }
-  };
+  const toggleGroup =
+    (index: number) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      const newMenus = [...menus];
+      const selectedMenu = menus[index];
+      if (selectedMenu instanceof GroupMenuItem) {
+        selectedMenu.isExpanded = !selectedMenu.isExpanded;
+        newMenus[index] = selectedMenu;
+        setMenus(newMenus);
+      }
+    };
 
-  const notifyListeners = () => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    props.listeners?.forEach((action) => action(event));
-  };
+  const notifyListeners =
+    () => (event: React.KeyboardEvent | React.MouseEvent) => {
+      props.listeners?.forEach((action) => action(event));
+    };
 
   return (
     <>
