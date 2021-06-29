@@ -7,7 +7,6 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
-import React from "react";
 import Link from "next/link";
 import { Error as ErrorIcon } from "@material-ui/icons";
 

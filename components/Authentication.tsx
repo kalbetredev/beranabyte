@@ -12,7 +12,7 @@ import Logo from "./Logo";
 import { useForm } from "react-hook-form";
 import Paper from "@material-ui/core/Paper";
 import { createStyles } from "@material-ui/core/styles";
-import useAuth from "../shared/lib/utils/useAuth";
+import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
 import useDisclosure from "../shared/lib/utils/useDisclosure";
 import useAlert from "../shared/lib/utils/useAlert";
 import { useRouter } from "next/router";
@@ -86,7 +86,7 @@ const AuthContent = (props: AuthContentProps) => {
   const { handleSubmit } = useFormMethods;
 
   const classes = useStyles();
-  const auth = useAuth();
+  const auth: AuthProvider = useAuth();
   const alert = useAlert();
   const router = useRouter();
 

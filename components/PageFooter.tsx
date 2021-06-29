@@ -1,5 +1,4 @@
 import { Box, Divider, Grid, IconButton, Typography } from "@material-ui/core";
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles";
 import { createStyles } from "@material-ui/core/styles";
@@ -13,13 +12,10 @@ import {
   Telegram,
 } from "@material-ui/icons";
 import FontSizes from "../constants/fontsizes";
-import {
-  myLinkedinLink,
-  myTelegramLink,
-  myFacebookLink,
-  myMailLink,
-  myGithubLink,
-} from "../shared/data/extras/mysummary";
+import useSWR from "swr";
+import { BIO_API_ROUTE } from "../shared/lib/api/constants";
+import { Bio } from "../shared/lib/models/Bio";
+import fetcher from "../shared/lib/utils/fetcher";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,6 +49,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const PageFooter: React.FC = () => {
   const classes = useStyles();
+  const { data } = useSWR(BIO_API_ROUTE, fetcher);
+  const myBio: Bio = data?.bio ?? {
+    summary: "...",
+    facebookLink: "",
+    telegramLink: "",
+    linkedinLink: "",
+    gitHubLink: "",
+    email: "",
+  };
 
   return (
     <Box className={classes.root}>
@@ -75,7 +80,7 @@ const PageFooter: React.FC = () => {
               >
                 <IconButton
                   component="a"
-                  href={myGithubLink}
+                  href={myBio.gitHubLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -83,7 +88,7 @@ const PageFooter: React.FC = () => {
                 </IconButton>
                 <IconButton
                   component="a"
-                  href={myLinkedinLink}
+                  href={myBio.linkedinLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -91,7 +96,7 @@ const PageFooter: React.FC = () => {
                 </IconButton>
                 <IconButton
                   component="a"
-                  href={myTelegramLink}
+                  href={myBio.telegramLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -99,7 +104,7 @@ const PageFooter: React.FC = () => {
                 </IconButton>
                 <IconButton
                   component="a"
-                  href={myMailLink}
+                  href={myBio.email}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -107,7 +112,7 @@ const PageFooter: React.FC = () => {
                 </IconButton>
                 <IconButton
                   component="a"
-                  href={myFacebookLink}
+                  href={myBio.facebookLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

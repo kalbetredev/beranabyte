@@ -10,14 +10,19 @@ import {
 import React, { useState, useRef } from "react";
 import FontSizes from "../constants/fontsizes";
 import TextField from "@material-ui/core/TextField";
-import { Close, Reply, Send } from "@material-ui/icons";
+import { Close, Reply as ReplyIcon, Send } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
-import Comment from "../shared/lib/model/Comment";
+import Comment from "../shared/lib/models/Comment";
 import { withAuthDialog } from "./Authentication";
-import useAuth from "../shared/lib/utils/useAuth";
+import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CommentContent from "./CommentContent";
 import UserAvatar from "./UserAvatar";
+import fetcher from "../shared/lib/utils/fetcher";
+import { REPLIES_API_ROUTE } from "../shared/lib/api/constants";
+import useSWR from "swr";
+import { sendReply } from "../shared/lib/api/beranabtyeApi";
+import Reply from "../shared/lib/models/Reply";
 
 interface CommentItemProps {
   comment: Comment;
@@ -72,56 +77,41 @@ const CommentItem = (props: CommentItemProps) => {
   const inputRef = useRef(null);
   const [sending, setSending] = useState(false);
 
-  const auth = useAuth();
+  const auth: AuthProvider = useAuth();
   const [toggleReply, setToggleReply] = useState(false);
   const { comment } = props;
+
+  const { data, mutate } = useSWR(
+    REPLIES_API_ROUTE(props.comment._id),
+    fetcher
+  );
+  const replies: Reply[] = data?.replies ?? [];
 
   const onSendComment = async () => {
     if (!auth.user) props.openAuthDialog();
     else if (inputRef.current.value != "") {
       setSending(true);
-      const idToken = await auth.getUserIdToken();
-      if (idToken) {
-        const blogId = props.comment.blogId;
-        const commentId = props.comment.commentId;
-        fetch(`/api/blogs-meta/${blogId}/comments/${commentId}`, {
-          body: JSON.stringify({
-            reply: inputRef.current.value,
-            idToken: idToken,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
+      sendReply(props.comment._id, inputRef.current.value)
+        .then(() => {
+          mutate();
+          setSending(false);
+          inputRef.current.value = "";
         })
-          .then(() => {
-            props.mutate();
-            setSending(false);
-          })
-          .catch(() => {
-            alert({
-              severity: "error",
-              message: "Failed to verify your authentication. Please Try Again",
-              duration: 3000,
-            });
-            setSending(false);
+        .catch(() => {
+          alert({
+            severity: "error",
+            message: "Error Occurred Sending Your Reply. Please Try Again",
+            duration: 3000,
           });
-      } else {
-        alert({
-          severity: "error",
-          message: "Failed to verify your authentication. Please Try Again",
-          duration: 3000,
+          setSending(false);
         });
-        setSending(false);
-      }
-      inputRef.current.value = "";
     }
   };
 
   return (
     <Grid container>
       <Grid item className={classes.avatarContainer} container justify="center">
-        <UserAvatar userUid={comment.author} />
+        <UserAvatar userUid={comment.authorId} />
       </Grid>
       <Grid item className={classes.commentContainer}>
         <Box className={classes.comment}>
@@ -129,7 +119,7 @@ const CommentItem = (props: CommentItemProps) => {
             <Grid item xs={12} container>
               <Grid item xs={12}>
                 <CommentContent
-                  author={comment.author}
+                  authorId={comment.authorId}
                   text={comment.text}
                   date={comment.date}
                 />
@@ -147,7 +137,7 @@ const CommentItem = (props: CommentItemProps) => {
                   </Button>
                 ) : (
                   <Button
-                    startIcon={<Reply />}
+                    startIcon={<ReplyIcon />}
                     className={classes.replyButton}
                     onClick={() => setToggleReply(!toggleReply)}
                     size="small"
@@ -204,16 +194,16 @@ const CommentItem = (props: CommentItemProps) => {
               </Grid>
             ) : null}
 
-            {comment.replies && comment.replies.length > 0 ? (
+            {replies && replies.length > 0 ? (
               <Grid item xs={12}>
                 <Divider style={{ marginTop: 7 }} />
               </Grid>
             ) : null}
           </Grid>
 
-          {comment.replies && comment.replies.length > 0 ? (
+          {replies && replies.length > 0 ? (
             <Grid container className={classes.repliesContainer} spacing={1}>
-              {comment.replies.map((reply, index) => (
+              {replies.map((reply: Reply, index) => (
                 <Grid key={index} item container>
                   <Grid
                     item
@@ -221,12 +211,12 @@ const CommentItem = (props: CommentItemProps) => {
                     container
                     justify="center"
                   >
-                    <UserAvatar userUid={reply.author} />
+                    <UserAvatar userUid={reply.authorId} />
                   </Grid>
                   <Grid item className={classes.commentContainer}>
                     <Box className={classes.comment}>
                       <CommentContent
-                        author={reply.author}
+                        authorId={reply.authorId}
                         text={reply.text}
                         date={reply.date}
                       />

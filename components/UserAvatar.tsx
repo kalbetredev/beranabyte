@@ -5,8 +5,8 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import React from "react";
 import useSWR from "swr";
+import { USER_ACCOUNT_API_ROUTE } from "../shared/lib/api/constants";
 import fetcher from "../shared/lib/utils/fetcher";
 
 type AvatarSize = "small" | "medium";
@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const UserAvatar = (props: UserAvatarProps) => {
   const classes = useStyles();
-  const { data } = useSWR([`/api/users/${props.userUid}`], fetcher);
-  const userName = data?.username ?? "---";
+  const { data } = useSWR(USER_ACCOUNT_API_ROUTE(props.userUid), fetcher);
+  const userName = data?.user.username ?? "---";
   const size = props.size ?? "small";
   const avatarClassName = size == "small" ? classes.small : classes.medium;
   const textClassName =
