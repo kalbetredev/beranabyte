@@ -1,7 +1,6 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { InsertLink } from "@material-ui/icons";
 import Link from "next/link";
-import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

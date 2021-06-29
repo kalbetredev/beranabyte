@@ -1,6 +1,5 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
