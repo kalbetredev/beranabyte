@@ -1,17 +1,17 @@
-import FrontMatter from "../types/FrontMatter";
-import Page from "../model/Page";
-import { PageGroup } from "../model/PageGroup";
+import Blog from "../models/Blog";
+import Page from "../models/Page";
+import { PageGroup } from "../models/PageGroup";
 
 export function convertFrontMatterToPageGroup(
   label: string,
-  pagesFrontMatter: FrontMatter[]
+  blogs: Blog[]
 ): PageGroup {
-  const pages = pagesFrontMatter.map(
-    (frontMatter) =>
+  const pages = blogs.map(
+    (blog: Blog) =>
       new Page(
         "",
-        frontMatter.title,
-        `/blog/${frontMatter.category}/${frontMatter.slug}` ?? ""
+        blog.title,
+        `/blogs/${blog.category.toLowerCase()}/${blog._id}` ?? ""
       )
   );
 
