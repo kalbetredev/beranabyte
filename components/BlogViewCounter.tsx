@@ -9,7 +9,7 @@ interface PageViewCounterProps {
 }
 
 const BlogViewCounter = (props: PageViewCounterProps) => {
-  const { data } = useSWR(BLOG_API_ROUTE(props.blogId), fetcher);
+  const { data } = useSWR(BLOG_API_ROUTE(props.blogId, true), fetcher);
   const viewCount = data?.blog.viewCount;
 
   return (
