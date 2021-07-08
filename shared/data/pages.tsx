@@ -24,7 +24,7 @@ export function pagesFromCategories(categories: string[]): Page[] {
     .filter((category) => category !== FEATURED)
     .forEach((category) => {
       pages.push(
-        new Page("Blog", category, `/blogs/${category.toLowerCase()}`)
+        new Page("Blogs", category, `/blogs/${category.toLowerCase()}`)
       );
     });
 
