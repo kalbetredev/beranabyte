@@ -9,9 +9,11 @@ import {
   BLOG_API_ROUTE,
   COMMENTS_API_ROUTE,
   REPLIES_API_ROUTE,
+  BLOG_IMAGES,
 } from "./constants";
 import axiosFetcher from "../utils/fetcher";
 import { getToken } from "../utils/token";
+import { AxiosRequestConfig } from "axios";
 
 export const getAllBlogSummaries = async (): Promise<Blog[]> => {
   const { blogs } = await axiosFetcher(BLOGS_API_ROUTE);
@@ -111,5 +113,56 @@ export const sendReply = async (commentId: string, text: string) => {
       });
 
     return reply;
+  }
+};
+
+export const uploadImage = async (file: any, blogId: string) => {
+  try {
+    const token = getToken();
+
+    if (token) {
+      let config: AxiosRequestConfig = {
+        headers: {
+          "x-auth-token": token,
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      const formData = new FormData();
+      formData.append("image", file);
+      const response = await axiosInstance.post(
+        BLOG_IMAGES(blogId),
+        formData,
+        config
+      );
+      if (response.status === 200) return response.data.image;
+      else return null;
+    }
+  } catch (error) {
+    return null;
+  }
+};
+
+export const deleteImage = async (fileName: string, blogId: string) => {
+  try {
+    const token = getToken();
+
+    if (token) {
+      let config = {
+        headers: {
+          "x-auth-token": token,
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      const response = await axiosInstance.delete(
+        `${BLOG_IMAGES(blogId)}/${fileName}`,
+        config
+      );
+      if (response.status === 200) return response.data.success;
+      else return null;
+    }
+  } catch (error) {
+    return null;
   }
 };
