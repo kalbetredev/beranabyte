@@ -154,7 +154,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: Params }) {
-  const blog = await getBlogById(params.slug);
+  const blog = await getBlogById(params.slug, false);
   const renderedBlog = await renderBlog(blog);
   const headers = getHeadersForTOC(renderedBlog.mdxSource.compiledSource);
 
@@ -172,8 +172,6 @@ function getHeadersForTOC(renderedOutput: string): HeaderLevelIdPair[] {
   const matches = Array.from(renderedOutput.matchAll(regex));
 
   const headers: HeaderLevelIdPair[] = matches.map((match) => {
-    const level = parseInt(match[1]);
-    const id = match[2];
     return {
       level: parseInt(match[1]),
       id: match[2],

@@ -18,7 +18,7 @@ export const CURRENT_USER_API_ROUTE = `${USERS_API_ROUTE}/account`;
 // Blogs
 export const BLOGS_API_ROUTE = `${API_ROUTE}/blogs`;
 export const BLOG_CATEGORIES_API_ROUTE = `${BLOGS_API_ROUTE}/categories`;
-export const BLOG_API_ROUTE = (blogId: string, onlySummary: boolean = false) =>
+export const BLOG_API_ROUTE = (blogId: string, onlySummary: boolean) =>
   onlySummary
     ? `${BLOGS_API_ROUTE}/${blogId}?onlySummary=true`
     : `${BLOGS_API_ROUTE}/${blogId}`;

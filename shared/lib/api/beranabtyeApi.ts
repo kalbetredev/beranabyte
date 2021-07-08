@@ -45,13 +45,16 @@ export const getCategories = async (): Promise<string[]> => {
   return categories ?? [];
 };
 
-export const getBlogById = async (blogId: string): Promise<Blog> => {
-  const { blog } = await axiosFetcher(BLOG_API_ROUTE(blogId));
+export const getBlogById = async (
+  blogId: string,
+  onlySummary: boolean
+): Promise<Blog> => {
+  const { blog } = await axiosFetcher(BLOG_API_ROUTE(blogId, onlySummary));
   return blog;
 };
 
 export const updateBlogViewCount = async (blogId: string) =>
-  axiosInstance.patch(BLOG_API_ROUTE(blogId));
+  axiosInstance.patch(BLOG_API_ROUTE(blogId, true));
 
 export const sendComment = async (blogId: string, text: string) => {
   const token = getToken();
