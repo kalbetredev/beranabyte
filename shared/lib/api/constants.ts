@@ -1,5 +1,5 @@
 export const TOKEN_KEY = "token";
-export const API_BASE_URL = "http://localhost:5000";
+export const API_BASE_URL = "https://beranabyte-api.herokuapp.com";
 
 // Api
 const API_ROUTE = "/api/v1";
