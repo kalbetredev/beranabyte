@@ -1,9 +1,8 @@
 import { createStyles, Grid, Grow, makeStyles, Theme } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
 import FontSizes from "../constants/fontsizes";
-import Project from "../shared/lib/types/Project";
+import Project from "../shared/lib/models/Project";
 import ProjectSummary from "./ProjectSummary";
 
 interface ProjectSummaryProps {

@@ -1,31 +1,28 @@
 import format from "number-format.js";
-import { useEffect } from "react";
 import useSWR from "swr";
+import { BLOG_API_ROUTE } from "../shared/lib/api/constants";
 import fetcher from "../shared/lib/utils/fetcher";
+import Bullet from "./Bullet";
 
 interface PageViewCounterProps {
   blogId: string;
 }
 
 const BlogViewCounter = (props: PageViewCounterProps) => {
-  const { data } = useSWR(`/api/blogs-meta/${props.blogId}/views`, fetcher);
-  const views = data?.total;
-
-  useEffect(() => {
-    const registerView = () =>
-      fetch(`/api/blogs-meta/${props.blogId}/views`, {
-        method: "POST",
-      });
-
-    registerView();
-  }, [props.blogId]);
+  const { data } = useSWR(BLOG_API_ROUTE(props.blogId), fetcher);
+  const viewCount = data?.blog.viewCount;
 
   return (
-    <span>
-      {views
-        ? `${format("#,###.", views)} ${views == 1 ? "view" : "views"}`
-        : ""}
-    </span>
+    <>
+      <Bullet />
+      <span>
+        {viewCount
+          ? `${format("#,###.", viewCount)} ${
+              viewCount == 1 ? "view" : "views"
+            }`
+          : ""}
+      </span>
+    </>
   );
 };
 

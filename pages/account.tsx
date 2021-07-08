@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
-import React from "react";
 import FullScreenAuthentication from "../components/Authentication";
 import PageContainer from "../layouts/PageContainer";
-import PageMeta from "../shared/lib/types/PageMeta";
-import useAuth from "../shared/lib/utils/useAuth";
+import PageMeta from "../shared/lib/models/PageMeta";
+import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
 
 const signin = () => {
-  const auth = useAuth();
+  const auth: AuthProvider = useAuth();
   const router = useRouter();
 
   const meta: PageMeta = {

@@ -13,9 +13,11 @@ import { Send } from "@material-ui/icons";
 import React, { useRef, useState } from "react";
 import useSWR from "swr";
 import FontSizes from "../constants/fontsizes";
+import { sendComment } from "../shared/lib/api/beranabtyeApi";
+import { COMMENTS_API_ROUTE } from "../shared/lib/api/constants";
 import fetcher from "../shared/lib/utils/fetcher";
 import useAlert from "../shared/lib/utils/useAlert";
-import useAuth from "../shared/lib/utils/useAuth";
+import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
 import { withAuthDialog } from "./Authentication";
 import CommentItem from "./CommentItem";
 
@@ -51,15 +53,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const BlogComments = (props: BlogCommentsProps) => {
   const classes = useStyles();
-  const auth = useAuth();
+  const auth: AuthProvider = useAuth();
   const alert = useAlert();
   const inputRef = useRef(null);
   const [sending, setSending] = useState(false);
 
-  const { data, mutate } = useSWR(
-    [`/api/blogs-meta/${props.blogId}/comments`],
-    fetcher
-  );
+  const { data, mutate } = useSWR(COMMENTS_API_ROUTE(props.blogId), fetcher);
 
   const comments = data?.comments ?? [];
 
@@ -69,39 +68,20 @@ const BlogComments = (props: BlogCommentsProps) => {
     if (!auth.user) props.openAuthDialog();
     else if (inputRef.current.value != "") {
       setSending(true);
-      const idToken = await auth.getUserIdToken();
-      if (idToken) {
-        fetch(`/api/blogs-meta/${props.blogId}/comments`, {
-          body: JSON.stringify({
-            comment: inputRef.current.value,
-            idToken: idToken,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
+      sendComment(props.blogId, inputRef.current.value)
+        .then(() => {
+          mutate();
+          setSending(false);
+          inputRef.current.value = "";
         })
-          .then(() => {
-            mutate();
-            setSending(false);
-          })
-          .catch(() => {
-            alert({
-              severity: "error",
-              message: "Failed to verify your authentication. Please Try Again",
-              duration: 3000,
-            });
-            setSending(false);
+        .catch(() => {
+          alert({
+            severity: "error",
+            message: "Error Occurred Sending Your Comment. Please Try Again",
+            duration: 3000,
           });
-      } else {
-        alert({
-          severity: "error",
-          message: "Failed to verify your authentication. Please Try Again",
-          duration: 3000,
+          setSending(false);
         });
-        setSending(false);
-      }
-      inputRef.current.value = "";
     }
   };
 

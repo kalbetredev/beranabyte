@@ -8,9 +8,8 @@ import {
   Grow,
 } from "@material-ui/core";
 import { ErrorTwoTone } from "@material-ui/icons";
-import React from "react";
 import FontSizes from "../constants/fontsizes";
-import FrontMatter from "../shared/lib/types/FrontMatter";
+import Blog from "../shared/lib/models/Blog";
 import { removeNonAlphaNumeric } from "../shared/lib/utils/text-transform";
 import BlogSummary from "./BlogSummary";
 
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface BlogCollectionProps {
   title: string;
-  blogs: FrontMatter[];
+  blogs: Blog[];
   isSearching: boolean;
 }
 
@@ -66,10 +65,10 @@ const BlogCollection = (props: BlogCollectionProps) => {
         </Grid>
       ) : null}
 
-      {props.blogs.map((post, index) => (
+      {props.blogs.map((blog, index) => (
         <Grow in timeout={400 * index} key={index}>
           <Grid item key={index} xs={12}>
-            <BlogSummary blogFrontMatter={post} />
+            <BlogSummary blog={blog} />
           </Grid>
         </Grow>
       ))}

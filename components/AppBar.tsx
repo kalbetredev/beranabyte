@@ -28,9 +28,10 @@ import {
 } from "../shared/data/pages";
 import Box from "@material-ui/core/Box";
 import UserAvatar from "./UserAvatar";
-import useAuth from "../shared/lib/utils/useAuth";
+import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
 import UserAccount from "./UserAccount";
 import Link from "next/link";
+import { BLOG_CATEGORIES_API_ROUTE } from "../shared/lib/api/constants";
 
 const useAppBarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -85,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const AppBar = () => {
-  const auth = useAuth();
+  const auth: AuthProvider = useAuth();
   const appBarClasses = useAppBarStyles();
   const classes = useStyles();
   const theme = useTheme();
@@ -94,7 +95,7 @@ const AppBar = () => {
   const toggleDarkTheme = () => toggleDarkThemeDispatch(toggleDarkMode());
   const isLightTheme = theme.palette.type === "light";
 
-  const { data } = useSWR(`/api/blogs-meta/categories`, fetcher);
+  const { data } = useSWR(BLOG_CATEGORIES_API_ROUTE, fetcher);
   const categories = data?.categories;
   const pages = categories
     ? [HomePage, ...pagesFromCategories(categories), ProjectsPage]
@@ -152,7 +153,7 @@ const AppBar = () => {
 
               {auth.user ? (
                 <Box className={classes.userAvatar}>
-                  <UserAvatar userUid={auth.user?.uid} onClick={handleClick} />
+                  <UserAvatar userUid={auth.user?._id} onClick={handleClick} />
                   <Menu
                     anchorEl={anchorEl}
                     keepMounted

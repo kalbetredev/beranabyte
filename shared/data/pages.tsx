@@ -1,4 +1,4 @@
-import Page from "../lib/model/Page";
+import Page from "../lib/models/Page";
 import {
   JavaBrandIcon,
   JavaScriptBrandIcon,
@@ -23,7 +23,9 @@ export function pagesFromCategories(categories: string[]): Page[] {
   categories
     .filter((category) => category !== FEATURED)
     .forEach((category) => {
-      pages.push(new Page("Blog", category, `/blog/${category}`));
+      pages.push(
+        new Page("Blogs", category, `/blogs/${category.toLowerCase()}`)
+      );
     });
 
   return batchFormatPages(pages);

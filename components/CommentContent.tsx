@@ -1,13 +1,13 @@
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { format } from "date-fns";
-import React from "react";
 import useSWR from "swr";
 import FontSizes from "../constants/fontsizes";
+import { USER_ACCOUNT_API_ROUTE } from "../shared/lib/api/constants";
 import fetcher from "../shared/lib/utils/fetcher";
 import Bullet from "./Bullet";
 
 interface CommentContentProps {
-  author: string;
+  authorId: string;
   text: string;
   date: string;
 }
@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const CommentContent = (props: CommentContentProps) => {
   const classes = useStyles();
-  const { data } = useSWR([`/api/users/${props.author}`], fetcher);
-  const authorName = data?.username ?? "---";
+  const { data } = useSWR(USER_ACCOUNT_API_ROUTE(props.authorId), fetcher);
+  const authorName = data?.user.username ?? "---";
 
   return (
     <>

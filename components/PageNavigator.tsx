@@ -1,7 +1,6 @@
 import { Divider } from "@material-ui/core";
-import React from "react";
 import NavButton from "./NavButton";
-import Page from "../shared/lib/model/Page";
+import Page from "../shared/lib/models/Page";
 
 interface PagesNavigatorProps {
   pages: Page[];
