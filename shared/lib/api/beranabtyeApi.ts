@@ -166,3 +166,59 @@ export const deleteImage = async (fileName: string, blogId: string) => {
     return null;
   }
 };
+
+export const createBlog = async (
+  title: string,
+  category: string
+): Promise<Blog | null> => {
+  try {
+    const token = getToken();
+
+    if (token) {
+      let config = {
+        headers: {
+          "x-auth-token": token,
+        },
+      };
+
+      const response = await axiosInstance.post(
+        BLOGS_API_ROUTE,
+        {
+          title: title,
+          category: category,
+        },
+        config
+      );
+      if (response.status === 200) return response.data.blog;
+      else return null;
+    }
+  } catch (error) {
+    return null;
+  }
+};
+
+export const saveBlog = async (blog: Blog) => {
+  try {
+    const token = getToken();
+
+    if (token) {
+      let config = {
+        headers: {
+          "x-auth-token": token,
+        },
+      };
+
+      const response = await axiosInstance.patch(
+        `${BLOGS_API_ROUTE}/${blog._id}/save`,
+        {
+          ...blog,
+        },
+        config
+      );
+      if (response.status === 200) return response.data.success;
+      else return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
