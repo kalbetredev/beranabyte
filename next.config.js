@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "beranabyte-api.herokuapp.com"],
   },
 };
