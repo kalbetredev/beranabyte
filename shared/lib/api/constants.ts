@@ -43,3 +43,9 @@ export const PROJECTS_API_ROUTE = `${API_ROUTE}/projects`;
 export const PROJECT_RELATE_API_ROUTE = (projectId: string) =>
   `${PROJECTS_API_ROUTE}/${projectId}/relate`;
 export const PROJECTS_BLOGS_API_ROUTE = `${PROJECTS_API_ROUTE}/blogs`;
+
+// Blog Images
+export const BLOG_IMAGES = (blogId: string) =>
+  `${BLOGS_API_ROUTE}/${blogId}/images`;
+export const BLOG_IMAGE_URL = (blogId: string, imageFileName: string) =>
+  `${API_BASE_URL}${BLOG_IMAGES(blogId)}/${imageFileName}`;
