@@ -16,6 +16,7 @@ import useSWR from "swr";
 import { BIO_API_ROUTE } from "../shared/lib/api/constants";
 import { Bio } from "../shared/lib/models/Bio";
 import fetcher from "../shared/lib/utils/fetcher";
+import CircularLoading from "./LoadingPlaceholders/CircularLoading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,13 +51,15 @@ const useStyles = makeStyles((theme: Theme) =>
 const PageFooter: React.FC = () => {
   const classes = useStyles();
   const { data } = useSWR(BIO_API_ROUTE, fetcher);
-  const myBio: Bio = data?.bio ?? {
-    summary: "...",
-    facebookLink: "",
-    telegramLink: "",
-    linkedinLink: "",
-    gitHubLink: "",
-    email: "",
+  const myBio: Bio | null = data?.bio ?? null;
+
+  const getPlaceholders = () => {
+    const placeHolders = [];
+    for (let i = 0; i < 5; i++) {
+      placeHolders.push(<CircularLoading size={48} />);
+    }
+
+    return placeHolders;
   };
 
   return (
@@ -78,46 +81,52 @@ const PageFooter: React.FC = () => {
                 alignItems="center"
                 className={classes.linksContainer}
               >
-                <IconButton
-                  component="a"
-                  href={myBio.gitHubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <GitHub />
-                </IconButton>
-                <IconButton
-                  component="a"
-                  href={myBio.linkedinLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <LinkedIn style={{ color: "#0077B5" }} />
-                </IconButton>
-                <IconButton
-                  component="a"
-                  href={myBio.telegramLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Telegram style={{ color: "#0088CC" }} />
-                </IconButton>
-                <IconButton
-                  component="a"
-                  href={myBio.email}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Email style={{ color: "#EA4335" }} />
-                </IconButton>
-                <IconButton
-                  component="a"
-                  href={myBio.facebookLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Facebook style={{ color: "#3B5998" }} />
-                </IconButton>
+                {myBio ? (
+                  <>
+                    <IconButton
+                      component="a"
+                      href={myBio.gitHubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <GitHub />
+                    </IconButton>
+                    <IconButton
+                      component="a"
+                      href={myBio.linkedinLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <LinkedIn style={{ color: "#0077B5" }} />
+                    </IconButton>
+                    <IconButton
+                      component="a"
+                      href={myBio.telegramLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Telegram style={{ color: "#0088CC" }} />
+                    </IconButton>
+                    <IconButton
+                      component="a"
+                      href={myBio.email}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Email style={{ color: "#EA4335" }} />
+                    </IconButton>
+                    <IconButton
+                      component="a"
+                      href={myBio.facebookLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Facebook style={{ color: "#3B5998" }} />
+                    </IconButton>
+                  </>
+                ) : (
+                  getPlaceholders()
+                )}
               </Grid>
             </Grid>
             <Grid item xs={12} container justify="center">
