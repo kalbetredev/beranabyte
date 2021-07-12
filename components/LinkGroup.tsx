@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import FontSizes from "../constants/fontsizes";
 import { PageGroup } from "../shared/lib/models/PageGroup";
 import Page from "../shared/lib/models/Page";
+import SingleLineLoading from "./LoadingPlaceholders/SingleLineLoading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,11 +45,26 @@ const useStyles = makeStyles((theme: Theme) =>
 interface LinkGroupProps {
   pageGroup: PageGroup;
   showOutline?: boolean;
+  placeHolderCount?: number;
 }
 
 const LinkGroup = (props: LinkGroupProps) => {
   const classes = useStyles();
   const showOutline = props.showOutline ?? false;
+
+  const getPlaceholders = () => {
+    const count = props.placeHolderCount ?? 3;
+    const placeHolders = [];
+    for (let i = 0; i < count; i++) {
+      placeHolders.push(
+        <li>
+          <SingleLineLoading />
+        </li>
+      );
+    }
+
+    return placeHolders;
+  };
 
   return (
     <Box className={showOutline ? classes.rootOutlined : classes.root}>
@@ -57,27 +73,29 @@ const LinkGroup = (props: LinkGroupProps) => {
       </Typography>
       {props.pageGroup.children.length > 0 ? (
         <ul className={classes.ul}>
-          {props.pageGroup.children.map((page: Page, index) => (
-            <li key={index}>
-              {page.href &&
-              (page.href.startsWith("/") || page.href.startsWith("#")) ? (
-                <Link href={page.href}>
-                  <Typography component="a" className={classes.link}>
-                    {page.label}
-                  </Typography>
-                </Link>
-              ) : (
-                <a
-                  className={classes.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={page.href}
-                >
-                  {page.label}
-                </a>
-              )}
-            </li>
-          ))}
+          {props.pageGroup.children.length != 0
+            ? getPlaceholders()
+            : props.pageGroup.children.map((page: Page, index) => (
+                <li key={index}>
+                  {page.href &&
+                  (page.href.startsWith("/") || page.href.startsWith("#")) ? (
+                    <Link href={page.href}>
+                      <Typography component="a" className={classes.link}>
+                        {page.label}
+                      </Typography>
+                    </Link>
+                  ) : (
+                    <a
+                      className={classes.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={page.href}
+                    >
+                      {page.label}
+                    </a>
+                  )}
+                </li>
+              ))}
         </ul>
       ) : null}
     </Box>
