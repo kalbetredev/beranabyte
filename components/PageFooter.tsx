@@ -56,7 +56,7 @@ const PageFooter: React.FC = () => {
   const getPlaceholders = () => {
     const placeHolders = [];
     for (let i = 0; i < 5; i++) {
-      placeHolders.push(<CircularLoading size={48} />);
+      placeHolders.push(<CircularLoading size={48} key={i} />);
     }
 
     return placeHolders;
