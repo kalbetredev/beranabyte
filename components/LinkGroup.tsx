@@ -73,7 +73,7 @@ const LinkGroup = (props: LinkGroupProps) => {
       </Typography>
       {props.pageGroup.children.length > 0 ? (
         <ul className={classes.ul}>
-          {props.pageGroup.children.length != 0
+          {props.pageGroup.children.length == 0
             ? getPlaceholders()
             : props.pageGroup.children.map((page: Page, index) => (
                 <li key={index}>
