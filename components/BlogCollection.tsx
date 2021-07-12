@@ -12,6 +12,7 @@ import FontSizes from "../constants/fontsizes";
 import Blog from "../shared/lib/models/Blog";
 import { removeNonAlphaNumeric } from "../shared/lib/utils/text-transform";
 import BlogSummary from "./BlogSummary";
+import BlogSummaryLoading from "./LoadingPlaceholders/BlogSummaryLoading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,10 +35,27 @@ interface BlogCollectionProps {
   title: string;
   blogs: Blog[];
   isSearching: boolean;
+  placeHolderCount?: number;
 }
 
 const BlogCollection = (props: BlogCollectionProps) => {
   const classes = useStyles();
+
+  const getPlaceholders = () => {
+    const count = props.placeHolderCount ?? 3;
+    const placeHolders = [];
+    for (let i = 0; i < count; i++) {
+      placeHolders.push(
+        <Grow in timeout={400 * i} key={i}>
+          <Grid item key={i} xs={12}>
+            <BlogSummaryLoading />
+          </Grid>
+        </Grow>
+      );
+    }
+
+    return placeHolders;
+  };
 
   return (
     <Grid container spacing={1}>
@@ -50,28 +68,32 @@ const BlogCollection = (props: BlogCollectionProps) => {
         <Divider />
       </Grid>
 
-      {props.isSearching && props.blogs.length === 0 ? (
-        <Grid
-          item
-          container
-          justify="flex-start"
-          alignItems="center"
-          className={classes.emptyResult}
-        >
-          <ErrorTwoTone color="secondary" className={classes.errorIcon} />
-          <Typography color="textSecondary" variant="caption">
-            No Blog found that matches your search
-          </Typography>
-        </Grid>
-      ) : null}
-
-      {props.blogs.map((blog, index) => (
-        <Grow in timeout={400 * index} key={index}>
-          <Grid item key={index} xs={12}>
-            <BlogSummary blog={blog} />
+      {props.blogs.length === 0 ? (
+        props.isSearching ? (
+          <Grid
+            item
+            container
+            justify="flex-start"
+            alignItems="center"
+            className={classes.emptyResult}
+          >
+            <ErrorTwoTone color="secondary" className={classes.errorIcon} />
+            <Typography color="textSecondary" variant="caption">
+              No Blog found that matches your search
+            </Typography>
           </Grid>
-        </Grow>
-      ))}
+        ) : (
+          getPlaceholders()
+        )
+      ) : (
+        props.blogs.map((blog, index) => (
+          <Grow in timeout={400 * index} key={index}>
+            <Grid item key={index} xs={12}>
+              <BlogSummary blog={blog} />
+            </Grid>
+          </Grow>
+        ))
+      )}
     </Grid>
   );
 };
