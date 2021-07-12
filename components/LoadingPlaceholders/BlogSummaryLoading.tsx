@@ -6,15 +6,15 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
-      margin: "3px 3px 10px 3px",
+      padding: "8px 8px 15px 0",
     },
     title: {
       width: "70%",
-      height: 20,
-      marginBottom: 5,
+      height: 18,
+      marginBottom: 3,
     },
     meta: {
-      width: 200,
+      width: 150,
       height: 12,
       marginBottom: 8,
     },
