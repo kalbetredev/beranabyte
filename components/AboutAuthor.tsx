@@ -60,9 +60,13 @@ const AboutAuthor = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography className={classes.description}>
-            {myBio ? myBio.summary : <MultiLineLoading />}
-          </Typography>
+          {myBio ? (
+            <Typography className={classes.description}>
+              {myBio.summary}
+            </Typography>
+          ) : (
+            <MultiLineLoading />
+          )}
         </Grid>
       </Grid>
     </Grid>
