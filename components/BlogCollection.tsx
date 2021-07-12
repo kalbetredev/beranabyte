@@ -68,30 +68,32 @@ const BlogCollection = (props: BlogCollectionProps) => {
         <Divider />
       </Grid>
 
-      {props.isSearching && props.blogs.length === 0 ? (
-        <Grid
-          item
-          container
-          justify="flex-start"
-          alignItems="center"
-          className={classes.emptyResult}
-        >
-          <ErrorTwoTone color="secondary" className={classes.errorIcon} />
-          <Typography color="textSecondary" variant="caption">
-            No Blog found that matches your search
-          </Typography>
-        </Grid>
-      ) : null}
-
-      {props.blogs.length == 0
-        ? getPlaceholders()
-        : props.blogs.map((blog, index) => (
-            <Grow in timeout={400 * index} key={index}>
-              <Grid item key={index} xs={12}>
-                <BlogSummary blog={blog} />
-              </Grid>
-            </Grow>
-          ))}
+      {props.blogs.length === 0 ? (
+        props.isSearching ? (
+          <Grid
+            item
+            container
+            justify="flex-start"
+            alignItems="center"
+            className={classes.emptyResult}
+          >
+            <ErrorTwoTone color="secondary" className={classes.errorIcon} />
+            <Typography color="textSecondary" variant="caption">
+              No Blog found that matches your search
+            </Typography>
+          </Grid>
+        ) : (
+          getPlaceholders()
+        )
+      ) : (
+        props.blogs.map((blog, index) => (
+          <Grow in timeout={400 * index} key={index}>
+            <Grid item key={index} xs={12}>
+              <BlogSummary blog={blog} />
+            </Grid>
+          </Grow>
+        ))
+      )}
     </Grid>
   );
 };
