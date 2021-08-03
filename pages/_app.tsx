@@ -12,6 +12,7 @@ import Head from "next/head";
 import { AppProps } from "next/app";
 import { ProvideAlert } from "../shared/lib/utils/useAlert";
 import { ProvideAuth } from "../shared/lib/utils/useAuth";
+import "../styles/globals.css";
 
 function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
