@@ -1,5 +1,5 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import AppBar from "./AppBar";
+import AppBar from "./MUI_AppBar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

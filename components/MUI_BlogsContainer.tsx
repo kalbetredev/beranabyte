@@ -18,9 +18,9 @@ import {
 } from "../shared/lib/api/constants";
 import fetcher from "../shared/lib/utils/fetcher";
 import { convertFrontMatterToPageGroup } from "../shared/lib/utils/mdx-helpers";
-import BlogCollection from "./BlogCollection";
-import LinkGroup from "./LinkGroup";
-import SearchInput from "./SearchInput";
+import BlogCollection from "./MUI_BlogCollection";
+import LinkGroup from "./MUI_LinkGroup";
+import SearchInput from "./MUI_SearchInput";
 
 interface BlogContainerProps {
   category: string;

@@ -8,7 +8,7 @@ import {
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import React, { useState } from "react";
-import Logo from "./Logo";
+import Logo from "./MUI_Logo";
 import { useForm } from "react-hook-form";
 import Paper from "@material-ui/core/Paper";
 import { createStyles } from "@material-ui/core/styles";
@@ -17,7 +17,7 @@ import useDisclosure from "../shared/lib/utils/useDisclosure";
 import useAlert from "../shared/lib/utils/useAlert";
 import { useRouter } from "next/router";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import FormInput from "./FormInput";
+import FormInput from "./MUI_FormInput";
 import IconButton from "@material-ui/core/IconButton";
 import { Close } from "@material-ui/icons";
 import FontSizes from "../constants/fontsizes";

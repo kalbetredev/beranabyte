@@ -4,7 +4,7 @@ import Link from "next/link";
 import FontSizes from "../constants/fontsizes";
 import { useRouter } from "next/router";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import SubMenuContainer from "./SubMenuContainer";
+import SubMenuContainer from "./MUI_SubMenuContainer";
 import { removeNonAlphaNumeric } from "../shared/lib/utils/text-transform";
 import { useState, useRef } from "react";
 

@@ -1,9 +1,9 @@
 import { makeStyles, Theme, Grid, createStyles } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Hidden from "@material-ui/core/Hidden";
-import LinkGroup from "../components/LinkGroup";
-import ProjectCollection from "../components/ProjectCollection";
-import PageContainer from "../layouts/PageContainer";
+import LinkGroup from "../components/MUI_LinkGroup";
+import ProjectCollection from "../components/MUI_ProjectCollection";
+import PageContainer from "../layouts/MUI_PageContainer";
 import PageMeta from "../shared/lib/models/PageMeta";
 import { convertFrontMatterToPageGroup } from "../shared/lib/utils/mdx-helpers";
 import Project from "../shared/lib/models/Project";

@@ -8,8 +8,8 @@ import {
 import Divider from "@material-ui/core/Divider";
 import Page from "../shared/lib/models/Page";
 import FontSizes from "../constants/fontsizes";
-import UserAccount from "./UserAccount";
-import NestedMenuList from "./NestedMenuList";
+import UserAccount from "./MUI_UserAccount";
+import NestedMenuList from "./MUI_NestedMenuList";
 import SingleLevelMenuItem from "../shared/lib/models/SingleLevelMenuItem";
 import MenuItem from "../shared/lib/models/MenuItem";
 import GroupMenuItem from "../shared/lib/models/GroupMenuItem";

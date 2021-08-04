@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles";
 import { createStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import AboutAuthor from "./AboutAuthor";
+import AboutAuthor from "./MUI_AboutAuthor";
 import {
   Email,
   Facebook,

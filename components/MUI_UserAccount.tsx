@@ -11,7 +11,7 @@ import { Theme } from "@material-ui/core/styles";
 import { SignInPage } from "../shared/data/pages";
 import FontSizes from "../constants/fontsizes";
 import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
-import UserAvatar from "./UserAvatar";
+import UserAvatar from "./MUI_UserAvatar";
 
 interface UserAccountProps {
   alwaysShow?: boolean;

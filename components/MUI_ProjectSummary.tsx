@@ -14,7 +14,7 @@ import { Theme } from "@material-ui/core/styles";
 import { GitHub } from "@material-ui/icons";
 import FontSizes from "../constants/fontsizes";
 import Project from "../shared/lib/models/Project";
-import Bullet from "./Bullet";
+import Bullet from "./MUI_Bullet";
 
 interface ProjectSummaryProps {
   index: number;

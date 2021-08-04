@@ -18,8 +18,8 @@ import { COMMENTS_API_ROUTE } from "../shared/lib/api/constants";
 import fetcher from "../shared/lib/utils/fetcher";
 import useAlert from "../shared/lib/utils/useAlert";
 import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
-import { withAuthDialog } from "./Authentication";
-import CommentItem from "./CommentItem";
+import { withAuthDialog } from "./MUI_Authentication";
+import CommentItem from "./MUI_CommentItem";
 
 interface BlogCommentsProps {
   blogId: string;

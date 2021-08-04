@@ -1,6 +1,6 @@
 import { Params } from "next/dist/next-server/server/router";
-import BlogsContainer from "../../../components/BlogsContainer";
-import PageContainer from "../../../layouts/PageContainer";
+import BlogsContainer from "../../../components/MUI_BlogsContainer";
+import PageContainer from "../../../layouts/MUI_PageContainer";
 import { getCategories } from "../../../shared/lib/api/beranabtyeApi";
 import PageMeta from "../../../shared/lib/models/PageMeta";
 import {

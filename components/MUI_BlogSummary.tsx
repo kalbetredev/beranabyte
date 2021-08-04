@@ -10,7 +10,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import FontSizes from "../constants/fontsizes";
 import Blog from "../shared/lib/models/Blog";
-import BlogViewCounter from "./BlogViewCounter";
+import BlogViewCounter from "./MUI_BlogViewCounter";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

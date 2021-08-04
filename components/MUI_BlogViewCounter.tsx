@@ -2,7 +2,7 @@ import format from "number-format.js";
 import useSWR from "swr";
 import { BLOG_API_ROUTE } from "../shared/lib/api/constants";
 import fetcher from "../shared/lib/utils/fetcher";
-import Bullet from "./Bullet";
+import Bullet from "./MUI_Bullet";
 
 interface PageViewCounterProps {
   blogId: string;

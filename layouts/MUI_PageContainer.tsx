@@ -1,10 +1,10 @@
 import Container from "@material-ui/core/Container";
 import Head from "next/head";
 import PageMeta from "../shared/lib/models/PageMeta";
-import PageFooter from "../components/PageFooter";
-import PageHeader from "../components/PageHeader";
+import PageFooter from "../components/MUI_PageFooter";
+import PageHeader from "../components/MUI_PageHeader";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import ScrollTop from "../components/ScrollTop";
+import ScrollTop from "../components/MUI_ScrollTop";
 import { useRouter } from "next/router";
 
 interface PageContainerProps {

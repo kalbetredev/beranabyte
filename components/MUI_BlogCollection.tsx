@@ -11,7 +11,7 @@ import { ErrorTwoTone } from "@material-ui/icons";
 import FontSizes from "../constants/fontsizes";
 import Blog from "../shared/lib/models/Blog";
 import { removeNonAlphaNumeric } from "../shared/lib/utils/text-transform";
-import BlogSummary from "./BlogSummary";
+import BlogSummary from "./MUI_BlogSummary";
 import BlogSummaryLoading from "./LoadingPlaceholders/BlogSummaryLoading";
 
 const useStyles = makeStyles((theme: Theme) =>

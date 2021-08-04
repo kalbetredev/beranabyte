@@ -11,14 +11,14 @@ import { format } from "date-fns";
 import Box from "@material-ui/core/Box";
 import TwoLevelTableOfContent, {
   HeaderLevelIdPair,
-} from "../../../components/TwoLevelTableOfContent";
-import Bullet from "../../../components/Bullet";
+} from "../../../components/MUI_TwoLevelTableOfContent";
+import Bullet from "../../../components/MUI_Bullet";
 import MDXComponents from "../../../components/MDX/MDXComponents";
 import FontSizes from "../../../constants/fontsizes";
 import PageMeta from "../../../shared/lib/models/PageMeta";
-import PageContainer from "../../../layouts/PageContainer";
+import PageContainer from "../../../layouts/MUI_PageContainer";
 import { Params } from "next/dist/next-server/server/router";
-import BlogComments from "../../../components/BlogComments";
+import BlogComments from "../../../components/MUI_BlogComments";
 import { Facebook, LinkedIn } from "@material-ui/icons";
 import {
   generateFacebookShareLink,
@@ -34,7 +34,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import readingTime from "reading-time";
 import Blog from "../../../shared/lib/models/Blog";
-import BlogViewCounter from "../../../components/BlogViewCounter";
+import BlogViewCounter from "../../../components/MUI_BlogViewCounter";
 
 interface BlogProps {
   mdxSource: MDXRemoteSerializeResult;

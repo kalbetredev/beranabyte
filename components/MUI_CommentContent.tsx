@@ -4,7 +4,7 @@ import useSWR from "swr";
 import FontSizes from "../constants/fontsizes";
 import { USER_ACCOUNT_API_ROUTE } from "../shared/lib/api/constants";
 import fetcher from "../shared/lib/utils/fetcher";
-import Bullet from "./Bullet";
+import Bullet from "./MUI_Bullet";
 
 interface CommentContentProps {
   authorId: string;

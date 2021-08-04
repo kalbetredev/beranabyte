@@ -1,7 +1,7 @@
-import PageContainer from "../layouts/PageContainer";
+import PageContainer from "../layouts/MUI_PageContainer";
 import PageMeta from "../shared/lib/models/PageMeta";
 import { FEATURED } from "../constants/strings";
-import BlogsContainer from "../components/BlogsContainer";
+import BlogsContainer from "../components/MUI_BlogsContainer";
 
 const Index = () => {
   const meta: PageMeta = {

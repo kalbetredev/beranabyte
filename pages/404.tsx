@@ -1,5 +1,5 @@
-import PageError from "../components/PageError";
-import PageContainer from "../layouts/PageContainer";
+import PageError from "../components/MUI_PageError";
+import PageContainer from "../layouts/MUI_PageContainer";
 import PageMeta from "../shared/lib/models/PageMeta";
 
 const PageNotFound = () => {

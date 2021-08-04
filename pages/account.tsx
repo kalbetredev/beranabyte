@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import FullScreenAuthentication from "../components/Authentication";
-import PageContainer from "../layouts/PageContainer";
+import FullScreenAuthentication from "../components/MUI_Authentication";
+import PageContainer from "../layouts/MUI_PageContainer";
 import PageMeta from "../shared/lib/models/PageMeta";
 import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
 

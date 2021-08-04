@@ -9,13 +9,13 @@ import {
   Menu,
 } from "@material-ui/core";
 import React, { Dispatch, useState } from "react";
-import Drawer from "./Drawer";
-import PagesNavigator from "./PageNavigator";
+import Drawer from "./MUI_Drawer";
+import PagesNavigator from "./MUI_PageNavigator";
 import { Theme, makeStyles, createStyles } from "@material-ui/core/styles";
-import ElevationScroll from "./ElevationScroll";
+import ElevationScroll from "./MUI_ElevationScroll";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle, Brightness3, WbSunny } from "@material-ui/icons";
-import Logo from "./Logo";
+import Logo from "./MUI_Logo";
 import { useDispatch } from "react-redux";
 import { ThemeActionTypes } from "../redux/theme/types";
 import { toggleDarkMode } from "../redux/theme/actions";
@@ -27,9 +27,9 @@ import {
   pagesFromCategories,
 } from "../shared/data/pages";
 import Box from "@material-ui/core/Box";
-import UserAvatar from "./UserAvatar";
+import UserAvatar from "./MUI_UserAvatar";
 import useAuth, { AuthProvider } from "../shared/lib/utils/useAuth";
-import UserAccount from "./UserAccount";
+import UserAccount from "./MUI_UserAccount";
 import Link from "next/link";
 import { BLOG_CATEGORIES_API_ROUTE } from "../shared/lib/api/constants";
 

@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import FontSizes from "../constants/fontsizes";
 import Project from "../shared/lib/models/Project";
 import ProjectSummaryLoading from "./LoadingPlaceholders/ProjectSummaryLoading";
-import ProjectSummary from "./ProjectSummary";
+import ProjectSummary from "./MUI_ProjectSummary";
 
 interface ProjectSummaryProps {
   title: string;
