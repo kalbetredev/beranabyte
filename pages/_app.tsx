@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import AppTheme from "../shared/theme/app-theme";
 import { ThemeProvider } from "@material-ui/core/styles";
-import "../shared/styles/globals.css";
 import { RootState } from "../redux/rootReducer";
 import { useSelector } from "react-redux";
 import MDXComponents from "../components/MDX/MDXComponents";
@@ -12,7 +11,7 @@ import Head from "next/head";
 import { AppProps } from "next/app";
 import { ProvideAlert } from "../shared/lib/utils/useAlert";
 import { ProvideAuth } from "../shared/lib/utils/useAuth";
-import "../styles/globals.css";
+import "../shared/styles/globals.css";
 
 function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
