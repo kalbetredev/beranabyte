@@ -8,7 +8,7 @@ import {
   UserIcon,
 } from "../icons";
 import IconButton from "./IconButton";
-import LogoLink from "./LogoLink";
+import Logo from "./Logo";
 import AppBarLink from "./AppBarLink";
 import PageLink from "../constants/types/page_link";
 
@@ -26,7 +26,7 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
           <IconButton screenToggle={SCREEN_TOGGLE.MOBILE}>
             <MenuIcon />
           </IconButton>
-          <LogoLink />
+          <Logo />
         </div>
         <div className="flex justify-center items-center">
           <div className="hidden sm:visible sm:flex border-r-2 pr-2 mr-2">
