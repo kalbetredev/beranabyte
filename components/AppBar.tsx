@@ -10,16 +10,18 @@ import {
 import IconButton from "./IconButton";
 import LogoLink from "./LogoLink";
 import AppBarLink from "./AppBarLink";
+import PageLink from "../constants/types/page_link";
 
 interface AppBarProps {
   theme: Theme;
+  pageLinks: PageLink[];
   switchTheme: () => void;
 }
 
 const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
   return (
-    <nav className="sticky top-0 border-b-[1px] shadow-sm flex justify-center items-center bg-light dark:bg-dark dark:text-white dark:border-gray-700">
-      <div className="h-12 flex justify-between items-center flex-grow max-w-[960px] px-3 sm:px-6">
+    <header className="sticky top-0 border-b-[1px] shadow-sm flex justify-center items-center bg-light dark:bg-dark dark:text-white dark:border-gray-700">
+      <nav className="h-12 flex justify-between items-center flex-grow max-w-[960px] px-3 sm:px-6">
         <div className="flex justify-start items-center">
           <IconButton screenToggle={SCREEN_TOGGLE.MOBILE}>
             <MenuIcon />
@@ -28,8 +30,8 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
         </div>
         <div className="flex justify-center items-center">
           <div className="hidden sm:visible sm:flex border-r-2 pr-2 mr-2">
-            {["Home", "Blogs", "Projects"].map((item) => (
-              <AppBarLink key={item} href="/" label={item} />
+            {props.pageLinks.map((link) => (
+              <AppBarLink key={link.label} pageLink={link} />
             ))}
           </div>
           <UserIcon />
@@ -44,8 +46,8 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
             <MoreIcon />
           </IconButton>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 };
 

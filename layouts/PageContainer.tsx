@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import AppBar from "../components/AppBar";
 import Theme from "../constants/types/theme";
+import PageLink from "../constants/types/page_link";
 
 interface PageContainerProps {
   meta: PageMeta;
@@ -21,6 +22,12 @@ const PageContainer = (props: PageContainerProps) => {
       return prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
     });
   };
+
+  const pageLinks: PageLink[] = [
+    { label: "Home", href: "/" },
+    { label: "Blogs", href: "/blogs" },
+    { label: "Projects", href: "/projects" },
+  ];
 
   return (
     <>
@@ -47,7 +54,7 @@ const PageContainer = (props: PageContainerProps) => {
         />
       </Head>
       <div className={`${theme === Theme.DARK ? "dark" : ""}`}>
-        <AppBar switchTheme={switchTheme} theme={theme} />
+        <AppBar switchTheme={switchTheme} theme={theme} pageLinks={pageLinks} />
         <main className="flex justify-center dark:bg-dark dark:text-white">
           <div className="flex-1 max-w-[960px] px-3 sm:px-6">
             {props.children}
