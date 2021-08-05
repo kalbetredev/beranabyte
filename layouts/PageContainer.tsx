@@ -1,10 +1,9 @@
 import Head from "next/head";
 import PageMeta from "../shared/lib/models/PageMeta";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import AppBar from "../components/AppBar";
-import Theme from "../constants/types/theme";
 import PageLink from "../constants/types/page_link";
+import Footer from "../components/Footer";
 
 interface PageContainerProps {
   meta: PageMeta;
@@ -14,14 +13,6 @@ interface PageContainerProps {
 const PageContainer = (props: PageContainerProps) => {
   const { meta } = props;
   const router = useRouter();
-
-  const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
-
-  const switchTheme = () => {
-    setTheme((prevTheme) => {
-      return prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
-    });
-  };
 
   const pageLinks: PageLink[] = [
     { label: "Home", href: "/" },
@@ -53,13 +44,14 @@ const PageContainer = (props: PageContainerProps) => {
           content={`https://www.beranabyte.com${meta.image}`}
         />
       </Head>
-      <div className={`${theme === Theme.DARK ? "dark" : ""}`}>
-        <AppBar switchTheme={switchTheme} theme={theme} pageLinks={pageLinks} />
-        <main className="flex justify-center dark:bg-dark dark:text-white">
-          <div className="flex-1 max-w-[960px] px-3 sm:px-6">
+      <div>
+        <AppBar pageLinks={pageLinks} />
+        <main className="flex justify-center">
+          <div className="flex flex-1 max-w-[960px] px-3 sm:px-6">
             {props.children}
           </div>
         </main>
+        <Footer />
       </div>
     </>
   );
