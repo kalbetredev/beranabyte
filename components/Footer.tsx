@@ -6,6 +6,7 @@ import {
   MailIcon,
   TelegramIcon,
 } from "../icons";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -32,6 +33,11 @@ const Footer = () => {
               <FacebookIcon />
             </IconButton>
           </div>
+          <Link href="/kalbetre">
+            <a className="border-b border-t py-1 px-4 my-3 sm:my-0 rounded-lg text-xs dark:border-gray-500 hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand">
+              About Me
+            </a>
+          </Link>
         </div>
         <div className="flex flex-col flex-1 sm:justify-center items-center mt-4 sm:mt-0 sm:items-start sm:pl-4">
           <div>
@@ -41,8 +47,9 @@ const Footer = () => {
             <p className="text-[10px]">
               Social Media Icons by{" "}
               <a
-                className="border p-1 dark:border-gray-500 rounded-lg ml-1 uppercase"
+                className="border-b border-t p-1 px-2 dark:border-gray-500 rounded-lg ml-1 uppercase hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand"
                 href="http://icons8.com"
+                target="_blank"
               >
                 icons8
               </a>
