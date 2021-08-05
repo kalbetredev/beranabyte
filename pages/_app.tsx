@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import AppTheme from "../shared/theme/app-theme";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider as MUIThemeProvider } from "@material-ui/core/styles";
 import { RootState } from "../redux/rootReducer";
 import { useSelector } from "react-redux";
 import MDXComponents from "../components/MDX/MDXComponents";
@@ -12,6 +12,7 @@ import { AppProps } from "next/app";
 import { ProvideAlert } from "../shared/lib/utils/useAlert";
 import { ProvideAuth } from "../shared/lib/utils/useAuth";
 import "../shared/styles/globals.css";
+import { ThemeProvider } from "next-themes";
 
 function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -35,13 +36,15 @@ function MyApp(props: AppProps) {
         />
       </Head>
       <ProvideAuth>
-        <ThemeProvider theme={theme}>
-          <MDXProvider components={MDXComponents}>
-            <CssBaseline />
-            <ProvideAlert>
-              <Component {...pageProps} />
-            </ProvideAlert>
-          </MDXProvider>
+        <ThemeProvider attribute="class">
+          <MUIThemeProvider theme={theme}>
+            <MDXProvider components={MDXComponents}>
+              <CssBaseline />
+              <ProvideAlert>
+                <Component {...pageProps} />
+              </ProvideAlert>
+            </MDXProvider>
+          </MUIThemeProvider>
         </ThemeProvider>
       </ProvideAuth>
     </>
