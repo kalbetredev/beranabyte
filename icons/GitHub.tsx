@@ -13,8 +13,8 @@ const GitHubIcon = () => {
         y2="23.508"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#4c4c4c" />
-        <stop offset="1" stop-color="#343434" />
+        <stop offset="0" stopColor="#4c4c4c" />
+        <stop offset="1" stopColor="#343434" />
       </linearGradient>
       <path
         fill="url(#a)"
