@@ -1,4 +1,4 @@
-import { TOKEN_KEY } from "../../api/constants";
+import { TOKEN_KEY } from "../../api/constants/constants";
 
 export const setToken = (token) => localStorage.setItem(TOKEN_KEY, token);
 

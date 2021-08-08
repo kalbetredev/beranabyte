@@ -9,7 +9,7 @@ import {
   BLOG_API_ROUTE,
   COMMENTS_API_ROUTE,
   REPLIES_API_ROUTE,
-} from "./constants";
+} from "./constants/constants";
 import axiosFetcher from "../common/utils/fetcher";
 import { getToken } from "../common/utils/token";
 

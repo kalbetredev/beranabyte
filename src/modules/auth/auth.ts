@@ -3,7 +3,7 @@ import {
   AUTH_REGISTER_API_ROUTE,
   AUTH_LOGIN_API_ROUTE,
   CURRENT_USER_API_ROUTE,
-} from "../../api/constants";
+} from "../../api/constants/constants";
 import { deleteToken, getToken, setToken } from "../../common/utils/token";
 import User from "./models/User";
 
