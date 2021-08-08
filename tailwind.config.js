@@ -1,3 +1,5 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   mode: "jit",
   purge: [
@@ -8,13 +10,11 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-      backgroundColor: {
+      colors: {
         brand: "teal",
         light: "white",
         dark: "#212121",
-      },
-      textColor: {
-        brand: "teal",
+        gray: colors.trueGray,
       },
     },
   },
