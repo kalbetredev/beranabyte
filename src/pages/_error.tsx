@@ -1,6 +1,6 @@
 import React from "react";
 import { NextPageContext } from "next";
-import PageContainer from "../common/layouts/PageContainer";
+import Page from "../common/layouts/Page";
 import PageMeta from "../common/types/PageMeta";
 
 //TODO: Convert PageError Component from MUI to Tailwind
@@ -25,12 +25,12 @@ const Error = (props: ErrorProps) => {
   };
 
   return (
-    <PageContainer meta={meta}>
+    <Page meta={meta}>
       {/* <PageError errorMessage={errorMessage} statusCode={props.statusCode} /> */}
       <h1>{errorMessage}</h1>
       <hr />
       <h3>{props.statusCode}</h3>
-    </PageContainer>
+    </Page>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import PageContainer from "../common/layouts/PageContainer";
+import Page from "../common/layouts/Page";
 import PageMeta from "../common/types/PageMeta";
 
 //TODO: Convert PageError Component from MUI to Tailwind
@@ -12,7 +12,7 @@ const PageNotFound = () => {
   };
 
   return (
-    <PageContainer meta={meta}>
+    <Page meta={meta}>
       {/* <PageError
         errorMessage={"NEW NEW This Page could not be found"}
         statusCode={404}
@@ -20,7 +20,7 @@ const PageNotFound = () => {
       <h1>{"NEW NEW This Page could not be found"}</h1>
       <hr />
       <h3>{404}</h3>
-    </PageContainer>
+    </Page>
   );
 };
 

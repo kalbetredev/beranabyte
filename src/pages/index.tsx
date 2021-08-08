@@ -1,10 +1,10 @@
 import React from "react";
-import PageContainer from "../common/layouts/PageContainer";
+import Page from "../common/layouts/Page";
 import PageMeta from "../common/types/PageMeta";
 
 //TODO: Blogs on Home Page
-import { FEATURED } from "../../constants/strings";
-import BlogsContainer from "../../components/MUI_BlogsContainer";
+// import { FEATURED } from "../../constants/strings";
+// import BlogsContainer from "../../components/MUI_BlogsContainer";
 
 const Index = () => {
   const meta: PageMeta = {
@@ -16,7 +16,7 @@ const Index = () => {
   };
 
   return (
-    <PageContainer meta={meta}>
+    <Page meta={meta}>
       {/* <BlogsContainer category={FEATURED} /> */}
       <div className="mt-4 mb-8">
         <h1>BeranaByte</h1>
@@ -70,7 +70,7 @@ const Index = () => {
           non-characteristic words etc.
         </p>
       </div>
-    </PageContainer>
+    </Page>
   );
 };
 
