@@ -1,8 +1,8 @@
 import React, { Fragment, ReactNode } from "react";
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
+import { MoreIcon } from "../../icons";
 
 interface MenuItemsProps {
-  button: ReactNode;
   children?: ReactNode;
 }
 
@@ -10,7 +10,9 @@ const Menu: React.FC<MenuItemsProps> = (props: MenuItemsProps) => {
   return (
     <HeadlessMenu as="div" className="relative inline-block text-left">
       <div>
-        <HeadlessMenu.Button>{props.button}</HeadlessMenu.Button>
+        <HeadlessMenu.Button className="rounded-full w-9 h-9 p-[6px] hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand">
+          <MoreIcon />
+        </HeadlessMenu.Button>
       </div>
       <Transition
         as={Fragment}
