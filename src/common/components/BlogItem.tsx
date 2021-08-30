@@ -8,14 +8,14 @@ interface BlogSummaryProps {
 }
 
 const BlogItem: React.FC<BlogSummaryProps> = (props: BlogSummaryProps) => {
-  const { title, publishedDate, numberOfViews, summary }: BlogSummary =
+  const { slug, title, publishedDate, numberOfViews, summary }: BlogSummary =
     props.blogSummary;
   const formattedDate = formatDate(publishedDate);
 
   return (
     <div className="">
       <h3 className="text-lg font-medium">
-        <Link href="#">
+        <Link href={slug}>
           <a className="hover:text-brand">{title}</a>
         </Link>
       </h3>
