@@ -17,7 +17,9 @@ const MenuItem: React.FC<MenuItemProps> = (props: MenuItemProps) => {
               : "text-gray-900 dark:text-white"
           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
         >
-          {props.icon}
+          <span className="w-5 h-5 mr-2 flex justify-center items-center">
+            {props.icon}
+          </span>
           {props.label}
         </button>
       )}
