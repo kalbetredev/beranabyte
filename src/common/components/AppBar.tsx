@@ -21,7 +21,7 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
   };
 
   return (
-    <header className="sticky top-0 border-b-[1px] shadow-sm flex justify-center items-center bg-white dark:bg-dark dark:border-gray-700">
+    <header className="sticky z-50 top-0 border-b-[1px] shadow-sm flex justify-center items-center bg-white dark:bg-dark dark:border-gray-700">
       <nav className="h-12 flex justify-between items-center flex-grow max-w-[960px] px-3 sm:px-6">
         <div className="flex justify-start items-center">
           <Logo />
