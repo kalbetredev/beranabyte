@@ -1,4 +1,4 @@
-import { DarkThemeIcon, LightThemeIcon, MoreIcon, UserIcon } from "../../icons";
+import { DarkThemeIcon, LightThemeIcon, UserIcon } from "../../icons";
 import IconButton from "./IconButton";
 import Logo from "./Logo";
 import AppBarLink from "./AppBarLink";
@@ -8,6 +8,8 @@ import Theme from "../types/theme";
 import React from "react";
 import Menu from "./Menu";
 import DefaultMenuItems from "./DefaultMenuItems";
+import LoggedInMenuItems from "./LoggedInMenuItems";
+import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 
 interface AppBarProps {
   pageLinks: PageLink[];
@@ -15,6 +17,7 @@ interface AppBarProps {
 
 const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
   const { theme, setTheme } = useTheme();
+  const auth: AuthProvider = useAuth();
 
   const switchTheme = () => {
     theme === Theme.DARK ? setTheme(Theme.LIGHT) : setTheme(Theme.DARK);
@@ -37,7 +40,7 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
             {theme === Theme.LIGHT ? <DarkThemeIcon /> : <LightThemeIcon />}
           </IconButton>
           <Menu>
-            <DefaultMenuItems />
+            {auth.user ? <LoggedInMenuItems /> : <DefaultMenuItems />}
           </Menu>
         </div>
       </nav>
