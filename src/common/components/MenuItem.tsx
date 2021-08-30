@@ -13,7 +13,7 @@ const MenuItem: React.FC<MenuItemProps> = (props: MenuItemProps) => {
         <button
           className={`${
             active
-              ? "hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand"
+              ? "hover:bg-brand hover:bg-opacity-50 hover:text-white"
               : "text-gray-900 dark:text-white"
           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
         >
