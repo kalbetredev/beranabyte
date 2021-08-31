@@ -10,6 +10,7 @@ import Menu from "./Menu";
 import DefaultMenuItems from "./DefaultMenuItems";
 import LoggedInMenuItems from "./LoggedInMenuItems";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
+import NavMenuItems from "./NavMenuItems";
 
 interface AppBarProps {
   pageLinks: PageLink[];
@@ -35,12 +36,18 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
               <AppBarLink key={link.label} pageLink={link} />
             ))}
           </div>
-          <UserIcon />
+          {auth.user && <UserIcon />}
           <IconButton onClick={switchTheme}>
             {theme === Theme.LIGHT ? <DarkThemeIcon /> : <LightThemeIcon />}
           </IconButton>
-          <Menu>
+          <Menu className="hidden sm:block">
             {auth.user ? <LoggedInMenuItems /> : <DefaultMenuItems />}
+          </Menu>
+          <Menu className="sm:hidden">
+            <>
+              <NavMenuItems />
+              {auth.user ? <LoggedInMenuItems /> : <DefaultMenuItems />}
+            </>
           </Menu>
         </div>
       </nav>

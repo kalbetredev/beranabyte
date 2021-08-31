@@ -3,12 +3,18 @@ import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
 import { MoreIcon } from "../../icons";
 
 interface MenuItemsProps {
+  className?: string;
   children?: ReactNode;
 }
 
 const Menu: React.FC<MenuItemsProps> = (props: MenuItemsProps) => {
+  const className = props.className ?? "";
+
   return (
-    <HeadlessMenu as="div" className="relative inline-block text-left">
+    <HeadlessMenu
+      as="div"
+      className={`${className} relative inline-block text-left`}
+    >
       <div>
         <HeadlessMenu.Button className="rounded-full w-9 h-9 p-[6px] hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand">
           <MoreIcon />
