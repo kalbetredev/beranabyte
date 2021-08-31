@@ -16,7 +16,7 @@ const BlogCollection: React.FC<BlogCollectionProps> = (
         {props.title}
       </h2>
       {props.blogs.map((blog) => (
-        <BlogItem blogSummary={blog} />
+        <BlogItem key={blog.slug} blogSummary={blog} />
       ))}
     </div>
   );

@@ -13,7 +13,7 @@ const BlogLinks: React.FC<BlogLinksProps> = (props: BlogLinksProps) => {
       <div>
         <h2 className="text-lg mb-2">{props.title}</h2>
         {props.blogs.map((blog) => (
-          <h3 className="text-xs text-gray-400 mb-2">
+          <h3 key={blog.slug} className="text-xs text-gray-400 mb-2">
             <Link href={blog.slug}>
               <a className="hover:text-brand">{blog.title}</a>
             </Link>
