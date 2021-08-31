@@ -11,7 +11,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: "teal",
+        brand: {
+          light: "#459F9F",
+          DEFAULT: "teal",
+          dark: "#116666",
+        },
         light: "white",
         dark: "#212121",
         gray: colors.trueGray,
