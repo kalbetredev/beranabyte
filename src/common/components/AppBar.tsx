@@ -7,8 +7,7 @@ import { useTheme } from "next-themes";
 import Theme from "../types/theme";
 import React from "react";
 import Menu from "./Menu";
-import DefaultMenuItems from "./DefaultMenuItems";
-import LoggedInMenuItems from "./LoggedInMenuItems";
+import AppBarMenuItems from "./AppBarMenuItems";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import NavMenuItems from "./NavMenuItems";
 import { NextRouter, useRouter } from "next/router";
@@ -47,12 +46,12 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
             {theme === Theme.LIGHT ? <DarkThemeIcon /> : <LightThemeIcon />}
           </IconButton>
           <Menu className="hidden sm:block">
-            {auth.user ? <LoggedInMenuItems /> : <DefaultMenuItems />}
+            <AppBarMenuItems />
           </Menu>
           <Menu className="sm:hidden">
             <>
               <NavMenuItems />
-              {auth.user ? <LoggedInMenuItems /> : <DefaultMenuItems />}
+              <AppBarMenuItems />
             </>
           </Menu>
         </div>
