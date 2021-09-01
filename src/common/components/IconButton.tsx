@@ -13,7 +13,7 @@ const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
   else if (props.screenToggle === SCREEN_TOGGLE.MOBILE) classes = "sm:hidden";
 
   classes +=
-    " rounded-full w-9 h-9 p-[6px] hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand";
+    " rounded-full w-9 h-9 hover:bg-gray-400 dark:hover:bg-gray-700 hover:bg-opacity-10 hover:text-brand flex justify-center items-center";
 
   return (
     <button className={classes} onClick={props.onClick}>
