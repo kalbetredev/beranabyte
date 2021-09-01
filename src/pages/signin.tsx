@@ -1,6 +1,5 @@
 import React from "react";
 import Page from "../common/layouts/Page";
-import PageMeta from "../common/types/PageMeta";
 import FormInput from "../common/components/FormInput";
 import FormLabel from "../common/components/FormLabel";
 import PrimaryButton from "../common/components/PrimaryButton";
@@ -13,16 +12,8 @@ import {
 import Link from "next/link";
 
 const SignIn = () => {
-  const meta: PageMeta = {
-    title: "BeranaByte",
-    description:
-      "Blog / portfolio website where you can find blogs and projects on most recent technologies on software development and other tech things.",
-    type: "website",
-    image: "/static/images/banner.png",
-  };
-
   return (
-    <Page meta={meta}>
+    <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
         <div className="p-4 sm:p-6 shadow rounded-md border border-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:bg-opacity-80">
           <div className="flex flex-col justify-center items-center mb-5">

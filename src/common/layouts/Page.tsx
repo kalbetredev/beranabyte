@@ -6,12 +6,19 @@ import PageLink from "../types/page_link";
 import Footer from "../components/Footer";
 
 interface PageContainerProps {
-  meta: PageMeta;
+  meta?: PageMeta;
   children?: React.ReactNode;
 }
 
 const PageContainer = (props: PageContainerProps) => {
-  const { meta } = props;
+  const meta = props.meta ?? {
+    title: "BeranaByte",
+    description:
+      "Blog / portfolio website where you can find blogs and projects on most recent technologies on software development and other tech things.",
+    type: "website",
+    image: "/static/images/banner.png",
+  };
+
   const router = useRouter();
 
   const pageLinks: PageLink[] = [
