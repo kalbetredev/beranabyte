@@ -13,7 +13,7 @@ const BlogItem: React.FC<BlogSummaryProps> = (props: BlogSummaryProps) => {
   const formattedDate = formatDate(publishedDate);
 
   return (
-    <div className="">
+    <div>
       <h3 className="text-lg font-medium">
         <Link href={slug}>
           <a className="hover:text-brand">{title}</a>
