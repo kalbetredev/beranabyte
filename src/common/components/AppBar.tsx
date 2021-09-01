@@ -11,6 +11,7 @@ import DefaultMenuItems from "./DefaultMenuItems";
 import LoggedInMenuItems from "./LoggedInMenuItems";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import NavMenuItems from "./NavMenuItems";
+import { NextRouter, useRouter } from "next/router";
 
 interface AppBarProps {
   pageLinks: PageLink[];
@@ -19,13 +20,14 @@ interface AppBarProps {
 const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
   const { theme, setTheme } = useTheme();
   const auth: AuthProvider = useAuth();
+  const router: NextRouter = useRouter();
 
   const switchTheme = () => {
     theme === Theme.DARK ? setTheme(Theme.LIGHT) : setTheme(Theme.DARK);
   };
 
   return (
-    <header className="sticky z-50 top-0 border-b-[1px] shadow-sm flex justify-center items-center bg-white dark:bg-dark dark:border-gray-700">
+    <header className="fixed w-full z-50 top-0 border-b-[1px] shadow-sm flex justify-center items-center bg-white dark:bg-dark dark:border-gray-700">
       <nav className="h-12 flex justify-between items-center flex-grow max-w-[960px] px-3 sm:px-6">
         <div className="flex justify-start items-center">
           <Logo />
@@ -33,7 +35,11 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
         <div className="flex justify-center items-center">
           <div className="hidden sm:visible sm:flex border-r-2 pr-2 mr-2">
             {props.pageLinks.map((link) => (
-              <AppBarLink key={link.label} pageLink={link} />
+              <AppBarLink
+                key={link.label}
+                pageLink={link}
+                active={router.pathname === link.href}
+              />
             ))}
           </div>
           {auth.user && <UserIcon />}
