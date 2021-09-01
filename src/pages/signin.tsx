@@ -65,7 +65,10 @@ const SignIn = () => {
                 </Link>
               </div>
               <div className="border-t border-gray-600 mt-4 pt-2">
-                <SecondaryButton label="Register" slug={REGISTER_PAGE_SLUG} />
+                <SecondaryButton
+                  label="Create Account"
+                  slug={REGISTER_PAGE_SLUG}
+                />
               </div>
             </form>
           </div>
