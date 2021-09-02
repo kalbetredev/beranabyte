@@ -12,7 +12,7 @@ const PrimaryButton: React.FC<FormSubmitButtonProps> = (
   props: FormSubmitButtonProps
 ) => {
   const className =
-    "w-full flex my-2 justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-brand hover:bg-brand-light outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-700 focus:ring-brand-light cursor-default";
+    "w-full flex my-2 capitalize justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-brand hover:bg-brand-light outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-700 focus:ring-brand-light cursor-default";
 
   return (
     <>
