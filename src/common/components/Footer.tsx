@@ -11,12 +11,9 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="flex justify-center border-t dark:border-gray-700">
-      <div className="flex flex-col sm:flex-row flex-grow max-w-[960px] py-8 px-3 sm:px-6">
-        <div className="flex flex-col sm:justify-center items-center sm:items-end flex-1 sm:border-r sm:pr-4">
-          <div className="flex items-center">
-            <p className="text-xs">Kalkidan Betre</p>
-          </div>
+    <footer className="w-full border-t dark:border-gray-700">
+      <div className="flex mx-auto flex-col sm:flex-row flex-grow max-w-[960px] sm:px-6 mt-4">
+        <div className="sm:w-1/2 flex flex-col items-center sm:items-end justify-center pr-4 py-2 sm:border-r sm:border-gray-600 text-gray-400">
           <div className="flex items-center flex-wrap">
             <IconButton>
               <GitHubIcon />
@@ -34,30 +31,36 @@ const Footer = () => {
               <FacebookIcon />
             </IconButton>
           </div>
-          <Link href="/kalbetre">
-            <a className="border-b border-t py-1 px-4 my-3 sm:my-0 rounded-lg text-xs dark:border-gray-500 hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand">
-              About Me
-            </a>
-          </Link>
+          <div className="flex items-center mb-2">
+            <p className="text-xs">Kalkidan Betre</p>
+          </div>
         </div>
-        <div className="flex flex-col flex-1 sm:justify-center items-center mt-4 sm:mt-0 sm:items-start sm:pl-4">
-          <div>
-            <p className="text-xs">Copyright (c) 2021 BeranaByte</p>
-          </div>
-          <div className="mt-3">
-            <p className="text-[10px]">
-              Social Media Icons by{" "}
-              <a
-                className="border-b border-t p-1 px-2 dark:border-gray-500 rounded-lg ml-1 uppercase hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand"
-                href="http://icons8.com"
-                target="_blank"
-              >
-                icons8
-              </a>
-            </p>
-          </div>
+        <div className="sm:w-1/2 flex flex-col items-center sm:items-start justify-center pl-4 py-2 text-gray-400">
+          <p className="text-[10px] ">
+            Icons by{" "}
+            <a
+              href="https://heroicons.com/"
+              target="_blank"
+              className="font-bold text-xs uppercase text-brand hover:text-brand-light"
+            >
+              HeroIcons
+            </a>
+          </p>
+          <p className="text-[10px]">
+            Social Media Icons & Brand Logos by{" "}
+            <a
+              href="http://icons8.com"
+              target="_blank"
+              className="font-bold text-xs uppercase text-brand hover:text-brand-light"
+            >
+              Icons8
+            </a>
+          </p>
         </div>
       </div>
+      <p className="text-xs text-center mx-auto my-3">
+        Copyright (c) 2021 BeranaByte
+      </p>
     </footer>
   );
 };
