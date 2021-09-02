@@ -12,7 +12,7 @@ const BlogCollection: React.FC<BlogCollectionProps> = (
 ) => {
   return (
     <div>
-      <h2 className="uppercase py-3 mb-4 text-xl border-b border-gray-400 border-opacity-40">
+      <h2 className="uppercase py-3 mb-4 text-xl border-b border-gray-300 dark:border-gray-700">
         {props.title}
       </h2>
       {props.blogs.map((blog) => (
