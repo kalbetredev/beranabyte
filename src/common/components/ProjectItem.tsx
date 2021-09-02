@@ -21,8 +21,11 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
       </div>
 
       <div className="flex flex-wrap shadow-inner bg-gray-100 dark:bg-gray-800 py-2 px-1 border-t border-b dark:border-gray-700">
-        {techStack.map((stack) => (
-          <div className="w-16 h-16 rounded-2xl m-1 border bg-white dark:bg-gray-600 border-gray-200 dark:border-gray-600 flex justify-center items-center">
+        {techStack.map((stack, index) => (
+          <div
+            key={index}
+            className="w-16 h-16 rounded-2xl m-1 border bg-white dark:bg-gray-600 border-gray-200 dark:border-gray-600 flex justify-center items-center"
+          >
             <BrandLogo label={stack} />
           </div>
         ))}
