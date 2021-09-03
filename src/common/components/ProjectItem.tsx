@@ -9,12 +9,19 @@ interface ProjectItemProps {
 }
 
 const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
-  const { title, liveDemoLink, githubLink, summary, techStack } = props.project;
-  console.log(liveDemoLink);
+  const { title, liveDemoLink, githubLink, summary, techStack, tags } =
+    props.project;
   return (
     <div className="mb-10 shadow rounded-lg border dark:border-gray-700">
       <div className="p-3 dark:bg-gray-700 dark:bg-opacity-50">
         <h3 className="text-lg font-medium">{title}</h3>
+        <div className="flex">
+          {tags.map((tag, index) => (
+            <p key={index} className="text-xs text-gray-400 mr-2">
+              #{tag}
+            </p>
+          ))}
+        </div>
         <div className="my-2">
           <p className="text-sm text-gray-400">{summary}</p>
         </div>
