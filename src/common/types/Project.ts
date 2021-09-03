@@ -1,9 +1,10 @@
 interface Project {
   projectId: string;
   title: string;
-  summary: string;
+  tags: string[];
   liveDemoLink: string;
   githubLink: string;
+  summary: string;
   techStack: string[];
 }
 
