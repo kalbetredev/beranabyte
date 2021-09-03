@@ -54,7 +54,7 @@ const Index: React.FC = () => {
           <div className="flex flex-col md:flex-row md:mt-8">
             <div className="flex-1">
               <ProjectCollection
-                title="Recent Projects"
+                title="Featured Projects"
                 featured
                 count={3}
                 hideTitleDivider
