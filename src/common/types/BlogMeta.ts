@@ -10,6 +10,7 @@ interface BlogMeta {
   summary: string;
   imageUrl: string;
   viewCount: Number;
+  linkedProjects: string[];
 }
 
 export default BlogMeta;
