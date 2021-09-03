@@ -10,7 +10,7 @@ interface ProjectItemProps {
 
 const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
   const { title, liveDemoLink, githubLink, summary, techStack } = props.project;
-
+  console.log(liveDemoLink);
   return (
     <div className="mb-10 shadow rounded-lg border dark:border-gray-700">
       <div className="p-3 dark:bg-gray-700 dark:bg-opacity-50">
@@ -32,7 +32,7 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
       </div>
 
       <div className="flex flex-wrap justify-end items-center dark:bg-gray-700 dark:bg-opacity-50">
-        {liveDemoLink != "" ? (
+        {liveDemoLink && liveDemoLink != "" ? (
           <a
             href={liveDemoLink}
             target="_blank"
