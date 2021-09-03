@@ -11,6 +11,7 @@ const Subscribe = () => {
       <FormInputWithButton
         type="email"
         name="subscribe"
+        id="subscriber_email"
         placeholder="Please Enter Your Email"
         label="subscribe"
         className="mt-3"

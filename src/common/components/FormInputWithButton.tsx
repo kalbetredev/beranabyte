@@ -15,6 +15,7 @@ const FormInputWithButton: React.FC<FormInputWithButtonProps> = (
         <FormInput
           type={props.type}
           name={props.name}
+          id={props.id}
           placeholder={props.placeholder}
           className="pr-28 md:pr-36"
         />
