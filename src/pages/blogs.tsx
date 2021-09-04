@@ -2,6 +2,7 @@ import React from "react";
 import BlogCollection from "../common/components/BlogCollection";
 import BlogLinks from "../common/components/BlogLinks";
 import SearchInput from "../common/components/SearchInput";
+import Topics from "../common/components/Topics";
 import { BlogCategory } from "../common/enums/BlogCategory";
 import Page from "../common/layouts/Page";
 
@@ -29,6 +30,7 @@ const Blogs = () => {
             />
           </div>
           <div className="w-full border-t border-gray-300 dark:border-gray-700 md:pl-10 pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
+            <Topics />
             <BlogLinks
               title="Most Viewed"
               category={BlogCategory.MOST_VIEWED}
