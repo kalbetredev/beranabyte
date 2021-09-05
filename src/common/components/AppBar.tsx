@@ -1,4 +1,4 @@
-import { DarkThemeIcon, LightThemeIcon, UserIcon } from "../../icons";
+import { UserIcon } from "../../icons";
 import IconButton from "./IconButton";
 import Logo from "./Logo";
 import AppBarLink from "./AppBarLink";
@@ -11,6 +11,8 @@ import AppBarMenuItems from "./AppBarMenuItems";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import NavMenuItems from "./NavMenuItems";
 import { NextRouter, useRouter } from "next/router";
+import { SunIcon } from "@heroicons/react/outline";
+import { MoonIcon } from "@heroicons/react/solid";
 
 interface AppBarProps {
   pageLinks: PageLink[];
@@ -37,13 +39,20 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
               <AppBarLink
                 key={link.label}
                 pageLink={link}
-                active={router.pathname === link.href}
+                active={
+                  router.asPath == link.href ||
+                  router.asPath.includes(link.href + "/")
+                }
               />
             ))}
           </div>
           {auth.user && <UserIcon />}
           <IconButton onClick={switchTheme}>
-            {theme === Theme.LIGHT ? <DarkThemeIcon /> : <LightThemeIcon />}
+            {theme === Theme.LIGHT ? (
+              <MoonIcon className="h-6 w-6" />
+            ) : (
+              <SunIcon className="h-6 w-6" />
+            )}
           </IconButton>
           <Menu className="hidden sm:block">
             <AppBarMenuItems />
