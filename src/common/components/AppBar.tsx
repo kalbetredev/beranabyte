@@ -45,7 +45,7 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
               />
             ))}
           </div>
-          {!auth.user && <UserCircleIcon className="h-6 w-6" />}
+          {auth.user && <UserCircleIcon className="h-6 w-6" />}
           <IconButton onClick={switchTheme}>
             {theme === Theme.LIGHT ? (
               <MoonIcon className="h-6 w-6" />
