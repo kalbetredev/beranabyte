@@ -2,7 +2,7 @@ import Head from "next/head";
 import PageMeta from "../types/PageMeta";
 import { useRouter } from "next/router";
 import AppBar from "../components/AppBar";
-import PageLink from "../types/page_link";
+import PageLink from "../types/PageLink";
 import Footer from "../components/Footer";
 
 interface PageContainerProps {

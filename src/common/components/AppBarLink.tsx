@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PageLink from "../types/page_link";
+import PageLink from "../types/PageLink";
 
 interface AppBarLinkProps {
   pageLink: PageLink;

@@ -1,7 +1,7 @@
 import IconButton from "./IconButton";
 import Logo from "./Logo";
 import AppBarLink from "./AppBarLink";
-import PageLink from "../types/page_link";
+import PageLink from "../types/PageLink";
 import { useTheme } from "next-themes";
 import Theme from "../types/theme";
 import React from "react";
