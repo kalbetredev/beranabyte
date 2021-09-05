@@ -1,13 +1,12 @@
 import React from "react";
 import IconButton from "./IconButton";
-import Link from "next/link";
 import {
   GitHubIcon,
   LinkedInIcon,
   TelegramIcon,
-  MailIcon,
   FacebookIcon,
 } from "../../icons";
+import { AtSymbolIcon, MailIcon } from "@heroicons/react/solid";
 
 const Footer = () => {
   return (
@@ -25,7 +24,7 @@ const Footer = () => {
               <TelegramIcon />
             </IconButton>
             <IconButton>
-              <MailIcon />
+              <AtSymbolIcon className="h-6 w-6" />
             </IconButton>
             <IconButton>
               <FacebookIcon />

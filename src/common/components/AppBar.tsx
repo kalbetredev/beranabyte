@@ -1,4 +1,3 @@
-import { UserIcon } from "../../icons";
 import IconButton from "./IconButton";
 import Logo from "./Logo";
 import AppBarLink from "./AppBarLink";
@@ -11,7 +10,7 @@ import AppBarMenuItems from "./AppBarMenuItems";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import NavMenuItems from "./NavMenuItems";
 import { NextRouter, useRouter } from "next/router";
-import { SunIcon } from "@heroicons/react/outline";
+import { SunIcon, UserCircleIcon } from "@heroicons/react/outline";
 import { MoonIcon } from "@heroicons/react/solid";
 
 interface AppBarProps {
@@ -46,7 +45,7 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
               />
             ))}
           </div>
-          {auth.user && <UserIcon />}
+          {!auth.user && <UserCircleIcon className="h-6 w-6" />}
           <IconButton onClick={switchTheme}>
             {theme === Theme.LIGHT ? (
               <MoonIcon className="h-6 w-6" />

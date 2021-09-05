@@ -1,6 +1,6 @@
 import React, { Fragment, ReactNode } from "react";
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
-import { MoreIcon } from "../../icons";
+import { DotsVerticalIcon } from "@heroicons/react/solid";
 
 interface MenuItemsProps {
   className?: string;
@@ -17,7 +17,7 @@ const Menu: React.FC<MenuItemsProps> = (props: MenuItemsProps) => {
     >
       <div>
         <HeadlessMenu.Button className="rounded-full w-9 h-9 p-[6px] hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand">
-          <MoreIcon />
+          <DotsVerticalIcon className="h-6 w-6" />
         </HeadlessMenu.Button>
       </div>
       <Transition
