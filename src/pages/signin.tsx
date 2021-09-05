@@ -59,6 +59,7 @@ const SignIn = () => {
                 <SecondaryButton
                   label="Create Account"
                   slug={REGISTER_PAGE_SLUG}
+                  className="mt-2"
                 />
               </div>
             </form>

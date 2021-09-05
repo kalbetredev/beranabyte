@@ -36,7 +36,11 @@ const PasswordReset = () => {
               </div>
               <PrimaryButton type="submit" label="Send Password Reset Link" />
               <div className="border-t border-gray-600 mt-4 pt-2">
-                <SecondaryButton label="Sign In" slug={SIGNIN_PAGE_SLUG} />
+                <SecondaryButton
+                  label="Sign In"
+                  slug={SIGNIN_PAGE_SLUG}
+                  className="my-2"
+                />
                 <SecondaryButton
                   label="Create Account"
                   slug={REGISTER_PAGE_SLUG}

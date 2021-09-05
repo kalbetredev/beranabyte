@@ -23,7 +23,7 @@ const FormInputWithButton: React.FC<FormInputWithButtonProps> = (
       <div className="absolute right-0 top-0">
         <SecondaryButton
           label={props.label}
-          className="my-0 rounded-l-none w-24 md:w-32 bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 focus:ring-0 focus:ring-offset-0"
+          className="my-0 rounded-l-none w-24 sm:w-32 bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 focus:ring-0 focus:ring-offset-0"
         />
       </div>
     </div>
