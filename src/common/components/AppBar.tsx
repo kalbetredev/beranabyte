@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import AppBarLink from "./AppBarLink";
 import PageLink from "../types/PageLink";
 import { useTheme } from "next-themes";
-import Theme from "../types/theme";
+import Theme from "../enums/Theme";
 import React from "react";
 import Menu from "./Menu";
 import AppBarMenuItems from "./AppBarMenuItems";
