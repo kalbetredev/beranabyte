@@ -1,12 +1,18 @@
 import React from "react";
-import BlogCollection from "../common/components/BlogCollection";
-import BlogLinks from "../common/components/BlogLinks";
-import SearchInput from "../common/components/SearchInput";
-import Topics from "../common/components/Topics";
-import { BlogCategory } from "../common/enums/BlogCategory";
-import Page from "../common/layouts/Page";
+import BlogCollection from "../../common/components/BlogCollection";
+import BlogLinks from "../../common/components/BlogLinks";
+import SearchInput from "../../common/components/SearchInput";
+import Topics from "../../common/components/Topics";
+import { BlogCategory } from "../../common/enums/BlogCategory";
+import Page from "../../common/layouts/Page";
 
-const Blogs = () => {
+interface BlogsPageProps {
+  title?: string;
+  topic?: string;
+  category?: BlogCategory;
+}
+
+const BlogsPage: React.FC<BlogsPageProps> = (props: BlogsPageProps) => {
   const onSearch = (search: string) => {
     console.log(search);
   };
@@ -24,8 +30,9 @@ const Blogs = () => {
         <div className="flex flex-col md:flex-row md:mt-10">
           <div className="flex-1">
             <BlogCollection
-              title="featured"
-              category={BlogCategory.FEATURED}
+              title={props.title}
+              category={props.category}
+              topic={props.topic}
               count={5}
             />
           </div>
@@ -48,4 +55,10 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+BlogsPage.defaultProps = {
+  title: "featured",
+  category: BlogCategory.FEATURED,
+  topic: "",
+};
+
+export default BlogsPage;

@@ -7,14 +7,19 @@ import BlogItemLoading from "./BlogItemLoading";
 
 interface BlogCollectionProps {
   title: string;
-  category: BlogCategory;
   count: number;
+  category: BlogCategory;
+  topic?: string;
 }
 
 const BlogCollection: React.FC<BlogCollectionProps> = (
   props: BlogCollectionProps
 ) => {
-  const { blogs, isLoading, isError } = useBlogs(props.category, props.count);
+  const { blogs, isLoading, isError } = useBlogs(
+    props.count,
+    props.category,
+    props.topic
+  );
 
   if (isLoading)
     return (
@@ -43,6 +48,10 @@ const BlogCollection: React.FC<BlogCollectionProps> = (
       )}
     </div>
   );
+};
+
+BlogCollection.defaultProps = {
+  topic: "",
 };
 
 export default BlogCollection;

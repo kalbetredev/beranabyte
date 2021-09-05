@@ -12,7 +12,7 @@ interface BlogLinksProps {
 }
 
 const BlogLinks: React.FC<BlogLinksProps> = (props: BlogLinksProps) => {
-  const { blogs, isLoading, isError } = useBlogs(props.category, props.count);
+  const { blogs, isLoading, isError } = useBlogs(props.count, props.category);
 
   if (isLoading) return <BlogLinksLoading title={props.title} />;
 

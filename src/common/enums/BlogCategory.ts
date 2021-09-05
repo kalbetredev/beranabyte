@@ -3,4 +3,5 @@ export enum BlogCategory {
   MOST_VIEWED = "popular",
   LATEST = "latest",
   PROJECT_RELATED = "project-related",
+  ANY = "",
 }
