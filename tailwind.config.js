@@ -20,6 +20,9 @@ module.exports = {
         dark: "#212121",
         gray: colors.trueGray,
       },
+      dropShadow: {
+        error: "0px 0px 15px #FF0000",
+      },
     },
   },
   variants: {

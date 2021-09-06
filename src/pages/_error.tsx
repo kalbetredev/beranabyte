@@ -2,13 +2,11 @@ import React from "react";
 import { NextPageContext } from "next";
 import Page from "../common/layouts/Page";
 import PageMeta from "../common/types/PageMeta";
-
-//TODO: Convert PageError Component from MUI to Tailwind
-// import PageError from "../../components/MUI_PageError";
+import SecondaryButton from "../common/components/SecondaryButton";
 
 const statusCodes: { [code: number]: string } = {
   400: "Bad Request",
-  404: "This Page could not be found",
+  404: "The page you requested could not be found",
   405: "Method Not Allowed",
   500: "Internal Server Error",
 };
@@ -26,10 +24,17 @@ const Error = (props: ErrorProps) => {
 
   return (
     <Page meta={meta}>
-      {/* <PageError errorMessage={errorMessage} statusCode={props.statusCode} /> */}
-      <h1>{errorMessage}</h1>
-      <hr />
-      <h3>{props.statusCode}</h3>
+      <div className="mt-20 mx-auto text-center">
+        <h3 className="text-red-400 dark:text-gray-300 text-9xl filter drop-shadow-error mb-8">
+          {props.statusCode}
+        </h3>
+        <h1 className="mb-8 uppercase font-bold ">{errorMessage}</h1>
+        <SecondaryButton
+          className="max-w-[200px] mx-auto mb-40"
+          slug="/"
+          label="TAKE ME HOME"
+        />
+      </div>
     </Page>
   );
 };
