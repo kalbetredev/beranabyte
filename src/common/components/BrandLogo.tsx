@@ -16,7 +16,7 @@ const BrandLogo: React.FC<BrandLogoProps> = (props: BrandLogoProps) => {
     icons[index]()
   ) : (
     <span className="text-yellow-400 dark:text-yellow-600 w-8 h-8">
-      <ExclamationIcon />
+      <ExclamationIcon className="w-4 h-4 text-red-400" />
     </span>
   );
 };
