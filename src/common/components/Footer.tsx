@@ -1,12 +1,5 @@
 import React from "react";
-import IconButton from "./IconButton";
-import {
-  GitHubIcon,
-  LinkedInIcon,
-  TelegramIcon,
-  FacebookIcon,
-} from "../../icons";
-import { AtSymbolIcon, MailIcon } from "@heroicons/react/solid";
+import SocialMediaLinks from "./SocialMediaLinks";
 
 const Footer = () => {
   return (
@@ -14,21 +7,7 @@ const Footer = () => {
       <div className="flex mx-auto flex-col sm:flex-row flex-grow max-w-[960px] sm:px-6 mt-4">
         <div className="sm:w-1/2 flex flex-col items-center sm:items-end justify-center pr-4 py-2 sm:border-r sm:border-gray-600 text-gray-400">
           <div className="flex items-center flex-wrap">
-            <IconButton>
-              <GitHubIcon />
-            </IconButton>
-            <IconButton>
-              <LinkedInIcon />
-            </IconButton>
-            <IconButton>
-              <TelegramIcon />
-            </IconButton>
-            <IconButton>
-              <AtSymbolIcon className="h-6 w-6" />
-            </IconButton>
-            <IconButton>
-              <FacebookIcon />
-            </IconButton>
+            <SocialMediaLinks />
           </div>
           <div className="flex items-center mb-2">
             <p className="text-xs">Kalkidan Betre</p>
