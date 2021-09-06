@@ -22,7 +22,7 @@ const SocialMediaLinks = () => {
     return (
       <>
         {[0, 1, 2, 3].map((index) => (
-          <IconButtonLoading />
+          <IconButtonLoading key={index} />
         ))}
       </>
     );
@@ -31,7 +31,7 @@ const SocialMediaLinks = () => {
     return (
       <>
         {[0, 1, 2, 3].map((index) => (
-          <IconButtonError />
+          <IconButtonError key={index} />
         ))}
       </>
     );
