@@ -15,7 +15,7 @@ const BlogItem: React.FC<BlogSummaryProps> = (props: BlogSummaryProps) => {
   return (
     <div>
       <h3 className="text-lg font-medium">
-        <Link href={_id}>
+        <Link href={"/blogs/" + _id}>
           <a className="hover:text-brand">{title}</a>
         </Link>
       </h3>
