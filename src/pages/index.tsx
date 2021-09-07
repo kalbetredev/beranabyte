@@ -11,21 +11,21 @@ import { BlogCategory } from "../common/enums/BlogCategory";
 const IndexPage: React.FC = () => {
   return (
     <Page>
-      <div className="mt-4 mb-8 w-full">
-        <div className="w-full mt-16 mb-8">
-          <h1 className="text-7xl font-medium mt-20">Welcome</h1>
-          <div className="max-w-xl">
-            <h2 className="text-sm mt-5 text-gray-400">
+      <div className="mb-8 w-full">
+        <div className="w-full mt-20 mb-8">
+          <h1 className="text-7xl font-medium">Welcome</h1>
+          <div className="max-w-xl text-sm text-gray-400">
+            <h2 className="mt-5">
               I'm Kalkidan B. and you have landed on{" "}
               <span className="text-brand font-bold">BeranaByte.</span> You will
               find here my personal blogs and projects. I'm a developer and I
               built this site to share what I have learned through building
               various projects and researching popular tech stacks.
             </h2>
-            <p className="text-sm mt-4 text-gray-400 ">
+            <p className="mt-4">
               Feel free to leave me a message, a comment or a request!.
             </p>
-            <p className="text-sm mt-4 text-gray-400 ">
+            <p className="mt-4">
               You can also register to comment on blogs and receive email
               notifications when I publish new articles
             </p>
