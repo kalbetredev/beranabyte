@@ -7,9 +7,8 @@ import Subscribe from "../common/components/Subscribe";
 import { REGISTER_PAGE_SLUG } from "../common/constants/page-slugs";
 import Page from "../common/layouts/Page";
 import { BlogCategory } from "../common/enums/BlogCategory";
-import { ProjectType } from "../common/enums/ProjectType";
 
-const Index: React.FC = () => {
+const IndexPage: React.FC = () => {
   return (
     <Page>
       <div className="mt-4 mb-8 w-full">
@@ -109,4 +108,4 @@ const Index: React.FC = () => {
   );
 };
 
-export default Index;
+export default IndexPage;

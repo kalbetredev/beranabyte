@@ -6,7 +6,7 @@ import { BlogCategory } from "../common/enums/BlogCategory";
 import { ProjectType } from "../common/enums/ProjectType";
 import Page from "../common/layouts/Page";
 
-const Projects = () => {
+const ProjectsPage = () => {
   const onSearch = (search: string) => {
     console.log(search);
   };
@@ -42,4 +42,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default ProjectsPage;

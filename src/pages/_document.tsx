@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import React from "react";
-export class MyDocument extends Document {
+export class BeranabyteDocument extends Document {
   render() {
     return (
       <Html lang="en">
@@ -67,4 +67,4 @@ export class MyDocument extends Document {
   }
 }
 
-export default MyDocument;
+export default BeranabyteDocument;

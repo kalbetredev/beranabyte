@@ -7,7 +7,7 @@ import Logo from "../common/components/Logo";
 import SecondaryButton from "../common/components/SecondaryButton";
 import { SIGNIN_PAGE_SLUG } from "../common/constants/page-slugs";
 
-const register = () => {
+const RegisterPage = () => {
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
@@ -71,4 +71,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default RegisterPage;

@@ -8,7 +8,7 @@ import "../styles/globals.css";
 import { SWRConfig } from "swr";
 import axiosFetcher from "../common/utils/fetcher";
 
-function MyApp(props: AppProps) {
+function BeranabyteApp(props: AppProps) {
   const { Component, pageProps } = props;
 
   return (
@@ -32,4 +32,4 @@ function MyApp(props: AppProps) {
   );
 }
 
-export default MyApp;
+export default BeranabyteApp;

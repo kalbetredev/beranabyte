@@ -11,11 +11,11 @@ const statusCodes: { [code: number]: string } = {
   500: "Internal Server Error",
 };
 
-interface ErrorProps {
+interface ErrorPageProps {
   statusCode: number;
 }
 
-const Error = (props: ErrorProps) => {
+const ErrorPage = (props: ErrorPageProps) => {
   const errorMessage = statusCodes[props.statusCode];
   const meta: PageMeta = {
     title: `BeranaByte : ${props.statusCode} Error`,
@@ -39,10 +39,10 @@ const Error = (props: ErrorProps) => {
   );
 };
 
-Error.getInitialProps = ({ res, err }: NextPageContext) => {
+ErrorPage.getInitialProps = ({ res, err }: NextPageContext) => {
   const statusCode =
     res && res.statusCode ? res.statusCode : err ? err.statusCode : 404;
   return { statusCode };
 };
 
-export default Error;
+export default ErrorPage;

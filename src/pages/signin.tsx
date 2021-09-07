@@ -11,7 +11,7 @@ import {
 } from "../common/constants/page-slugs";
 import Link from "next/link";
 
-const SignIn = () => {
+const SignInPage = () => {
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
@@ -70,4 +70,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInPage;

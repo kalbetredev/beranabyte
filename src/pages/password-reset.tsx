@@ -10,7 +10,7 @@ import {
   SIGNIN_PAGE_SLUG,
 } from "../common/constants/page-slugs";
 
-const PasswordReset = () => {
+const PasswordResetPage = () => {
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
@@ -54,4 +54,4 @@ const PasswordReset = () => {
   );
 };
 
-export default PasswordReset;
+export default PasswordResetPage;

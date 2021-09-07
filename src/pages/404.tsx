@@ -1,8 +1,8 @@
 import React from "react";
-import Error from "./_error";
+import ErrorPage from "./_error";
 
 const PageNotFound = () => {
-  return <Error statusCode={404} />;
+  return <ErrorPage statusCode={404} />;
 };
 
 export default PageNotFound;
