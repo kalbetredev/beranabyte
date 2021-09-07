@@ -2,7 +2,7 @@ import { CubeIcon } from "@heroicons/react/solid";
 import React from "react";
 import { GitHubIcon } from "../../icons";
 import Project from "../types/Project";
-import BrandLogo from "./BrandLogo";
+import BrandIcon from "./BrandIcon";
 
 interface ProjectItemProps {
   project: Project;
@@ -33,7 +33,7 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
             key={index}
             className="w-16 h-16 rounded-2xl m-1 border bg-white dark:bg-gray-600 border-gray-200 dark:border-gray-600 flex justify-center items-center"
           >
-            <BrandLogo label={stack} />
+            <BrandIcon label={stack} />
           </div>
         ))}
       </div>
