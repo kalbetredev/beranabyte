@@ -17,7 +17,7 @@ const Footer = () => {
           <p className="text-[10px] ">
             Icons by{" "}
             <a
-              href="https://heroicons.com/"
+              href="https://heroicons.com"
               target="_blank"
               className="font-bold text-xs uppercase text-brand hover:text-brand-light"
             >
@@ -25,13 +25,21 @@ const Footer = () => {
             </a>
           </p>
           <p className="text-[10px]">
-            Social Media Icons & Brand Logos by{" "}
+            Brand Icons by{" "}
             <a
-              href="http://icons8.com"
+              href="https://icons8.com"
               target="_blank"
               className="font-bold text-xs uppercase text-brand hover:text-brand-light"
             >
               Icons8
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://uxwing.com"
+              target="_blank"
+              className="font-bold text-xs uppercase text-brand hover:text-brand-light"
+            >
+              UxWing
             </a>
           </p>
         </div>
