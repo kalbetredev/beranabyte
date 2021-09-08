@@ -33,7 +33,7 @@ const SubscriptionForm = () => {
       <p className="text-sm text-gray-400">
         Subscribe to receive notifications when new articles are published
       </p>
-      <form action="" onSubmit={handleSubmit}>
+      <form method="POST" onSubmit={handleSubmit}>
         <FormInputWithButton
           inputType="email"
           inputValue={email}
