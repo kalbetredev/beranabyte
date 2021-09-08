@@ -55,12 +55,15 @@ const ContactPage = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    let inputError = false;
+
     if (!isEmailValid(formState.email)) {
       setError((state) => ({
         ...state,
         email: true,
       }));
       setValidateOnChange(true);
+      inputError = true;
     }
 
     if (!isShortMessageValid(formState.message)) {
@@ -69,7 +72,10 @@ const ContactPage = () => {
         message: true,
       }));
       setValidateOnChange(true);
-    } else {
+      inputError = true;
+    }
+
+    if (!inputError) {
       setError({ email: false, message: false });
       setValidateOnChange(false);
 
