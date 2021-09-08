@@ -1,16 +1,30 @@
 import React, { useState } from "react";
+import { isShortMessageValid } from "../utils/input-validation";
+import FormErrorMessage from "./FormErrorMessage";
 import FormInputWithButton from "./FormInputWithButton";
 
 const QuickMessageFrom = () => {
   const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
+  const [validateOnChange, setValidateOnChange] = useState(false);
 
   const handelInputChange = (event: React.FormEvent<HTMLInputElement>) => {
     setMessage(event.currentTarget.value);
+    if (validateOnChange)
+      setError(!isShortMessageValid(event.currentTarget.value.toString()));
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(message);
+    if (!isShortMessageValid(message)) {
+      setError(true);
+      setValidateOnChange(true);
+    } else {
+      setError(false);
+
+      //TODO : Submit Message To Server
+      console.log(message);
+    }
   };
 
   return (
@@ -24,8 +38,14 @@ const QuickMessageFrom = () => {
           inputPlaceholder="Your Message"
           btnType="submit"
           btnLabel="Send"
+          errorState={error}
           className="mt-3"
         />
+        {error ? (
+          <div className="mt-3">
+            <FormErrorMessage message="Your message should at least be 5 characters long" />
+          </div>
+        ) : null}
       </form>
     </div>
   );
