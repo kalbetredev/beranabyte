@@ -96,7 +96,7 @@ const ContactPage = () => {
               </label>
               <div className="mt-1 max-w-sm">
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   value={formState.email}
                   onChange={handelEmailChange}

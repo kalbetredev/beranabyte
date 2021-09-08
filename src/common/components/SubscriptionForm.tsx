@@ -34,7 +34,7 @@ const SubscriptionForm = () => {
       </p>
       <form action="" onSubmit={handleSubmit}>
         <FormInputWithButton
-          inputType="text"
+          inputType="email"
           inputValue={email}
           inputOnChange={handelInputChange}
           inputPlaceholder="Please Enter Your Email"
