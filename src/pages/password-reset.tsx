@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Page from "../common/layouts/Page";
 import Logo from "../common/components/Logo";
 import {
   REGISTER_PAGE_SLUG,
   SIGNIN_PAGE_SLUG,
 } from "../common/constants/page-slugs";
-import Link from "next/link";
 import LinkButton from "../common/components/LinkButton";
+import { isEmailValid } from "../common/utils/input-validation";
+import FormErrorMessage from "../common/components/FormErrorMessage";
 
 const PasswordResetPage = () => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
+  const [validateOnChange, setValidateOnChange] = useState(false);
+
+  const handelInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setEmail(event.currentTarget.value);
+    if (validateOnChange) setError(!isEmailValid(event.currentTarget.value));
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!isEmailValid(email)) {
+      setError(true);
+      setValidateOnChange(true);
+    } else {
+      setError(false);
+      setValidateOnChange(false);
+
+      //TODO : Submit Email To Server
+      console.log(email);
+    }
+  };
+
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
@@ -19,7 +43,7 @@ const PasswordResetPage = () => {
             </div>
           </div>
           <div className="">
-            <form action="#" method="POST">
+            <form method="POST" onSubmit={handleSubmit}>
               <div className="mb-6">
                 <label htmlFor="email" className="form-label">
                   email
@@ -28,10 +52,17 @@ const PasswordResetPage = () => {
                   <input
                     type="email"
                     id="email"
+                    value={email}
+                    onChange={handelInputChange}
                     placeholder="Enter Your Email"
                     autoComplete="off"
                     className="form-input w-full"
                   />
+                  {error ? (
+                    <div className="mt-3">
+                      <FormErrorMessage message="Invalid Email Address" />
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <button type="submit" className="w-full primary-btn">
