@@ -8,6 +8,7 @@ interface FormInputWithButtonProps {
   btnType?: "button" | "submit" | "reset" | null;
   btnLabel: string;
   btnOnClick?: () => void;
+  errorState?: boolean;
   className?: string;
 }
 
@@ -22,7 +23,10 @@ const FormInputWithButton: React.FC<FormInputWithButtonProps> = (
           value={props.inputValue}
           onChange={props.inputOnChange}
           placeholder={props.inputPlaceholder}
-          className="w-full form-input pr-28 md:pr-36"
+          className={
+            "w-full form-input pr-28 md:pr-36" +
+            (props.errorState ? " error-ring" : "")
+          }
         />
       </div>
       <div className="absolute right-0 top-0">
@@ -40,9 +44,9 @@ const FormInputWithButton: React.FC<FormInputWithButtonProps> = (
 
 FormInputWithButton.defaultProps = {
   inputType: "text",
-  inputPlaceholder: "",
   className: "",
   btnType: "button",
+  errorState: false,
 };
 
 export default FormInputWithButton;
