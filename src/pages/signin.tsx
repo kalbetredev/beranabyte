@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Page from "../common/layouts/Page";
 import Logo from "../common/components/Logo";
 import {
@@ -7,8 +7,77 @@ import {
 } from "../common/constants/page-slugs";
 import Link from "next/link";
 import LinkButton from "../common/components/LinkButton";
+import { isEmailValid } from "../common/utils/input-validation";
+import FormErrorMessage from "../common/components/FormErrorMessage";
+
+interface SingInForm {
+  email: string;
+  password: string;
+}
+
+interface FormError {
+  email: boolean;
+  password: boolean;
+}
 
 const SignInPage = () => {
+  const [formState, setFormState] = useState<SingInForm>({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState<FormError>({
+    email: false,
+    password: false,
+  });
+
+  const [validateOnChange, setValidateOnChange] = useState(false);
+
+  const handelEmailChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const email = event.currentTarget.value;
+    setFormState((state) => ({ ...state, email: email }));
+    if (validateOnChange)
+      setError((state) => ({
+        ...state,
+        email: !isEmailValid(email),
+      }));
+  };
+
+  const handelPasswordChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const password = event.currentTarget.value;
+    setFormState((state) => ({ ...state, password: password }));
+    if (validateOnChange)
+      setError((state) => ({
+        ...state,
+        password: !(password.toString().length > 0),
+      }));
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!isEmailValid(formState.email)) {
+      setError((state) => ({
+        ...state,
+        email: true,
+      }));
+      setValidateOnChange(true);
+    }
+
+    if (!(formState.password.length > 0)) {
+      setError((state) => ({
+        ...state,
+        password: true,
+      }));
+      setValidateOnChange(true);
+    } else {
+      setError({ email: false, password: false });
+      setValidateOnChange(false);
+
+      //TODO : Submit Email & Password To Server
+      console.log(formState.email, formState.password);
+    }
+  };
+
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
@@ -19,7 +88,7 @@ const SignInPage = () => {
             </div>
           </div>
           <div className="">
-            <form action="#" method="POST">
+            <form method="POST" onSubmit={handleSubmit}>
               <div className="mb-6">
                 <label htmlFor="email" className="form-label">
                   email
@@ -28,9 +97,18 @@ const SignInPage = () => {
                   <input
                     type="email"
                     id="email"
+                    value={formState.email}
+                    onChange={handelEmailChange}
                     autoComplete="off"
-                    className="form-input w-full"
+                    className={
+                      "form-input w-full" + (error.email ? " error-ring" : "")
+                    }
                   />
+                  {error.email ? (
+                    <div className="mt-3">
+                      <FormErrorMessage message="Invalid Email Address" />
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <div className="mb-6">
@@ -41,9 +119,19 @@ const SignInPage = () => {
                   <input
                     type="password"
                     id="password"
+                    value={formState.password}
+                    onChange={handelPasswordChange}
                     autoComplete="off"
-                    className="form-input w-full"
+                    className={
+                      "form-input w-full" +
+                      (error.password ? " error-ring" : "")
+                    }
                   />
+                  {error.password ? (
+                    <div className="mt-3">
+                      <FormErrorMessage message="Password can not be empty" />
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <button type="submit" className="w-full primary-btn">
