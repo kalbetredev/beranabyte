@@ -49,7 +49,7 @@ const SignInPage = () => {
     if (validateOnChange)
       setError((state) => ({
         ...state,
-        password: !(password.toString().length > 0),
+        password: password.toString().length == 0,
       }));
   };
 
@@ -66,7 +66,7 @@ const SignInPage = () => {
       inputError = true;
     }
 
-    if (!(formState.password.length > 0)) {
+    if (formState.password.length == 0) {
       setError((state) => ({
         ...state,
         password: true,
