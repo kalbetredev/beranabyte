@@ -1,10 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
 import Page from "../common/layouts/Page";
 import Logo from "../common/components/Logo";
 import { SIGNIN_PAGE_SLUG } from "../common/constants/page-slugs";
 import LinkButton from "../common/components/LinkButton";
+import { isEmailValid } from "../common/utils/input-validation";
+import FormErrorMessage from "../common/components/FormErrorMessage";
+
+interface RegisterForm {
+  email: string;
+  password: string;
+  reptPassword: string;
+}
+
+interface FormError {
+  email: boolean;
+  password: boolean;
+  reptPassword: boolean;
+}
 
 const RegisterPage = () => {
+  const [formState, setFormState] = useState<RegisterForm>({
+    email: "",
+    password: "",
+    reptPassword: "",
+  });
+
+  const [error, setError] = useState<FormError>({
+    email: false,
+    password: false,
+    reptPassword: false,
+  });
+
+  const [validateOnChange, setValidateOnChange] = useState(false);
+
+  const handelEmailChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const email = event.currentTarget.value;
+    setFormState((state) => ({ ...state, email: email }));
+    if (validateOnChange)
+      setError((state) => ({
+        ...state,
+        email: !isEmailValid(email),
+      }));
+  };
+
+  const handelPasswordChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const password = event.currentTarget.value;
+    setFormState((state) => ({ ...state, password: password }));
+    if (validateOnChange)
+      setError((state) => ({
+        ...state,
+        password: !(password.toString().length > 0),
+      }));
+  };
+
+  const handelReptPasswordChange = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    const password = event.currentTarget.value;
+    setFormState((state) => ({ ...state, reptPassword: password }));
+    if (validateOnChange)
+      setError((state) => ({
+        ...state,
+        reptPassword: password != formState.password,
+      }));
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    let inputError = false;
+
+    if (!isEmailValid(formState.email)) {
+      setError((state) => ({
+        ...state,
+        email: true,
+      }));
+      setValidateOnChange(true);
+      inputError = true;
+    }
+
+    if (!(formState.password.length > 0)) {
+      setError((state) => ({
+        ...state,
+        password: true,
+      }));
+      setValidateOnChange(true);
+      inputError = true;
+    }
+
+    if (formState.reptPassword != formState.password) {
+      setError((state) => ({
+        ...state,
+        reptPassword: true,
+      }));
+      setValidateOnChange(true);
+      inputError = true;
+    }
+
+    if (!inputError) {
+      setError({ email: false, password: false, reptPassword: false });
+      setValidateOnChange(false);
+
+      //TODO : Submit Email, Password & reptPassword To Server
+      console.log(formState.email, formState.password);
+    }
+  };
+
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
@@ -15,7 +115,7 @@ const RegisterPage = () => {
             </div>
           </div>
           <div className="">
-            <form action="#" method="POST">
+            <form method="POST" onSubmit={handleSubmit}>
               <div className="mb-6">
                 <label htmlFor="email" className="form-label">
                   email
@@ -25,8 +125,17 @@ const RegisterPage = () => {
                     type="email"
                     id="email"
                     autoComplete="off"
-                    className="form-input w-full"
+                    value={formState.email}
+                    onChange={handelEmailChange}
+                    className={
+                      "form-input w-full" + (error.email ? " error-ring" : "")
+                    }
                   />
+                  {error.email ? (
+                    <div className="mt-3">
+                      <FormErrorMessage message="Invalid Email Address" />
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <div className="mb-6">
@@ -38,8 +147,18 @@ const RegisterPage = () => {
                     type="password"
                     id="password"
                     autoComplete="off"
-                    className="form-input w-full"
+                    value={formState.password}
+                    onChange={handelPasswordChange}
+                    className={
+                      "form-input w-full" +
+                      (error.password ? " error-ring" : "")
+                    }
                   />
+                  {error.password ? (
+                    <div className="mt-3">
+                      <FormErrorMessage message="Password can not be empty" />
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <div className="mb-6">
@@ -51,8 +170,18 @@ const RegisterPage = () => {
                     type="password"
                     id="rept_password"
                     autoComplete="off"
-                    className="form-input w-full"
+                    value={formState.reptPassword}
+                    onChange={handelReptPasswordChange}
+                    className={
+                      "form-input w-full" +
+                      (error.reptPassword ? " error-ring" : "")
+                    }
                   />
+                  {error.reptPassword ? (
+                    <div className="mt-3">
+                      <FormErrorMessage message="Passwords don't match" />
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <button type="submit" className="w-full primary-btn">
