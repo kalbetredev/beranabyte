@@ -49,7 +49,7 @@ const RegisterPage = () => {
     if (validateOnChange)
       setError((state) => ({
         ...state,
-        password: !(password.toString().length > 0),
+        password: password.toString().length == 0,
       }));
   };
 
@@ -61,7 +61,8 @@ const RegisterPage = () => {
     if (validateOnChange)
       setError((state) => ({
         ...state,
-        reptPassword: password != formState.password,
+        reptPassword:
+          password != formState.password || password.toString().length == 0,
       }));
   };
 
@@ -87,7 +88,10 @@ const RegisterPage = () => {
       inputError = true;
     }
 
-    if (formState.reptPassword != formState.password) {
+    if (
+      formState.reptPassword != formState.password ||
+      formState.reptPassword.length == 0
+    ) {
       setError((state) => ({
         ...state,
         reptPassword: true,
@@ -179,7 +183,7 @@ const RegisterPage = () => {
                   />
                   {error.reptPassword ? (
                     <div className="mt-3">
-                      <FormErrorMessage message="Passwords don't match" />
+                      <FormErrorMessage message="Passwords must match and should not not be empty" />
                     </div>
                   ) : null}
                 </div>
