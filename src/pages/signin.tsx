@@ -55,12 +55,15 @@ const SignInPage = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    let inputError = false;
+
     if (!isEmailValid(formState.email)) {
       setError((state) => ({
         ...state,
         email: true,
       }));
       setValidateOnChange(true);
+      inputError = true;
     }
 
     if (!(formState.password.length > 0)) {
@@ -69,7 +72,10 @@ const SignInPage = () => {
         password: true,
       }));
       setValidateOnChange(true);
-    } else {
+      inputError = true;
+    }
+
+    if (!inputError) {
       setError({ email: false, password: false });
       setValidateOnChange(false);
 
