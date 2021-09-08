@@ -20,6 +20,7 @@ const SubscriptionForm = () => {
       setValidateOnChange(true);
     } else {
       setError(false);
+      setValidateOnChange(false);
 
       //TODO : Submit Email To Server
       console.log(email);

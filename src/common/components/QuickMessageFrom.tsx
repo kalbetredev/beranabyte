@@ -21,6 +21,7 @@ const QuickMessageFrom = () => {
       setValidateOnChange(true);
     } else {
       setError(false);
+      setValidateOnChange(false);
 
       //TODO : Submit Message To Server
       console.log(message);

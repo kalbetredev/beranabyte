@@ -71,6 +71,7 @@ const ContactPage = () => {
       setValidateOnChange(true);
     } else {
       setError({ email: false, message: false });
+      setValidateOnChange(false);
 
       //TODO : Submit Email & Message To Server
       console.log(formState.email, formState.message);
