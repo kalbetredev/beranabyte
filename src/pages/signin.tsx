@@ -1,15 +1,12 @@
 import React from "react";
 import Page from "../common/layouts/Page";
-import FormInput from "../common/components/FormInput";
-import FormLabel from "../common/components/FormLabel";
-import PrimaryButton from "../common/components/PrimaryButton";
 import Logo from "../common/components/Logo";
-import SecondaryButton from "../common/components/SecondaryButton";
 import {
   REGISTER_PAGE_SLUG,
   SEND_PASSWORD_RESET,
 } from "../common/constants/page-slugs";
 import Link from "next/link";
+import LinkButton from "../common/components/LinkButton";
 
 const SignInPage = () => {
   return (
@@ -24,30 +21,34 @@ const SignInPage = () => {
           <div className="">
             <form action="#" method="POST">
               <div className="mb-6">
-                <FormLabel for="email" label="email" />
+                <label htmlFor="email" className="form-label">
+                  email
+                </label>
                 <div className="mt-1">
-                  <FormInput
+                  <input
                     type="email"
-                    name="email"
                     id="email"
                     autoComplete="off"
-                    required
+                    className="form-input w-full"
                   />
                 </div>
               </div>
               <div className="mb-6">
-                <FormLabel for="password" label="password" />
+                <label htmlFor="password" className="form-label">
+                  password
+                </label>
                 <div className="mt-1">
-                  <FormInput
+                  <input
                     type="password"
-                    name="password"
                     id="password"
                     autoComplete="off"
-                    required
+                    className="form-input w-full"
                   />
                 </div>
               </div>
-              <PrimaryButton type="submit" label="Sign In" />
+              <button type="submit" className="w-full primary-btn">
+                Sign In
+              </button>
               <div className="flex justify-end my-4">
                 <Link href={SEND_PASSWORD_RESET}>
                   <a className="text-sm text-brand dark:text-brand-light hover:text-gray-400 dark:hover:text-gray-300">
@@ -55,12 +56,8 @@ const SignInPage = () => {
                   </a>
                 </Link>
               </div>
-              <div className="border-t border-gray-600 mt-4 pt-2">
-                <SecondaryButton
-                  label="Create Account"
-                  slug={REGISTER_PAGE_SLUG}
-                  className="mt-2"
-                />
+              <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
+                <LinkButton label="Create Account" slug={REGISTER_PAGE_SLUG} />
               </div>
             </form>
           </div>

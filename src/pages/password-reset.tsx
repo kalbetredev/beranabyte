@@ -1,14 +1,12 @@
 import React from "react";
 import Page from "../common/layouts/Page";
-import FormInput from "../common/components/FormInput";
-import FormLabel from "../common/components/FormLabel";
-import PrimaryButton from "../common/components/PrimaryButton";
 import Logo from "../common/components/Logo";
-import SecondaryButton from "../common/components/SecondaryButton";
 import {
   REGISTER_PAGE_SLUG,
   SIGNIN_PAGE_SLUG,
 } from "../common/constants/page-slugs";
+import Link from "next/link";
+import LinkButton from "../common/components/LinkButton";
 
 const PasswordResetPage = () => {
   return (
@@ -23,27 +21,28 @@ const PasswordResetPage = () => {
           <div className="">
             <form action="#" method="POST">
               <div className="mb-6">
-                <FormLabel for="email" label="email" />
+                <label htmlFor="email" className="form-label">
+                  email
+                </label>
                 <div className="mt-1">
-                  <FormInput
+                  <input
                     type="email"
-                    name="email"
                     id="email"
+                    placeholder="Enter Your Email"
                     autoComplete="off"
-                    required
+                    className="form-input w-full"
                   />
                 </div>
               </div>
-              <PrimaryButton type="submit" label="Send Password Reset Link" />
-              <div className="border-t border-gray-600 mt-4 pt-2">
-                <SecondaryButton
-                  label="Sign In"
-                  slug={SIGNIN_PAGE_SLUG}
-                  className="my-2"
-                />
-                <SecondaryButton
+              <button type="submit" className="w-full primary-btn">
+                Send Password Reset Link
+              </button>
+              <div className="border-t border-gray-600 mt-4 pt-4">
+                <LinkButton label="Sign In" slug={SIGNIN_PAGE_SLUG} />
+                <LinkButton
                   label="Create Account"
                   slug={REGISTER_PAGE_SLUG}
+                  className="mt-2"
                 />
               </div>
             </form>

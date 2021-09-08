@@ -2,7 +2,7 @@ import React from "react";
 import { NextPageContext } from "next";
 import Page from "../common/layouts/Page";
 import PageMeta from "../common/types/PageMeta";
-import SecondaryButton from "../common/components/SecondaryButton";
+import LinkButton from "../common/components/LinkButton";
 
 const statusCodes: { [code: number]: string } = {
   400: "Bad Request",
@@ -29,10 +29,10 @@ const ErrorPage = (props: ErrorPageProps) => {
           {props.statusCode}
         </h3>
         <h1 className="mb-8 uppercase font-bold ">{errorMessage}</h1>
-        <SecondaryButton
-          className="max-w-[200px] mx-auto mb-40"
-          slug="/"
+        <LinkButton
           label="TAKE ME HOME"
+          slug="/"
+          className="max-w-[200px] mx-auto mb-40"
         />
       </div>
     </Page>

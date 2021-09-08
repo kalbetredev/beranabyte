@@ -3,10 +3,11 @@ import Link from "next/link";
 import BlogLinks from "../common/components/BlogLinks";
 import FormInputWithButton from "../common/components/FormInputWithButton";
 import ProjectCollection from "../common/components/ProjectCollection";
-import Subscribe from "../common/components/Subscribe";
+import SubscriptionForm from "../common/components/SubscriptionForm";
 import { REGISTER_PAGE_SLUG } from "../common/constants/page-slugs";
 import Page from "../common/layouts/Page";
 import { BlogCategory } from "../common/enums/BlogCategory";
+import QuickMessageFrom from "../common/components/QuickMessageFrom";
 
 const IndexPage: React.FC = () => {
   return (
@@ -71,7 +72,7 @@ const IndexPage: React.FC = () => {
         <div className="border-t w-full dark:border-gray-700 mt-8 pt-10">
           <div className="flex flex-col md:flex-row mt-1">
             <div className="flex-1">
-              <Subscribe />
+              <SubscriptionForm />
             </div>
             <div className="w-full md:ml-10 mt-4 md:mt-0 md:w-[280px] hidden md:block">
               <h2 className="text-xl mb-1 mt-3 md:mt-0">Your Can Also ...</h2>
@@ -88,17 +89,7 @@ const IndexPage: React.FC = () => {
           </div>
           <div className="flex flex-col md:flex-row mt-10">
             <div className="flex-1">
-              <div className="shadow max-w-2xl p-5 rounded-lg border dark:border-gray-700 ">
-                <h2 className="text-xl">For Your Quick thoughts ...</h2>
-                <FormInputWithButton
-                  type="text"
-                  name="message"
-                  id="anonymous_message"
-                  placeholder="Leave a message ..."
-                  label="Send"
-                  className="mt-3"
-                />
-              </div>
+              <QuickMessageFrom />
             </div>
             <div className="w-full md:ml-10 mt-4 md:mt-0 md:w-[280px] hidden md:block"></div>
           </div>
