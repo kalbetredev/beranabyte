@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { SearchIcon } from "@heroicons/react/solid";
+import React, { useRef, useState } from "react";
+import { SearchIcon, XIcon } from "@heroicons/react/solid";
 
 interface SearchInputProps {
   searchOnInput: boolean;
@@ -11,6 +11,7 @@ const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
   const placeholder = props.placeholder ?? "Search";
   const [searchInput, setSearchInput] = useState("");
   const [focus, setFocus] = useState(false);
+  const inputRef = useRef(null);
 
   const handelInputChange = (event: React.FormEvent<HTMLInputElement>) => {
     let value = event.currentTarget.value;
@@ -22,6 +23,12 @@ const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
     if ((event as React.KeyboardEvent).key === "Enter") {
       props.onSearch(searchInput);
     }
+  };
+
+  const clearSearch = () => {
+    setSearchInput("");
+    props.onSearch("");
+    inputRef.current.focus();
   };
 
   return (
@@ -45,8 +52,17 @@ const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
         onKeyUp={onSearch}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
-        className="outline-none pl-8 bg-transparent text-sm w-full border rounded-md flex justify-center items-center p-[6px] border-gray-400 border-opacity-25 focus:border-brand focus:border-opacity-25 focus:ring-brand focus:ring-opacity-50"
+        ref={inputRef}
+        className="outline-none pl-8 pr-8 bg-transparent text-sm w-full border rounded-md flex justify-center items-center p-[6px] border-gray-400 border-opacity-25 focus:border-brand focus:border-opacity-25 focus:ring-brand focus:ring-opacity-50"
       />
+      <div className="absolute pr-2 inset-y-0 right-0 flex items-center">
+        <button
+          onClick={() => clearSearch()}
+          className="h-6 w-6 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 flex justify-center items-center"
+        >
+          <XIcon className="h-4 w-4 text-gray-400" />
+        </button>
+      </div>
     </div>
   );
 };
