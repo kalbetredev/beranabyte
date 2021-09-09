@@ -1,15 +1,16 @@
 import React from "react";
 import Link from "next/link";
 import BlogLinks from "../common/components/BlogLinks";
-import FormInputWithButton from "../common/components/FormInputWithButton";
 import ProjectCollection from "../common/components/ProjectCollection";
 import SubscriptionForm from "../common/components/SubscriptionForm";
 import { REGISTER_PAGE_SLUG } from "../common/constants/page-slugs";
 import Page from "../common/layouts/Page";
-import { BlogCategory } from "../common/enums/BlogCategory";
 import QuickMessageFrom from "../common/components/QuickMessageFrom";
+import useBlogs from "../common/hooks/useBlogs";
 
 const IndexPage: React.FC = () => {
+  const blogData = useBlogs();
+
   return (
     <Page>
       <div className="mb-8 w-full">
@@ -36,16 +37,18 @@ const IndexPage: React.FC = () => {
           <div className="w-full flex flex-wrap">
             <div className="w-full md:w-1/2 md:pr-2">
               <BlogLinks
-                title="Most Viewed Blogs"
-                category={BlogCategory.MOST_VIEWED}
-                count={3}
+                title="Most Viewed"
+                blogs={blogData.mostViewedBlogs}
+                isLoading={blogData.isLoading}
+                isError={blogData.isError}
               />
             </div>
             <div className="w-full md:w-1/2 md:pl-2">
               <BlogLinks
-                title="Latest Blogs"
-                category={BlogCategory.LATEST}
-                count={3}
+                title="Latest"
+                blogs={blogData.latestBlogs}
+                isLoading={blogData.isLoading}
+                isError={blogData.isError}
               />
             </div>
           </div>
@@ -63,8 +66,9 @@ const IndexPage: React.FC = () => {
             <div className="w-full md:ml-10 border-t border-gray-300 dark:border-gray-700 pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
               <BlogLinks
                 title="Related Blogs"
-                category={BlogCategory.PROJECT_RELATED}
-                count={3}
+                blogs={blogData.projectRelatedBlogs}
+                isLoading={blogData.isLoading}
+                isError={blogData.isError}
               />
             </div>
           </div>

@@ -2,11 +2,13 @@ import React from "react";
 import BlogLinks from "../common/components/BlogLinks";
 import ProjectCollection from "../common/components/ProjectCollection";
 import SearchInput from "../common/components/SearchInput";
-import { BlogCategory } from "../common/enums/BlogCategory";
 import { ProjectType } from "../common/enums/ProjectType";
+import useBlogs from "../common/hooks/useBlogs";
 import Page from "../common/layouts/Page";
 
 const ProjectsPage = () => {
+  const blogData = useBlogs();
+
   const onSearch = (search: string) => {
     console.log(search);
   };
@@ -32,8 +34,9 @@ const ProjectsPage = () => {
           <div className="w-full md:ml-10 border-t border-gray-300 dark:border-gray-700 pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
             <BlogLinks
               title="Related Blogs"
-              category={BlogCategory.PROJECT_RELATED}
-              count={3}
+              blogs={blogData.projectRelatedBlogs}
+              isLoading={blogData.isLoading}
+              isError={blogData.isError}
             />
           </div>
         </div>
