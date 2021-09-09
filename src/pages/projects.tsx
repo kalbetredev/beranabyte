@@ -49,7 +49,10 @@ const ProjectsPage = () => {
                 title="Matching Projects"
                 projects={searchResult}
                 isLoading={projects.isLoading}
-                isError={projects.isError}
+                isError={projects.isError || searchResult.length == 0}
+                errorMessage={
+                  projects.isError ? null : "No Matching Projects Found"
+                }
               />
             ) : (
               <>

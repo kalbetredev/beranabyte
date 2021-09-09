@@ -84,7 +84,8 @@ const BlogsPage: React.FC<BlogsPageProps> = (props: BlogsPageProps) => {
                 title="Matching Blogs"
                 blogs={searchResult}
                 isLoading={blogs.isLoading}
-                isError={blogs.isError}
+                isError={blogs.isError || searchResult.length == 0}
+                errorMessage={blogs.isError ? null : "No Matching Blogs Found"}
               />
             ) : (
               <BlogCollection

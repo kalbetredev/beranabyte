@@ -1,5 +1,5 @@
-import { ExclamationIcon } from "@heroicons/react/outline";
 import React from "react";
+import { ExclamationIcon } from "@heroicons/react/outline";
 import BlogMeta from "../types/BlogMeta";
 import BlogItem from "./BlogItem";
 import BlogItemLoading from "./BlogItemLoading";
@@ -9,6 +9,7 @@ interface BlogCollectionProps {
   blogs: BlogMeta[];
   isLoading: boolean;
   isError: boolean;
+  errorMessage?: string;
 }
 
 const BlogCollection: React.FC<BlogCollectionProps> = (
@@ -34,7 +35,9 @@ const BlogCollection: React.FC<BlogCollectionProps> = (
       {props.isError ? (
         <h3 className="text-xs text-red-900 dark:text-red-300 mb-2 flex">
           <ExclamationIcon className="w-4 h-4 text-red-400 mr-1" />
-          Error loading {props.title} blogs
+          {props.errorMessage
+            ? props.errorMessage
+            : `Error loading ${props.title} blogs`}
         </h3>
       ) : (
         props.blogs.map((blog) => <BlogItem key={blog._id} blog={blog} />)

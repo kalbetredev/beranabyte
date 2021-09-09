@@ -10,6 +10,7 @@ interface ProjectCollectionProps {
   projects: Project[];
   isLoading: boolean;
   isError: boolean;
+  errorMessage?: string;
 }
 
 const ProjectCollection: React.FC<ProjectCollectionProps> = (
@@ -38,7 +39,9 @@ const ProjectCollection: React.FC<ProjectCollectionProps> = (
       {props.isError ? (
         <h3 className="text-xs text-red-900 dark:text-red-300 mb-2 flex">
           <ExclamationIcon className="w-4 h-4 text-red-400 mr-1" />
-          Error loading {props.title}
+          {props.errorMessage
+            ? props.errorMessage
+            : `Error loading ${props.title})`}
         </h3>
       ) : (
         props.projects.map((project: Project) => (
