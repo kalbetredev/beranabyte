@@ -7,9 +7,11 @@ import { REGISTER_PAGE_SLUG } from "../common/constants/page-slugs";
 import Page from "../common/layouts/Page";
 import QuickMessageFrom from "../common/components/QuickMessageFrom";
 import useBlogs from "../common/hooks/useBlogs";
+import useProjects from "../common/hooks/useProjects";
 
 const IndexPage: React.FC = () => {
   const blogData = useBlogs();
+  const projects = useProjects();
 
   return (
     <Page>
@@ -58,8 +60,9 @@ const IndexPage: React.FC = () => {
             <div className="flex-1">
               <ProjectCollection
                 title="Featured Projects"
-                featured
-                count={3}
+                projects={projects.openSource}
+                isLoading={projects.isLoading}
+                isError={projects.isError}
                 hideTitleDivider
               />
             </div>
