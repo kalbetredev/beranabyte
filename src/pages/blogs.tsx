@@ -18,25 +18,25 @@ interface BlogsPageProps {
 }
 
 const BlogsPage: React.FC<BlogsPageProps> = (props: BlogsPageProps) => {
-  const blogData = useBlogs();
+  const blogs = useBlogs();
   const router: NextRouter = useRouter();
   const { topic } = router.query;
 
   const [currentTopic, setCurrentTopic] = useState(null);
-  const [blogs, setBlogs] = useState<BlogMeta[]>([]);
+  const [currentTopicBlogs, setCurrentTopicBlogs] = useState<BlogMeta[]>([]);
 
   const [isSearching, setIsSearching] = useState(false);
+  const [searchResult, setSearchResult] = useState<BlogMeta[]>([]);
 
   const onSearch = (search: string) => {
     if (search == "") {
       setIsSearching(false);
-      onTopicChange(currentTopic ? currentTopic : FEATURED);
     } else {
       setIsSearching(true);
       const pattern = new RegExp(search, "i");
-      setBlogs(
-        blogData.blogs
-          ? blogData.blogs.filter(
+      setSearchResult(
+        blogs.blogs
+          ? blogs.blogs.filter(
               (blog) =>
                 blog.title.search(pattern) >= 0 ||
                 blog.summary.search(pattern) >= 0
@@ -53,16 +53,16 @@ const BlogsPage: React.FC<BlogsPageProps> = (props: BlogsPageProps) => {
       topic == FEATURED ? "blogs" : `blogs?topic=${convertToSlug(topic)}`;
     router.push(path, undefined, { shallow: true });
 
-    if (topic == FEATURED) setBlogs(blogData.featuredBlogs);
+    if (topic == FEATURED) setCurrentTopicBlogs(blogs.featuredBlogs);
     else
-      setBlogs(
-        blogData.blogs.filter(
+      setCurrentTopicBlogs(
+        blogs.blogs.filter(
           (blog) => blog.topic.toLowerCase() == topic.toLowerCase()
         )
       );
   };
 
-  if (currentTopic == null && blogData.blogs) {
+  if (currentTopic == null && blogs.blogs) {
     if (topic) onTopicChange(convertSlugToText(topic.toString()));
     else onTopicChange(FEATURED);
   }
@@ -79,12 +79,21 @@ const BlogsPage: React.FC<BlogsPageProps> = (props: BlogsPageProps) => {
         </div>
         <div className="flex flex-col md:flex-row md:mt-10">
           <div className="flex-1">
-            <BlogCollection
-              title={isSearching ? "Search Result" : currentTopic}
-              blogs={blogs}
-              isLoading={blogData.isLoading}
-              isError={blogData.isError}
-            />
+            {isSearching ? (
+              <BlogCollection
+                title="Matching Blogs"
+                blogs={searchResult}
+                isLoading={blogs.isLoading}
+                isError={blogs.isError}
+              />
+            ) : (
+              <BlogCollection
+                title={currentTopic}
+                blogs={currentTopicBlogs}
+                isLoading={blogs.isLoading}
+                isError={blogs.isError}
+              />
+            )}
           </div>
           <div className="w-full border-t border-gray-300 dark:border-gray-700 md:pl-10 pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
             <Topics
@@ -93,15 +102,15 @@ const BlogsPage: React.FC<BlogsPageProps> = (props: BlogsPageProps) => {
             />
             <BlogLinks
               title="Most Viewed"
-              blogs={blogData.mostViewedBlogs}
-              isLoading={blogData.isLoading}
-              isError={blogData.isError}
+              blogs={blogs.mostViewedBlogs}
+              isLoading={blogs.isLoading}
+              isError={blogs.isError}
             />
             <BlogLinks
               title="Latest"
-              blogs={blogData.latestBlogs}
-              isLoading={blogData.isLoading}
-              isError={blogData.isError}
+              blogs={blogs.latestBlogs}
+              isLoading={blogs.isLoading}
+              isError={blogs.isError}
             />
           </div>
         </div>
