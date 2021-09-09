@@ -1,26 +1,19 @@
+import React from "react";
 import IconButton from "./IconButton";
 import Logo from "./Logo";
-import AppBarLink from "./AppBarLink";
-import PageLink from "../types/PageLink";
+import AppBarPageLinks from "./AppBarPageLinks";
 import { useTheme } from "next-themes";
 import Theme from "../enums/Theme";
-import React from "react";
 import Menu from "./Menu";
 import AppBarMenuItems from "./AppBarMenuItems";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import NavMenuItems from "./NavMenuItems";
-import { NextRouter, useRouter } from "next/router";
 import { SunIcon, UserCircleIcon } from "@heroicons/react/outline";
 import { MoonIcon } from "@heroicons/react/solid";
 
-interface AppBarProps {
-  pageLinks: PageLink[];
-}
-
-const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
+const AppBar: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const auth: AuthProvider = useAuth();
-  const router: NextRouter = useRouter();
 
   const switchTheme = () => {
     theme === Theme.DARK ? setTheme(Theme.LIGHT) : setTheme(Theme.DARK);
@@ -34,16 +27,7 @@ const AppBar: React.FC<AppBarProps> = (props: AppBarProps) => {
         </div>
         <div className="flex justify-center items-center">
           <div className="hidden sm:visible sm:flex border-r-2 pr-2 mr-2">
-            {props.pageLinks.map((link) => (
-              <AppBarLink
-                key={link.label}
-                pageLink={link}
-                active={
-                  router.asPath == link.href ||
-                  router.asPath.includes(link.href + "/")
-                }
-              />
-            ))}
+            <AppBarPageLinks />
           </div>
           {auth.user && <UserCircleIcon className="h-6 w-6" />}
           <IconButton onClick={switchTheme}>
