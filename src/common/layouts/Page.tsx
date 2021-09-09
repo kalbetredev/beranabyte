@@ -2,7 +2,6 @@ import Head from "next/head";
 import PageMeta from "../types/PageMeta";
 import { useRouter } from "next/router";
 import AppBar from "../components/AppBar";
-import PageLink from "../types/PageLink";
 import Footer from "../components/Footer";
 
 interface PageContainerProps {
@@ -20,12 +19,6 @@ const PageContainer = (props: PageContainerProps) => {
   };
 
   const router = useRouter();
-
-  const pageLinks: PageLink[] = [
-    { label: "Home", href: "/" },
-    { label: "Blogs", href: "/blogs" },
-    { label: "Projects", href: "/projects" },
-  ];
 
   return (
     <>
@@ -52,7 +45,7 @@ const PageContainer = (props: PageContainerProps) => {
         />
       </Head>
       <div>
-        <AppBar pageLinks={pageLinks} />
+        <AppBar />
         <main className="flex justify-center">
           <div className="flex flex-1 max-w-[960px] px-3 sm:px-6">
             {props.children}
