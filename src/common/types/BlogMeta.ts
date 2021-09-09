@@ -9,7 +9,7 @@ interface BlogMeta {
   lastModifiedOn: string;
   summary: string;
   imageUrl: string;
-  viewCount: Number;
+  viewCount: number;
   linkedProjects: string[];
 }
 
