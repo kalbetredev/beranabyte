@@ -1,19 +1,31 @@
 import React from "react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import Link from "next/link";
 import useSWR from "swr";
 import { TOPICS_API_ENDPOINT } from "../../api/endpoints";
 import TopicsLoading from "./TopicsLoading";
 import { NextRouter, useRouter } from "next/router";
 import { convertToSlug } from "../utils/slug-converter";
+import { FEATURED } from "../constants/labels";
 
-const Topics: React.FC = () => {
+interface TopicsProps {
+  showActiveTopic: boolean;
+  onTopicClick: (string) => void;
+}
+
+const Topics: React.FC<TopicsProps> = (props: TopicsProps) => {
   const router: NextRouter = useRouter();
   const { data, error } = useSWR(TOPICS_API_ENDPOINT);
-  const topics = data ? ["featured", ...data.topics] : data;
+  const topics = data ? [FEATURED, ...data.topics] : data;
   const isLoading: boolean = !error && !data;
 
   if (isLoading) return <TopicsLoading />;
+
+  const isCurrentPath = (topic: string): boolean => {
+    if (props.showActiveTopic)
+      if (topic == FEATURED) return router.asPath == "/blogs";
+      else return router.asPath == "/blogs?topic=" + convertToSlug(topic);
+    else return false;
+  };
 
   return (
     <div className="mb-6 border-l border-gray-400 rounded-2xl px-3 py-1">
@@ -27,25 +39,18 @@ const Topics: React.FC = () => {
         ) : (
           <div className="flex flex-wrap gap-2 mb-2 text-xs text-gray-400">
             {topics.map((topic) => (
-              <Link
+              <button
                 key={topic}
-                href={
-                  "/blogs/" + (topic == "featured" ? "" : convertToSlug(topic))
+                onClick={() => props.onTopicClick(topic)}
+                className={
+                  "border capitalize rounded-full py-1 px-3 border-gray-300 dark:border-gray-600 hover:border-brand dark:hover:border-brand-light hover:text-brand-light" +
+                  (isCurrentPath(topic)
+                    ? " text-brand-light border-brand dark:border-brand"
+                    : "")
                 }
               >
-                <a
-                  className={
-                    "border capitalize rounded-full py-1 px-3 border-gray-300 dark:border-gray-600 hover:border-brand dark:hover:border-brand-light hover:text-brand-light" +
-                    (router.asPath ==
-                    "/blogs" +
-                      (topic == "featured" ? "" : "/" + convertToSlug(topic))
-                      ? " text-brand-light border-brand dark:border-brand"
-                      : "")
-                  }
-                >
-                  {topic}
-                </a>
-              </Link>
+                {topic}
+              </button>
             ))}
           </div>
         )}
