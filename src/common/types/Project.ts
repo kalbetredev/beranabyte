@@ -6,6 +6,9 @@ interface Project {
   tags: string[];
   liveDemoLink: string;
   techStack: string[];
+  type: string;
+  publishedOn: Date;
+  isFeatured: boolean;
 }
 
 export default Project;
