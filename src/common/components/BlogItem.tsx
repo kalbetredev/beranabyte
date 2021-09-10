@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import BlogMeta from "../types/BlogMeta";
-import { formatDate } from "../utils/date-formatter";
+import { format } from "date-fns";
 
 interface BlogSummaryProps {
   blog: BlogMeta;
@@ -10,7 +10,7 @@ interface BlogSummaryProps {
 const BlogItem: React.FC<BlogSummaryProps> = (props: BlogSummaryProps) => {
   const { _id, title, publishedOn, viewCount, summary }: BlogMeta = props.blog;
   const date = new Date(publishedOn);
-  const formattedDate = formatDate(date);
+  const formattedDate = format(new Date(props.blog.publishedOn), "MMM d, yyyy");
 
   return (
     <div>
