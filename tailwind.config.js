@@ -35,6 +35,19 @@ module.exports = {
                 color: "#459F9F",
               },
             },
+            img: {
+              marginBottom: 0,
+              margin: "0px auto",
+              textAlign: "center",
+              width: "100%",
+              aspectRatio: "auto 700 / 467",
+            },
+            "img + em": {
+              fontSize: "0.8em",
+              display: "block",
+              textAlign: "center",
+              marginBottom: "3rem",
+            },
           },
         },
         dark: {
