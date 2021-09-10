@@ -1,17 +1,17 @@
 import { NextRouter, useRouter } from "next/router";
 import React, { useState } from "react";
-import BlogCollection from "../common/components/BlogCollection";
-import BlogLinks from "../common/components/BlogLinks";
-import SearchInput from "../common/components/SearchInput";
-import Topics from "../common/components/Topics";
-import { FEATURED } from "../common/constants/labels";
-import useBlogs from "../common/hooks/useBlogs";
-import Page from "../common/layouts/Page";
-import BlogMeta from "../common/types/BlogMeta";
+import BlogCollection from "../../common/components/BlogCollection";
+import BlogLinks from "../../common/components/BlogLinks";
+import SearchInput from "../../common/components/SearchInput";
+import Topics from "../../common/components/Topics";
+import { FEATURED } from "../../common/constants/labels";
+import useBlogs from "../../common/hooks/useBlogs";
+import Page from "../../common/layouts/Page";
+import BlogMeta from "../../common/types/BlogMeta";
 import {
   convertSlugToText,
   convertToSlug,
-} from "../common/utils/slug-converter";
+} from "../../common/utils/slug-converter";
 
 interface BlogsPageProps {
   topic?: string;
