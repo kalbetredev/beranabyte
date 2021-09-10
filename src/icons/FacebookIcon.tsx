@@ -2,20 +2,25 @@ import React from "react";
 
 const FacebookIcon: React.FC = () => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6"
-      viewBox="0 0 48 48"
-    >
-      <path
-        fill="#3F51B5"
-        d="M42 37a5 5 0 01-5 5H11a5 5 0 01-5-5V11a5 5 0 015-5h26a5 5 0 015 5v26z"
-      />
-      <path
-        fill="#FFF"
-        d="M34.368 25H31v13h-5V25h-3v-4h3v-2.41c.002-3.508 1.459-5.59 5.592-5.59H35v4h-2.287C31.104 17 31 17.6 31 18.723V21h4l-.632 4z"
-      />
-    </svg>
+    <>
+      <span className="h-6 w-6 text-gray-500 dark:text-gray-300">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 3333 3333"
+          shapeRendering="geometricPrecision"
+          textRendering="geometricPrecision"
+          imageRendering="optimizeQuality"
+          fillRule="evenodd"
+          clipRule="evenodd"
+        >
+          <path
+            fill="currentColor"
+            d="M1667 0c460 0 877 187 1179 488 302 302 488 718 488 1179 0 460-187 877-488 1179-302 302-718 488-1179 488-460 0-877-187-1179-488C186 2544 0 2128 0 1667c0-460 187-877 488-1179C790 186 1206 0 1667 0zm181 1137h301V776h-301c-232 0-421 189-421 421v181h-241v361h241v963h361v-963h301l60-361h-361v-181c0-33 28-60 60-60zm913-563c-280-280-666-453-1093-453S854 294 575 574c-280 280-453 666-453 1093s173 814 453 1093c280 280 666 453 1093 453s814-173 1093-453c280-280 453-666 453-1093s-173-814-453-1093z"
+            fillRule="nonzero"
+          />
+        </svg>
+      </span>
+    </>
   );
 };
 

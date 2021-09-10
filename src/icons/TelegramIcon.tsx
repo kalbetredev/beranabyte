@@ -2,25 +2,45 @@ import React from "react";
 
 const TelegramIcon: React.FC = () => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6"
-      viewBox="0 0 48 48"
-    >
-      <path fill="#29b6f6" d="M24 4a20 20 0 100 40 20 20 0 100-40z" />
-      <path
-        fill="#fff"
-        d="M33.95 15l-3.746 19.126s-.161.874-1.245.874c-.576 0-.873-.274-.873-.274l-8.114-6.733-3.97-2.001-5.095-1.355S10 24.375 10 23.625c0-.625.933-.923.933-.923l21.316-8.468c-.001-.001.651-.235 1.126-.234.292 0 .625.125.625.5 0 .25-.05.5-.05.5z"
-      />
-      <path
-        fill="#b0bec5"
-        d="M23 30.505l-3.426 3.374s-.149.115-.348.12a.494.494 0 01-.219-.043l.964-5.965L23 30.505z"
-      />
-      <path
-        fill="#cfd8dc"
-        d="M29.897 18.196a.5.5 0 00-.701-.093L16 26s2.106 5.892 2.427 6.912c.322 1.021.58 1.045.58 1.045l.964-5.965 9.832-9.096a.499.499 0 00.094-.7z"
-      />
-    </svg>
+    <span className="h-6 w-6">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 333334 333334"
+        shape-rendering="geometricPrecision"
+        text-rendering="geometricPrecision"
+        image-rendering="optimizeQuality"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+      >
+        <defs>
+          <linearGradient
+            id="a"
+            gradientUnits="userSpaceOnUse"
+            x1="162482"
+            y1="307276"
+            x2="170852"
+            y2="26057.5"
+          >
+            <stop offset="0" stop-color="#19a8dd" />
+            <stop offset=".678" stop-color="#2ab2e2" />
+            <stop offset="1" stop-color="#3cbde8" />
+          </linearGradient>
+        </defs>
+        <circle cx="166667" cy="166667" r="166667" fill="url(#a)" />
+        <path
+          d="m246886 91205-29735 149919s-4158 10396-15594 5404l-68618-52606-24952-12059-42002-14140s-6446-2288-7069-7277c-624-4992 7277-7694 7277-7694l166970-65498s13722-6030 13722 3951z"
+          fill="#fefefe"
+        />
+        <path
+          d="M127666 239440s-2003-188-4499-8089c-2495-7901-15178-49487-15178-49487l100846-64043s5822-3535 5614 0c0 0 1040 623-2079 3534s-79222 71320-79222 71320l-5481 46765z"
+          fill="#d4e6f1"
+        />
+        <path
+          d="m159250 214094-27141 24745s-2122 1609-4443 601l5197-45965 26387 20619z"
+          fill="#b6d0e5"
+        />
+      </svg>
+    </span>
   );
 };
 
