@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  * {
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: rgba(64, 64, 64, 0.5);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: teal;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #116666;
+  }
+}
+
 @layer components {
   .form-input {
     @apply text-sm border border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 focus:border-brand focus:border-opacity-25 focus:ring-brand focus:ring-opacity-50;
