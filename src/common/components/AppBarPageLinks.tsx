@@ -16,10 +16,12 @@ const AppBarPageLinks: React.FC = () => {
       {mainPages.map((page) => (
         <div
           key={page.slug}
-          className="relative flex justify-center items-center w-20 h-6 hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand cursor-pointer"
+          className="relative w-20 h-6 hover:bg-gray-400 hover:bg-opacity-10 hover:text-brand cursor-pointer"
         >
           <Link href={page.slug}>
-            <a className="text-xs text-center uppercase">{page.label}</a>
+            <a className="text-xs text-center uppercase w-full h-full flex justify-center items-center">
+              {page.label}
+            </a>
           </Link>
           <div
             className={
