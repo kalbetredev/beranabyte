@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import IconButton from "./IconButton";
 import Logo from "./Logo";
 import AppBarPageLinks from "./AppBarPageLinks";
@@ -13,7 +13,10 @@ import { MoonIcon } from "@heroicons/react/solid";
 
 const AppBar: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const auth: AuthProvider = useAuth();
+
+  useEffect(() => setMounted(true), []);
 
   const switchTheme = () => {
     theme === Theme.DARK ? setTheme(Theme.LIGHT) : setTheme(Theme.DARK);
@@ -31,11 +34,12 @@ const AppBar: React.FC = () => {
           </div>
           {auth.user && <UserCircleIcon className="h-6 w-6" />}
           <IconButton onClick={switchTheme}>
-            {theme === Theme.LIGHT ? (
-              <MoonIcon className="h-6 w-6" />
-            ) : (
-              <SunIcon className="h-6 w-6" />
-            )}
+            {mounted &&
+              (theme === Theme.LIGHT ? (
+                <MoonIcon className="h-6 w-6" />
+              ) : (
+                <SunIcon className="h-6 w-6" />
+              ))}
           </IconButton>
           <Menu className="hidden sm:block">
             <AppBarMenuItems />
