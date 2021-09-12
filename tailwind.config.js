@@ -48,6 +48,17 @@ module.exports = {
               textAlign: "center",
               marginBottom: "3rem",
             },
+            "h2, h3, h4, h5, h6": {
+              marginTop: 0,
+              paddingTop: "3.5rem",
+              paddingBottom: "1rem",
+            },
+            ".header-anchor": {
+              textDecoration: "none",
+              position: "absolute",
+              left: "-15px",
+              opacity: "20%",
+            },
           },
         },
         dark: {
@@ -90,9 +101,6 @@ module.exports = {
         },
       }),
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
 };
