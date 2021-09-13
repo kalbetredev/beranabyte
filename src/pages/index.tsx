@@ -16,8 +16,8 @@ const IndexPage: React.FC = () => {
   return (
     <Page>
       <div className="mb-8 w-full">
-        <div className="w-full mt-20 mb-8">
-          <h1 className="text-7xl font-medium">Welcome</h1>
+        <div className="w-full mb-8">
+          <h1 className="text-4xl sm:text-6xl mt-3 font-medium">Welcome</h1>
           <div className="max-w-xl text-sm text-gray-400">
             <h2 className="mt-5">
               I'm Kalkidan B. and you have landed on{" "}

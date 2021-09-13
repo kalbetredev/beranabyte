@@ -47,8 +47,8 @@ const PageContainer = (props: PageContainerProps) => {
       </Head>
       <div>
         <AppBar />
-        <main className="flex justify-center">
-          <div className="flex flex-1 max-w-[960px] px-3 sm:px-6">
+        <main className="mx-auto">
+          <div className="max-w-[960px] px-3 sm:px-6 mx-auto">
             {props.children}
           </div>
         </main>
