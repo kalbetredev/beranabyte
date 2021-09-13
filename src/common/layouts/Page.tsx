@@ -3,6 +3,7 @@ import PageMeta from "../types/PageMeta";
 import { useRouter } from "next/router";
 import AppBar from "../components/AppBar";
 import Footer from "../components/Footer";
+import ScrollTop from "../components/ScrollTop";
 
 interface PageContainerProps {
   meta?: PageMeta;
@@ -52,6 +53,7 @@ const PageContainer = (props: PageContainerProps) => {
           </div>
         </main>
         <Footer />
+        <ScrollTop />
       </div>
     </>
   );
