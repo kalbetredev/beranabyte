@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { ArrowUpIcon } from "@heroicons/react/solid";
+import { ChevronUpIcon } from "@heroicons/react/outline";
 
 const ScrollTop = () => {
   const [showBtn, setShowBtn] = useState(false);
 
   const handleClick = () => {
-    const anchor = document.querySelector("#top-anchor");
-
-    if (anchor) {
-      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   useEffect(() => {
@@ -34,7 +33,7 @@ const ScrollTop = () => {
         }
         onClick={handleClick}
       >
-        <ArrowUpIcon className="w-6 h-6" />
+        <ChevronUpIcon className="w-6 h-6" />
       </button>
     </div>
   );
