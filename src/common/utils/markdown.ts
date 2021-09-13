@@ -31,9 +31,19 @@ const getMarkdownItInstance = (
   return md;
 };
 
-export const getRenderedHtml = (text: string): string => {
+export const getRenderedHtml = (
+  text: string,
+  option: { imageCaptions: boolean; wrapImgWithDiv: boolean } = {
+    imageCaptions: true,
+    wrapImgWithDiv: true,
+  }
+): string => {
   const md = getMarkdownItInstance();
-  return md.render(text);
+  let renderedHtml = md.render(text);
+
+  renderedHtml = getRenderedHtmlWithImageCaptions(renderedHtml);
+  renderedHtml = wrapImagesWithDiv(renderedHtml);
+  return renderedHtml;
 };
 
 export const getTableOfContent = (text: string): TocItem[] => {
@@ -71,4 +81,26 @@ const getToc = (
   });
 
   return tocItems;
+};
+
+export const getRenderedHtmlWithImageCaptions = (
+  renderedHtml: string
+): string => {
+  const $ = cheerio.load(renderedHtml);
+  $("img + em").addClass("img-caption");
+  return $.html();
+};
+
+export const wrapImagesWithDiv = (renderedHtml: string): string => {
+  const $ = cheerio.load(renderedHtml);
+  $("img").map((i, ele) => {
+    const src = ele.attribs["src"];
+    const alt = ele.attribs["alt"];
+    const $imgDiv = $(
+      `<div class="img-container"><img class="rounded-sm shadow-md" src="${src}" alt="${alt}"></div>`
+    );
+    $(ele).replaceWith($imgDiv);
+  });
+
+  return $.html();
 };
