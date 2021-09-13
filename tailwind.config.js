@@ -42,7 +42,7 @@ module.exports = {
               width: "100%",
               aspectRatio: "auto 700 / 467",
             },
-            "img + em": {
+            ".img-caption": {
               fontSize: "0.8em",
               display: "block",
               textAlign: "center",

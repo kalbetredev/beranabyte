@@ -69,8 +69,8 @@ const BlogsPage: React.FC<BlogsPageProps> = (props: BlogsPageProps) => {
 
   return (
     <Page>
-      <div className="mt-4 mb-8 w-full">
-        <div className="w-full mt-14 mb-6 flex justify-end">
+      <div className="mb-8 w-full">
+        <div className="w-full mt-4 mb-6 flex justify-end">
           <SearchInput
             placeholder="Search Blogs"
             searchOnInput={true}

@@ -34,21 +34,20 @@ const BlogPage: React.FC<BlogPageProps> = (props: BlogPageProps) => {
 
   return (
     <Page>
-      <div className="mb-8 w-full flex flex-row-reverse">
-        <div className="p-2 ml-2 w-[180px]">
+      <div className="mb-8 w-full md:flex md:flex-row-reverse md:justify-between">
+        <div className="p-2 w-[170px] hidden md:block">
           <TableOfContents tocItems={props.toc} />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 min-w-0 pr-2">
           <h1 id="title" className="pt-16 text-5xl">
             {props.blog.title}
           </h1>
-          <div className="flex text-gray-400 text-sm mt-4 justify-start items-center">
+          <div className="flex flex-wrap text-gray-400 text-sm mt-4 justify-start items-center">
             <span>{pubDate}</span>
             {dot}
             <span>{props.readingTime} Min Read</span>
             {dot}
-            <span>{props.blog.viewCount} views</span>
-            {dot}
+            <span className="mr-2">{props.blog.viewCount} views</span>
             <IconButton
               slug={generateFacebookShareLink(
                 router.asPath.toString().split("#")[0]
@@ -64,19 +63,22 @@ const BlogPage: React.FC<BlogPageProps> = (props: BlogPageProps) => {
               <LinkedInIcon />
             </IconButton>
           </div>
+
           <div>
-            <div className="my-6">
-              <img src={props.blog.imageUrl} alt={props.blog.title} />
-            </div>
-            {props.blog && (
-              <article
-                className="prose dark:prose-dark mt-4"
-                dangerouslySetInnerHTML={{
-                  __html: props.blog.content,
-                }}
-              ></article>
-            )}
+            <img
+              className="w-full rounded-md shadow-lg object-cover"
+              src={props.blog.imageUrl}
+              alt={props.blog.title}
+            />
           </div>
+          {props.blog && (
+            <article
+              className="prose prose-sm sm:prose md:prose-md break-words dark:prose-dark"
+              dangerouslySetInnerHTML={{
+                __html: props.blog.content,
+              }}
+            ></article>
+          )}
         </div>
       </div>
     </Page>
