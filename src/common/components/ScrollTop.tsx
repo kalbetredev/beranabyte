@@ -13,23 +13,15 @@ const ScrollTop = () => {
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShowBtn(false);
-          } else setShowBtn(true);
-        });
-      },
-      { rootMargin: "0% 0% -80% 0%" }
-    );
+    const scrollHandler = () => {
+      if (window.scrollY > 500) setShowBtn(true);
+      else setShowBtn(false);
+    };
 
-    const element = document.getElementById("top-anchor");
-    if (element) observer.observe(element);
+    window.addEventListener("scroll", scrollHandler);
 
     return () => {
-      const element = document.getElementById("top-anchor");
-      if (element) observer.unobserve(element);
+      window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
 

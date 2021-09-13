@@ -54,7 +54,7 @@ const AppBar: React.FC = () => {
           </div>
         </nav>
       </header>
-      <div id="top-anchor" className="h-12"></div>
+      <div className="h-12"></div>
     </>
   );
 };
