@@ -20,6 +20,7 @@ import {
   getRenderedHtml,
   getTableOfContent,
 } from "../../common/utils/markdown";
+import BlogViewCount from "../../common/components/BlogViewCount";
 
 interface BlogPageProps {
   blog: Blog;
@@ -46,8 +47,7 @@ const BlogPage: React.FC<BlogPageProps> = (props: BlogPageProps) => {
             <span>{pubDate}</span>
             {dot}
             <span>{props.readingTime} Min Read</span>
-            {dot}
-            <span className="mr-2">{props.blog.viewCount} views</span>
+            <BlogViewCount blogId={props.blog._id} />
             <IconButton
               slug={generateFacebookShareLink(
                 router.asPath.toString().split("#")[0]
