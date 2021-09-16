@@ -71,97 +71,95 @@ const SignInPage: React.FC = () => {
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
         <div className="p-4 sm:p-6 shadow rounded-md border border-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:bg-opacity-80">
           <div className="flex flex-col justify-center items-center mb-5">
-            <div className="w-36 h-10 mb-1">
+            <div className={"w-36" + (loading ? " animate-pulse" : "")}>
               <Logo />
             </div>
           </div>
-          <div className="">
-            <form onSubmit={handleSubmit(signIn)}>
-              <div className="mb-6">
-                <label htmlFor="email" className="form-label">
-                  email
-                </label>
-                <div className="mt-1">
-                  <input
-                    type="email"
-                    id="email"
-                    disabled={loading}
-                    autoComplete="off"
-                    {...register("email")}
-                    className={
-                      "form-input w-full" + (errors.email ? " error-ring" : "")
-                    }
-                  />
-                  {errors.email ? (
-                    <div className="mt-3">
-                      <FormErrorMessage
-                        message={errors.email.message.replace(/['"]+/g, "")}
-                      />
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-              <div className="mb-6">
-                <label htmlFor="password" className="form-label">
-                  password
-                </label>
-                <div className="mt-1">
-                  <input
-                    type="password"
-                    id="password"
-                    disabled={loading}
-                    autoComplete="off"
-                    {...register("password")}
-                    className={
-                      "form-input w-full" +
-                      (errors.password ? " error-ring" : "")
-                    }
-                  />
-                  {errors.password ? (
-                    <div className="mt-3">
-                      <FormErrorMessage
-                        message={errors.password.message.replace(/['"]+/g, "")}
-                      />
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-              <button
-                type="submit"
-                disabled={loading}
-                className={
-                  "w-full " + (loading ? "disabled-btn" : "primary-btn")
-                }
+          <form onSubmit={handleSubmit(signIn)}>
+            <div className="mb-6">
+              <label
+                htmlFor="email"
+                className={"form-label" + (loading ? " text-gray-400" : "")}
               >
-                Sign In
-              </button>
-              <div className="flex justify-end my-4 text-sm">
-                {loading ? (
-                  <p className="text-gray-400 cursor-not-allowed">
+                email
+              </label>
+              <div className="mt-1">
+                <input
+                  type="email"
+                  id="email"
+                  disabled={loading}
+                  autoComplete="off"
+                  {...register("email")}
+                  className={
+                    "form-input w-full" + (errors.email ? " error-ring" : "")
+                  }
+                />
+                {errors.email ? (
+                  <div className="mt-3">
+                    <FormErrorMessage
+                      message={errors.email.message.replace(/['"]+/g, "")}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="password"
+                className={"form-label" + (loading ? " text-gray-400" : "")}
+              >
+                password
+              </label>
+              <div className="mt-1">
+                <input
+                  type="password"
+                  id="password"
+                  disabled={loading}
+                  autoComplete="off"
+                  {...register("password")}
+                  className={
+                    "form-input w-full" + (errors.password ? " error-ring" : "")
+                  }
+                />
+                {errors.password ? (
+                  <div className="mt-3">
+                    <FormErrorMessage
+                      message={errors.password.message.replace(/['"]+/g, "")}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className={"w-full " + (loading ? "disabled-btn" : "primary-btn")}
+            >
+              Sign In
+            </button>
+            <div className="flex justify-end my-4 text-sm">
+              {loading ? (
+                <p className="text-gray-400 cursor-not-allowed">
+                  Forgot Your Password ?
+                </p>
+              ) : (
+                <Link href={SEND_PASSWORD_RESET}>
+                  <a className="text-brand dark:text-brand-light hover:text-gray-400 dark:hover:text-gray-300">
                     Forgot Your Password ?
-                  </p>
-                ) : (
-                  <Link href={SEND_PASSWORD_RESET}>
-                    <a className="text-brand dark:text-brand-light hover:text-gray-400 dark:hover:text-gray-300">
-                      Forgot Your Password ?
-                    </a>
-                  </Link>
-                )}
-              </div>
-              <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
-                {loading ? (
-                  <button disabled className="w-full disabled-btn">
-                    Create Account
-                  </button>
-                ) : (
-                  <LinkButton
-                    label="Create Account"
-                    slug={REGISTER_PAGE_SLUG}
-                  />
-                )}
-              </div>
-            </form>
-          </div>
+                  </a>
+                </Link>
+              )}
+            </div>
+            <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
+              {loading ? (
+                <button disabled className="w-full disabled-btn">
+                  Create Account
+                </button>
+              ) : (
+                <LinkButton label="Create Account" slug={REGISTER_PAGE_SLUG} />
+              )}
+            </div>
+          </form>
         </div>
       </div>
     </Page>

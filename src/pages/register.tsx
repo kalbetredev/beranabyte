@@ -66,97 +66,100 @@ const RegisterPage = () => {
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
         <div className="p-4 sm:p-6 shadow rounded-md border border-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:bg-opacity-80">
           <div className="flex flex-col justify-center items-center mb-5">
-            <div className="w-36 h-10 mb-1">
+            <div className={"w-36" + (loading ? " animate-pulse" : "")}>
               <Logo />
             </div>
           </div>
-          <div className="">
-            <form onSubmit={handleSubmit(signUp)}>
-              <div className="mb-6">
-                <label htmlFor="email" className="form-label">
-                  email
-                </label>
-                <div className="mt-1">
-                  <input
-                    type="email"
-                    id="email"
-                    disabled={loading}
-                    autoComplete="off"
-                    {...register("email")}
-                    className={
-                      "form-input w-full" + (errors.email ? " error-ring" : "")
-                    }
-                  />
-                  {errors.email ? (
-                    <div className="mt-3">
-                      <FormErrorMessage
-                        message={errors.email.message.replace(/['"]+/g, "")}
-                      />
-                    </div>
-                  ) : null}
-                </div>
+          <form onSubmit={handleSubmit(signUp)}>
+            <div className="mb-6">
+              <label
+                htmlFor="email"
+                className={"form-label" + (loading ? " text-gray-400" : "")}
+              >
+                email
+              </label>
+              <div className="mt-1">
+                <input
+                  type="email"
+                  id="email"
+                  disabled={loading}
+                  autoComplete="off"
+                  {...register("email")}
+                  className={
+                    "form-input w-full" + (errors.email ? " error-ring" : "")
+                  }
+                />
+                {errors.email ? (
+                  <div className="mt-3">
+                    <FormErrorMessage
+                      message={errors.email.message.replace(/['"]+/g, "")}
+                    />
+                  </div>
+                ) : null}
               </div>
-              <div className="mb-6">
-                <label htmlFor="password" className="form-label">
-                  password
-                </label>
-                <div className="mt-1">
-                  <input
-                    type="password"
-                    id="password"
-                    disabled={loading}
-                    autoComplete="off"
-                    {...register("password")}
-                    className={
-                      "form-input w-full" +
-                      (errors.password ? " error-ring" : "")
-                    }
-                  />
-                  {errors.password ? (
-                    <div className="mt-3">
-                      <FormErrorMessage
-                        message={errors.password.message.replace(/['"]+/g, "")}
-                      />
-                    </div>
-                  ) : null}
-                </div>
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="password"
+                className={"form-label" + (loading ? " text-gray-400" : "")}
+              >
+                password
+              </label>
+              <div className="mt-1">
+                <input
+                  type="password"
+                  id="password"
+                  disabled={loading}
+                  autoComplete="off"
+                  {...register("password")}
+                  className={
+                    "form-input w-full" + (errors.password ? " error-ring" : "")
+                  }
+                />
+                {errors.password ? (
+                  <div className="mt-3">
+                    <FormErrorMessage
+                      message={errors.password.message.replace(/['"]+/g, "")}
+                    />
+                  </div>
+                ) : null}
               </div>
-              <div className="mb-6">
-                <label htmlFor="repeat_password" className="form-label">
-                  repeat password
-                </label>
-                <div className="mt-1">
-                  <input
-                    type="password"
-                    id="repeat_password"
-                    disabled={loading}
-                    autoComplete="off"
-                    {...register("repeat_password")}
-                    className={
-                      "form-input w-full" +
-                      (errors.repeat_password ? " error-ring" : "")
-                    }
-                  />
-                  {errors.repeat_password ? (
-                    <div className="mt-3">
-                      <FormErrorMessage
-                        message={errors.repeat_password.message
-                          .replace(/['"]+/g, "")
-                          .replace("repeat_password", "repeated password")
-                          .replace("[ref:password]", "the same as password")}
-                      />
-                    </div>
-                  ) : null}
-                </div>
+            </div>
+            <div className="mb-6">
+              <label htmlFor="repeat_password" className="form-label">
+                repeat password
+              </label>
+              <div className="mt-1">
+                <input
+                  type="password"
+                  id="repeat_password"
+                  disabled={loading}
+                  autoComplete="off"
+                  {...register("repeat_password")}
+                  className={
+                    "form-input w-full" +
+                    (errors.repeat_password ? " error-ring" : "")
+                  }
+                />
+                {errors.repeat_password ? (
+                  <div className="mt-3">
+                    <FormErrorMessage
+                      message={errors.repeat_password.message
+                        .replace(/['"]+/g, "")
+                        .replace("repeat_password", "repeated password")
+                        .replace("[ref:password]", "the same as password")}
+                    />
+                  </div>
+                ) : null}
               </div>
-              <button type="submit" className="w-full primary-btn">
-                Sign Up
-              </button>
-              <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
-                <LinkButton label="Sign In" slug={SIGNIN_PAGE_SLUG} />
-              </div>
-            </form>
-          </div>
+            </div>
+            <button type="submit" className="w-full primary-btn">
+              Sign Up
+            </button>
+            <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
+              <LinkButton label="Sign In" slug={SIGNIN_PAGE_SLUG} />
+            </div>
+          </form>
         </div>
       </div>
     </Page>
