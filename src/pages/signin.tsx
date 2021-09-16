@@ -7,104 +7,46 @@ import {
 } from "../common/constants/page-slugs";
 import Link from "next/link";
 import LinkButton from "../common/components/LinkButton";
-import { isEmailValid } from "../common/utils/input-validation";
 import FormErrorMessage from "../common/components/FormErrorMessage";
 import useAuth, { AuthProvider } from "../modules/auth/hooks/useAuth";
 import { useRouter } from "next/router";
 import useAlert, { AlertProvider } from "../common/hooks/useAlert";
 import APIError from "../api/models/APIError";
-
-interface SingInForm {
-  email: string;
-  password: string;
-}
-
-interface FormError {
-  email: boolean;
-  password: boolean;
-}
+import { useForm } from "react-hook-form";
+import Joi from "joi";
+import { joiResolver } from "@hookform/resolvers/joi";
 
 interface SignInPageProps {
   redirectUrl?: string;
 }
 
+const signInFormSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  password: Joi.string().min(3).max(30).required(),
+});
+
 const SignInPage: React.FC<SignInPageProps> = (props: SignInPageProps) => {
   const router = useRouter();
   const auth: AuthProvider = useAuth();
-
   if (auth.user) router.replace("/");
 
   const alert: AlertProvider = useAlert();
   const [loading, setLoading] = useState(false);
-
-  const [formState, setFormState] = useState<SingInForm>({
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(signInFormSchema),
   });
 
-  const [error, setError] = useState<FormError>({
-    email: false,
-    password: false,
-  });
-
-  const [validateOnChange, setValidateOnChange] = useState(false);
-
-  const handelEmailChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const email = event.currentTarget.value;
-    setFormState((state) => ({ ...state, email: email }));
-    if (validateOnChange)
-      setError((state) => ({
-        ...state,
-        email: !isEmailValid(email),
-      }));
-  };
-
-  const handelPasswordChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const password = event.currentTarget.value;
-    setFormState((state) => ({ ...state, password: password }));
-    if (validateOnChange)
-      setError((state) => ({
-        ...state,
-        password: password.toString().length == 0,
-      }));
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    let inputError = false;
-
-    if (!isEmailValid(formState.email)) {
-      setError((state) => ({
-        ...state,
-        email: true,
-      }));
-      setValidateOnChange(true);
-      inputError = true;
-    }
-
-    if (formState.password.length == 0) {
-      setError((state) => ({
-        ...state,
-        password: true,
-      }));
-      setValidateOnChange(true);
-      inputError = true;
-    }
-
-    if (!inputError) {
-      setError({ email: false, password: false });
-      setValidateOnChange(false);
-
-      signIn(formState.email, formState.password);
-    }
-  };
-
-  const signIn = (email, pass) => {
+  const signIn = ({ email, password }) => {
     const redirectUrl = props.redirectUrl || "/";
-
     setLoading(true);
     auth
-      .signIn(email, pass)
+      .signIn(email, password)
       .then(() => {
         alert.success("Welcome Back!");
         router.push(redirectUrl);
@@ -131,7 +73,7 @@ const SignInPage: React.FC<SignInPageProps> = (props: SignInPageProps) => {
             </div>
           </div>
           <div className="">
-            <form method="POST" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(signIn)}>
               <div className="mb-6">
                 <label htmlFor="email" className="form-label">
                   email
@@ -140,17 +82,18 @@ const SignInPage: React.FC<SignInPageProps> = (props: SignInPageProps) => {
                   <input
                     type="email"
                     id="email"
-                    value={formState.email}
                     disabled={loading}
-                    onChange={handelEmailChange}
                     autoComplete="off"
+                    {...register("email")}
                     className={
-                      "form-input w-full" + (error.email ? " error-ring" : "")
+                      "form-input w-full" + (errors.email ? " error-ring" : "")
                     }
                   />
-                  {error.email ? (
+                  {errors.email ? (
                     <div className="mt-3">
-                      <FormErrorMessage message="Invalid Email Address" />
+                      <FormErrorMessage
+                        message={errors.email.message.replace(/['"]+/g, "")}
+                      />
                     </div>
                   ) : null}
                 </div>
@@ -163,18 +106,19 @@ const SignInPage: React.FC<SignInPageProps> = (props: SignInPageProps) => {
                   <input
                     type="password"
                     id="password"
-                    value={formState.password}
                     disabled={loading}
-                    onChange={handelPasswordChange}
                     autoComplete="off"
+                    {...register("password")}
                     className={
                       "form-input w-full" +
-                      (error.password ? " error-ring" : "")
+                      (errors.password ? " error-ring" : "")
                     }
                   />
-                  {error.password ? (
+                  {errors.password ? (
                     <div className="mt-3">
-                      <FormErrorMessage message="Password can not be empty" />
+                      <FormErrorMessage
+                        message={errors.password.message.replace(/['"]+/g, "")}
+                      />
                     </div>
                   ) : null}
                 </div>
