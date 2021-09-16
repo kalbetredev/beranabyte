@@ -15,13 +15,11 @@ const throwError = (error) => {
 };
 
 export const registerUser = async (
-  username: string,
   email: string,
   password: string
 ): Promise<User> => {
   const response = await axiosInstance
     .post(AUTH_REGISTER_API_ROUTE, {
-      username: username,
       email: email,
       password: password,
     })

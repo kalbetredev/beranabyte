@@ -7,7 +7,7 @@ const AuthContext = createContext(null);
 export interface AuthProvider {
   user: User;
   signIn: (email: any, password: any) => Promise<void>;
-  signUp: (userName: any, email: any, password: any) => Promise<User>;
+  signUp: (email: any, password: any) => Promise<User>;
   signOut: () => Promise<void>;
   sendPasswordResetEmail: (email: any) => any;
   confirmPasswordReset: (password: any, code: any) => any;
@@ -30,8 +30,8 @@ function useAuthProvider(): AuthProvider {
     return fetchCurrentUser();
   };
 
-  const signUp = async (userName, email, password) => {
-    const response = await auth.registerUser(userName, email, password);
+  const signUp = async (email, password) => {
+    const response = await auth.registerUser(email, password);
     if (!response) return response;
   };
 
