@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import "../styles/globals.css";
 import { SWRConfig } from "swr";
 import axiosFetcher from "../common/utils/fetcher";
+import { ProvideAlert } from "../common/hooks/useAlert";
 
 function BeranabyteApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -20,9 +21,11 @@ function BeranabyteApp(props: AppProps) {
       </Head>
       <SWRConfig value={{ fetcher: axiosFetcher }}>
         <ProvideAuth>
-          <ThemeProvider attribute="class">
-            <Component {...pageProps} />
-          </ThemeProvider>
+          <ProvideAlert>
+            <ThemeProvider attribute="class">
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </ProvideAlert>
         </ProvideAuth>
       </SWRConfig>
     </>
