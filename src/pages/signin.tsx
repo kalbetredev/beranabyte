@@ -16,10 +16,6 @@ import { useForm } from "react-hook-form";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-interface SignInPageProps {
-  redirectUrl?: string;
-}
-
 const signInFormSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -27,10 +23,13 @@ const signInFormSchema = Joi.object({
   password: Joi.string().min(3).max(30).required(),
 });
 
-const SignInPage: React.FC<SignInPageProps> = (props: SignInPageProps) => {
+const SignInPage: React.FC = () => {
   const router = useRouter();
+  const { continue_to } = router.query;
+  const continuePath = continue_to?.toString() || "";
+
   const auth: AuthProvider = useAuth();
-  if (auth.user) router.replace("/");
+  if (auth.user) router.replace("/" + continuePath);
 
   const alert: AlertProvider = useAlert();
   const [loading, setLoading] = useState(false);
@@ -43,13 +42,12 @@ const SignInPage: React.FC<SignInPageProps> = (props: SignInPageProps) => {
   });
 
   const signIn = ({ email, password }) => {
-    const redirectUrl = props.redirectUrl || "/";
     setLoading(true);
     auth
       .signIn(email, password)
       .then(() => {
         alert.success("Welcome Back!");
-        router.push(redirectUrl);
+        router.replace("/" + continuePath);
         setLoading(false);
       })
       .catch((error) => {
@@ -58,7 +56,7 @@ const SignInPage: React.FC<SignInPageProps> = (props: SignInPageProps) => {
             ? error.message
             : "An error has occurred authenticating your account. Please try again.";
 
-        alert.error(message, { disableAutoHide: true });
+        alert.error(message);
         setLoading(false);
       });
   };
