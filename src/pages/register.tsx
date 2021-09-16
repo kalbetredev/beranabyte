@@ -12,6 +12,12 @@ import useAuth, { AuthProvider } from "../modules/auth/hooks/useAuth";
 import useAlert, { AlertProvider } from "../common/hooks/useAlert";
 import APIError from "../api/models/APIError";
 
+type RegistrationFormData = {
+  email: string;
+  password: string;
+  repeat_password: string;
+};
+
 const registerFormSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -31,11 +37,11 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<RegistrationFormData>({
     resolver: joiResolver(registerFormSchema),
   });
 
-  const signUp = ({ email, password }) => {
+  const signUp = ({ email, password }: RegistrationFormData) => {
     setLoading(true);
     auth
       .signUp(email, password)

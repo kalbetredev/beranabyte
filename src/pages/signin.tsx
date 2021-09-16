@@ -16,6 +16,11 @@ import { useForm } from "react-hook-form";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
 
+type SignInFormData = {
+  email: string;
+  password: string;
+};
+
 const signInFormSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -37,11 +42,11 @@ const SignInPage: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<SignInFormData>({
     resolver: joiResolver(signInFormSchema),
   });
 
-  const signIn = ({ email, password }) => {
+  const signIn = ({ email, password }: SignInFormData) => {
     setLoading(true);
     auth
       .signIn(email, password)
