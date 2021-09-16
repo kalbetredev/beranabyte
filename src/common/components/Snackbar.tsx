@@ -32,19 +32,17 @@ const Snackbar: React.FC<SnackbarProps> = (props: SnackbarProps) => {
   }, []);
 
   return (
-    <div className="fixed bottom-12 w-full p-6 z-50">
-      <CSSTransition
-        in={isOpen}
-        timeout={500}
-        appear
-        unmountOnExit
-        classNames="zoom"
-        onEnter={handleEnter}
-        onExit={handleClose}
-      >
-        {children}
-      </CSSTransition>
-    </div>
+    <CSSTransition
+      in={isOpen}
+      timeout={500}
+      appear
+      unmountOnExit
+      classNames="zoom"
+      onEnter={handleEnter}
+      onExit={handleClose}
+    >
+      <div className="fixed bottom-12 w-full p-6 z-50">{children}</div>
+    </CSSTransition>
   );
 };
 
