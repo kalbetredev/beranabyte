@@ -33,10 +33,13 @@
     @apply block text-sm font-medium text-gray-700 dark:text-gray-300 capitalize;
   }
   .secondary-btn {
-    @apply flex capitalize justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-600 outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-700 focus:ring-brand-light;
+    @apply flex my-2 capitalize justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-600 outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-700 focus:ring-brand-light;
   }
   .primary-btn {
     @apply flex my-2 capitalize justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-brand hover:bg-brand-light outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-700 focus:ring-brand-light;
+  }
+  .disabled-btn {
+    @apply flex my-2 capitalize justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-gray-400 outline-none cursor-not-allowed bg-gray-600;
   }
   .error-ring {
     @apply ring-1 ring-red-300 focus:ring-red-300 dark:ring-red-800 dark:focus:ring-red-800;
@@ -91,4 +94,36 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   transition: background-color 10000s ease-in-out 0s;
+}
+
+/* Animations */
+.zoom-appear {
+  opacity: 0;
+  transform: scale(0);
+}
+.zoom-appear-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 300ms, transform 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.zoom-enter {
+  opacity: 0;
+  transform: scale(0);
+}
+.zoom-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 300ms, transform 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.zoom-exit {
+  transform: scale(1);
+  opacity: 1;
+}
+.zoom-exit-active {
+  transform: scale(0);
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
