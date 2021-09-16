@@ -3,110 +3,56 @@ import Page from "../common/layouts/Page";
 import Logo from "../common/components/Logo";
 import { SIGNIN_PAGE_SLUG } from "../common/constants/page-slugs";
 import LinkButton from "../common/components/LinkButton";
-import { isEmailValid } from "../common/utils/input-validation";
 import FormErrorMessage from "../common/components/FormErrorMessage";
+import Joi from "joi";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useRouter } from "next/router";
+import useAuth, { AuthProvider } from "../modules/auth/hooks/useAuth";
+import useAlert, { AlertProvider } from "../common/hooks/useAlert";
+import APIError from "../api/models/APIError";
 
-interface RegisterForm {
-  email: string;
-  password: string;
-  reptPassword: string;
-}
-
-interface FormError {
-  email: boolean;
-  password: boolean;
-  reptPassword: boolean;
-}
+const registerFormSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  password: Joi.string().min(3).max(30).required(),
+  repeat_password: Joi.ref("password"),
+});
 
 const RegisterPage = () => {
-  const [formState, setFormState] = useState<RegisterForm>({
-    email: "",
-    password: "",
-    reptPassword: "",
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const auth: AuthProvider = useAuth();
+  if (auth.user) router.replace("/");
+
+  const alert: AlertProvider = useAlert();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(registerFormSchema),
   });
 
-  const [error, setError] = useState<FormError>({
-    email: false,
-    password: false,
-    reptPassword: false,
-  });
+  const signUp = ({ email, password }) => {
+    setLoading(true);
+    auth
+      .signUp(email, password)
+      .then(() => {
+        alert.success("Your account has been created.");
+        router.replace("/");
+        setLoading(false);
+      })
+      .catch((error) => {
+        let message =
+          error instanceof APIError
+            ? error.message
+            : "An error has occurred creating your account. Please try again.";
 
-  const [validateOnChange, setValidateOnChange] = useState(false);
-
-  const handelEmailChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const email = event.currentTarget.value;
-    setFormState((state) => ({ ...state, email: email }));
-    if (validateOnChange)
-      setError((state) => ({
-        ...state,
-        email: !isEmailValid(email),
-      }));
-  };
-
-  const handelPasswordChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const password = event.currentTarget.value;
-    setFormState((state) => ({ ...state, password: password }));
-    if (validateOnChange)
-      setError((state) => ({
-        ...state,
-        password: password.toString().length == 0,
-      }));
-  };
-
-  const handelReptPasswordChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    const password = event.currentTarget.value;
-    setFormState((state) => ({ ...state, reptPassword: password }));
-    if (validateOnChange)
-      setError((state) => ({
-        ...state,
-        reptPassword:
-          password != formState.password || password.toString().length == 0,
-      }));
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    let inputError = false;
-
-    if (!isEmailValid(formState.email)) {
-      setError((state) => ({
-        ...state,
-        email: true,
-      }));
-      setValidateOnChange(true);
-      inputError = true;
-    }
-
-    if (!(formState.password.length > 0)) {
-      setError((state) => ({
-        ...state,
-        password: true,
-      }));
-      setValidateOnChange(true);
-      inputError = true;
-    }
-
-    if (
-      formState.reptPassword != formState.password ||
-      formState.reptPassword.length == 0
-    ) {
-      setError((state) => ({
-        ...state,
-        reptPassword: true,
-      }));
-      setValidateOnChange(true);
-      inputError = true;
-    }
-
-    if (!inputError) {
-      setError({ email: false, password: false, reptPassword: false });
-      setValidateOnChange(false);
-
-      //TODO : Submit Email, Password & reptPassword To Server
-      console.log(formState.email, formState.password);
-    }
+        alert.error(message, { disableAutoHide: true });
+        setLoading(false);
+      });
   };
 
   return (
@@ -119,7 +65,7 @@ const RegisterPage = () => {
             </div>
           </div>
           <div className="">
-            <form method="POST" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(signUp)}>
               <div className="mb-6">
                 <label htmlFor="email" className="form-label">
                   email
@@ -128,16 +74,18 @@ const RegisterPage = () => {
                   <input
                     type="email"
                     id="email"
+                    disabled={loading}
                     autoComplete="off"
-                    value={formState.email}
-                    onChange={handelEmailChange}
+                    {...register("email")}
                     className={
-                      "form-input w-full" + (error.email ? " error-ring" : "")
+                      "form-input w-full" + (errors.email ? " error-ring" : "")
                     }
                   />
-                  {error.email ? (
+                  {errors.email ? (
                     <div className="mt-3">
-                      <FormErrorMessage message="Invalid Email Address" />
+                      <FormErrorMessage
+                        message={errors.email.message.replace(/['"]+/g, "")}
+                      />
                     </div>
                   ) : null}
                 </div>
@@ -150,40 +98,47 @@ const RegisterPage = () => {
                   <input
                     type="password"
                     id="password"
+                    disabled={loading}
                     autoComplete="off"
-                    value={formState.password}
-                    onChange={handelPasswordChange}
+                    {...register("password")}
                     className={
                       "form-input w-full" +
-                      (error.password ? " error-ring" : "")
+                      (errors.password ? " error-ring" : "")
                     }
                   />
-                  {error.password ? (
+                  {errors.password ? (
                     <div className="mt-3">
-                      <FormErrorMessage message="Password can not be empty" />
+                      <FormErrorMessage
+                        message={errors.password.message.replace(/['"]+/g, "")}
+                      />
                     </div>
                   ) : null}
                 </div>
               </div>
               <div className="mb-6">
-                <label htmlFor="rept_password" className="form-label">
+                <label htmlFor="repeat_password" className="form-label">
                   repeat password
                 </label>
                 <div className="mt-1">
                   <input
                     type="password"
-                    id="rept_password"
+                    id="repeat_password"
+                    disabled={loading}
                     autoComplete="off"
-                    value={formState.reptPassword}
-                    onChange={handelReptPasswordChange}
+                    {...register("repeat_password")}
                     className={
                       "form-input w-full" +
-                      (error.reptPassword ? " error-ring" : "")
+                      (errors.repeat_password ? " error-ring" : "")
                     }
                   />
-                  {error.reptPassword ? (
+                  {errors.repeat_password ? (
                     <div className="mt-3">
-                      <FormErrorMessage message="Passwords must match and should not not be empty" />
+                      <FormErrorMessage
+                        message={errors.repeat_password.message
+                          .replace(/['"]+/g, "")
+                          .replace("repeat_password", "repeated password")
+                          .replace("[ref:password]", "the same as password")}
+                      />
                     </div>
                   ) : null}
                 </div>
@@ -191,7 +146,7 @@ const RegisterPage = () => {
               <button type="submit" className="w-full primary-btn">
                 Sign Up
               </button>
-              <div className="border-t border-gray-600 mt-4 pt-4">
+              <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
                 <LinkButton label="Sign In" slug={SIGNIN_PAGE_SLUG} />
               </div>
             </form>
