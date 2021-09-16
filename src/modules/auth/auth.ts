@@ -6,17 +6,26 @@ import {
 } from "../../api/constants/constants";
 import { deleteToken, getToken, setToken } from "../../common/utils/token";
 import User from "./models/User";
+import APIError from "../../api/models/APIError";
+
+const throwError = (error) => {
+  const { msg } = error.response.data;
+  if (msg) throw new APIError(error.response.data.msg);
+  else throw new Error(error.message);
+};
 
 export const registerUser = async (
   username: string,
   email: string,
   password: string
 ): Promise<User> => {
-  const response = await axiosInstance.post(AUTH_REGISTER_API_ROUTE, {
-    username: username,
-    email: email,
-    password: password,
-  });
+  const response = await axiosInstance
+    .post(AUTH_REGISTER_API_ROUTE, {
+      username: username,
+      email: email,
+      password: password,
+    })
+    .catch((error) => throwError(error));
 
   return getUserFromResponse(response);
 };
@@ -25,10 +34,12 @@ export const signIn = async (
   email: string,
   password: string
 ): Promise<User> => {
-  const response = await axiosInstance.post(AUTH_LOGIN_API_ROUTE, {
-    email: email,
-    password: password,
-  });
+  const response = await axiosInstance
+    .post(AUTH_LOGIN_API_ROUTE, {
+      email: email,
+      password: password,
+    })
+    .catch((error) => throwError(error));
 
   return getUserFromResponse(response);
 };
