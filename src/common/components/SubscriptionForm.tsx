@@ -1,30 +1,16 @@
-import React, { useState } from "react";
-import { isEmailValid } from "../utils/input-validation";
-import FormErrorMessage from "./FormErrorMessage";
+import React from "react";
+import Joi from "joi";
 import FormInputWithButton from "./FormInputWithButton";
 
+const subscriptionFormSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+});
+
 const SubscriptionForm = () => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState(false);
-  const [validateOnChange, setValidateOnChange] = useState(false);
-
-  const handelInputChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setEmail(event.currentTarget.value);
-    if (validateOnChange) setError(!isEmailValid(event.currentTarget.value));
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!isEmailValid(email)) {
-      setError(true);
-      setValidateOnChange(true);
-    } else {
-      setError(false);
-      setValidateOnChange(false);
-
-      //TODO : Submit Email To Server
-      console.log(email);
-    }
+  const onSubmit = (data) => {
+    console.log(data.email);
   };
 
   return (
@@ -33,23 +19,15 @@ const SubscriptionForm = () => {
       <p className="text-sm text-gray-400">
         Subscribe to receive notifications when new articles are published
       </p>
-      <form method="POST" onSubmit={handleSubmit}>
-        <FormInputWithButton
-          inputType="email"
-          inputValue={email}
-          inputOnChange={handelInputChange}
-          inputPlaceholder="Please Enter Your Email"
-          btnType="submit"
-          btnLabel="subscribe"
-          className="mt-3"
-          errorState={error}
-        />
-        {error ? (
-          <div className="mt-3">
-            <FormErrorMessage message="Invalid Email Address" />
-          </div>
-        ) : null}
-      </form>
+      <FormInputWithButton
+        inputType="email"
+        inputName="email"
+        inputPlaceholder="Please Enter Your Email"
+        btnLabel="subscribe"
+        className="mt-3"
+        onSubmit={onSubmit}
+        validationSchema={subscriptionFormSchema}
+      />
     </div>
   );
 };
