@@ -1,87 +1,35 @@
+import { joiResolver } from "@hookform/resolvers/joi";
+import Joi from "joi";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import FormErrorMessage from "../common/components/FormErrorMessage";
 import SocialMediaLinks from "../common/components/SocialMediaLinks";
 import Page from "../common/layouts/Page";
-import {
-  isEmailValid,
-  isShortMessageValid,
-} from "../common/utils/input-validation";
 
-interface ContactForm {
+type ContactForm = {
   email: string;
   message: string;
-}
+};
 
-interface FormError {
-  email: boolean;
-  message: boolean;
-}
+const contactFormSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  message: Joi.string().min(10).max(1000).required(),
+});
 
 const ContactPage = () => {
-  const [formState, setFormState] = useState<ContactForm>({
-    email: "",
-    message: "",
+  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ContactForm>({
+    resolver: joiResolver(contactFormSchema),
   });
 
-  const [error, setError] = useState<FormError>({
-    email: false,
-    message: false,
-  });
-
-  const [validateOnChange, setValidateOnChange] = useState(false);
-
-  const handelEmailChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const email = event.currentTarget.value;
-    setFormState((state) => ({ ...state, email: email }));
-    if (validateOnChange)
-      setError((state) => ({
-        ...state,
-        email: !isEmailValid(email),
-      }));
-  };
-
-  const handleMessageChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    const message = event.currentTarget.value;
-    setFormState((state) => ({
-      ...state,
-      message: message,
-    }));
-    if (validateOnChange)
-      setError((state) => ({
-        ...state,
-        message: !isShortMessageValid(message),
-      }));
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    let inputError = false;
-
-    if (!isEmailValid(formState.email)) {
-      setError((state) => ({
-        ...state,
-        email: true,
-      }));
-      setValidateOnChange(true);
-      inputError = true;
-    }
-
-    if (!isShortMessageValid(formState.message)) {
-      setError((state) => ({
-        ...state,
-        message: true,
-      }));
-      setValidateOnChange(true);
-      inputError = true;
-    }
-
-    if (!inputError) {
-      setError({ email: false, message: false });
-      setValidateOnChange(false);
-
-      //TODO : Submit Email & Message To Server
-      console.log(formState.email, formState.message);
-    }
+  const onSubmit = ({ email, message }: ContactForm) => {
+    console.log(email, message);
   };
 
   return (
@@ -96,51 +44,58 @@ const ContactPage = () => {
         </div>
         <h2 className="mt-5">You Can Also Leave a message</h2>
         <div className="mt-5">
-          <form method="POST" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)} name="contactForm">
             <div className="mb-6">
-              <label htmlFor="email" className="form-label">
+              <label
+                htmlFor="email"
+                className={"form-label" + (loading ? " text-gray-400" : "")}
+              >
                 email
               </label>
-              <div className="mt-1 max-w-sm">
+              <div className="mt-1">
                 <input
                   type="email"
                   id="email"
-                  value={formState.email}
-                  onChange={handelEmailChange}
-                  placeholder="Your Email Address"
+                  disabled={loading}
                   autoComplete="off"
+                  {...register("email")}
                   className={
-                    "form-input w-full" + (error.email ? " error-ring" : "")
+                    "form-input w-full" + (errors.email ? " error-ring" : "")
                   }
                 />
-                {error.email ? (
+                {errors.email ? (
                   <div className="mt-3">
-                    <FormErrorMessage message="Invalid Email Address" />
+                    <FormErrorMessage
+                      message={errors.email.message.replace(/['"]+/g, "")}
+                    />
                   </div>
                 ) : null}
               </div>
             </div>
             <div className="mb-6">
-              <label htmlFor="message" className="form-label">
+              <label
+                htmlFor="message"
+                className={"form-label" + (loading ? " text-gray-400" : "")}
+              >
                 Message
               </label>
               <div className="mt-1">
                 <textarea
                   form="contactForm"
                   id="message"
-                  value={formState.message}
-                  onChange={handleMessageChange}
                   placeholder="Your Message"
+                  {...register("message")}
                   className={
                     "w-full text-sm border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 focus:border-brand focus:border-opacity-25 focus:ring-brand focus:ring-opacity-50" +
-                    (error.message ? " error-ring" : "")
+                    (errors.message ? " error-ring" : "")
                   }
                   rows={10}
-                  required
                 ></textarea>
-                {error.message ? (
+                {errors.message ? (
                   <div className="mt-3">
-                    <FormErrorMessage message="Your message should at least be 5 characters long" />
+                    <FormErrorMessage
+                      message={errors.message.message.replace(/['"]+/g, "")}
+                    />
                   </div>
                 ) : null}
               </div>
