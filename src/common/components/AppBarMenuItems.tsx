@@ -11,7 +11,6 @@ import {
   ABOUT_PAGE_SLUG,
   ACC_SETTINGS_PAGE_SLUG,
   CONTACT_PAGE_SLUG,
-  LOGOUT_PAGE_SLUG,
   REGISTER_PAGE_SLUG,
   SIGNIN_PAGE_SLUG,
 } from "../constants/page-slugs";
@@ -19,6 +18,10 @@ import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 
 const AppBarMenuItems = () => {
   const auth: AuthProvider = useAuth();
+
+  const handleSignOut = () => {
+    auth.signOut();
+  };
 
   return (
     <>
@@ -31,8 +34,9 @@ const AppBarMenuItems = () => {
           />
           <MenuItem
             icon={<LogoutIcon className="w-5 h-5" aria-hidden="true" />}
-            label="Log Out"
-            slug={LOGOUT_PAGE_SLUG}
+            label="Sign Out"
+            renderAsButton
+            onClick={handleSignOut}
           />
         </div>
       ) : (
