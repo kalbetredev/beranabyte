@@ -9,6 +9,10 @@ import Link from "next/link";
 import LinkButton from "../common/components/LinkButton";
 import { isEmailValid } from "../common/utils/input-validation";
 import FormErrorMessage from "../common/components/FormErrorMessage";
+import useAuth, { AuthProvider } from "../modules/auth/hooks/useAuth";
+import { useRouter } from "next/router";
+import useAlert, { AlertProvider } from "../common/hooks/useAlert";
+import APIError from "../api/models/APIError";
 
 interface SingInForm {
   email: string;
@@ -20,7 +24,19 @@ interface FormError {
   password: boolean;
 }
 
-const SignInPage = () => {
+interface SignInPageProps {
+  redirectUrl?: string;
+}
+
+const SignInPage: React.FC<SignInPageProps> = (props: SignInPageProps) => {
+  const router = useRouter();
+  const auth: AuthProvider = useAuth();
+
+  if (auth.user) router.replace("/");
+
+  const alert: AlertProvider = useAlert();
+  const [loading, setLoading] = useState(false);
+
   const [formState, setFormState] = useState<SingInForm>({
     email: "",
     password: "",
@@ -79,9 +95,30 @@ const SignInPage = () => {
       setError({ email: false, password: false });
       setValidateOnChange(false);
 
-      //TODO : Submit Email & Password To Server
-      console.log(formState.email, formState.password);
+      signIn(formState.email, formState.password);
     }
+  };
+
+  const signIn = (email, pass) => {
+    const redirectUrl = props.redirectUrl || "/";
+
+    setLoading(true);
+    auth
+      .signIn(email, pass)
+      .then(() => {
+        alert.success("Welcome Back!");
+        router.push(redirectUrl);
+        setLoading(false);
+      })
+      .catch((error) => {
+        let message =
+          error instanceof APIError
+            ? error.message
+            : "An error has occurred authenticating your account. Please try again.";
+
+        alert.error(message, { disableAutoHide: true });
+        setLoading(false);
+      });
   };
 
   return (
@@ -104,6 +141,7 @@ const SignInPage = () => {
                     type="email"
                     id="email"
                     value={formState.email}
+                    disabled={loading}
                     onChange={handelEmailChange}
                     autoComplete="off"
                     className={
@@ -126,6 +164,7 @@ const SignInPage = () => {
                     type="password"
                     id="password"
                     value={formState.password}
+                    disabled={loading}
                     onChange={handelPasswordChange}
                     autoComplete="off"
                     className={
@@ -140,18 +179,39 @@ const SignInPage = () => {
                   ) : null}
                 </div>
               </div>
-              <button type="submit" className="w-full primary-btn">
+              <button
+                type="submit"
+                disabled={loading}
+                className={
+                  "w-full " + (loading ? "disabled-btn" : "primary-btn")
+                }
+              >
                 Sign In
               </button>
-              <div className="flex justify-end my-4">
-                <Link href={SEND_PASSWORD_RESET}>
-                  <a className="text-sm text-brand dark:text-brand-light hover:text-gray-400 dark:hover:text-gray-300">
+              <div className="flex justify-end my-4 text-sm">
+                {loading ? (
+                  <p className="text-gray-400 cursor-not-allowed">
                     Forgot Your Password ?
-                  </a>
-                </Link>
+                  </p>
+                ) : (
+                  <Link href={SEND_PASSWORD_RESET}>
+                    <a className="text-brand dark:text-brand-light hover:text-gray-400 dark:hover:text-gray-300">
+                      Forgot Your Password ?
+                    </a>
+                  </Link>
+                )}
               </div>
               <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
-                <LinkButton label="Create Account" slug={REGISTER_PAGE_SLUG} />
+                {loading ? (
+                  <button disabled className="w-full disabled-btn">
+                    Create Account
+                  </button>
+                ) : (
+                  <LinkButton
+                    label="Create Account"
+                    slug={REGISTER_PAGE_SLUG}
+                  />
+                )}
               </div>
             </form>
           </div>
