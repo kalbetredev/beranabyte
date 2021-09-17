@@ -44,6 +44,15 @@
   .error-ring {
     @apply ring-1 ring-red-300 focus:ring-red-300 dark:ring-red-800 dark:focus:ring-red-800;
   }
+  .separator {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+  .form-separator {
+    @apply border-gray-300 dark:border-gray-600;
+  }
+  .button-border {
+    @apply border-gray-200 dark:border-gray-600;
+  }
 }
 
 /* raleway-regular - latin */
