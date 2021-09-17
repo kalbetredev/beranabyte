@@ -53,12 +53,12 @@ const AboutPage = () => {
         <h2 className="w-full text-md text-gray-400 font-medium mt-5">
           Frontend
         </h2>
-        <div className="flex flex-wrap shadow-inner bg-gray-100 dark:bg-gray-800 py-2 px-1 border-t border-b dark:border-gray-700">
+        <div className="flex flex-wrap shadow-inner bg-gray-100 dark:bg-gray-800 py-2 px-1 border-t border-b separator">
           {["ReactJs", "NextJs", "TailwindCSS", "TypeScript"].map(
             (stack, index) => (
               <div
                 key={index}
-                className="w-16 h-16 rounded-2xl m-1 p-2 border bg-white dark:bg-gray-600 border-gray-200 dark:border-gray-600 flex justify-center items-center"
+                className="w-16 h-16 rounded-2xl m-1 p-2 border bg-white dark:bg-gray-600 separator flex justify-center items-center"
               >
                 <BrandIcon label={stack} />
               </div>
@@ -68,12 +68,12 @@ const AboutPage = () => {
         <h2 className="w-full text-md text-gray-400 font-medium mt-5">
           Backend
         </h2>
-        <div className="flex flex-wrap shadow-inner bg-gray-100 dark:bg-gray-800 py-2 px-1 border-t border-b dark:border-gray-700">
+        <div className="flex flex-wrap shadow-inner bg-gray-100 dark:bg-gray-800 py-2 px-1 border-t border-b separator">
           {["NodeJs", "ExpressJs", "MongoDb", "TypeScript"].map(
             (stack, index) => (
               <div
                 key={index}
-                className="w-16 h-16 rounded-2xl m-1 p-2 border bg-white dark:bg-gray-600 border-gray-200 dark:border-gray-600 flex justify-center items-center"
+                className="w-16 h-16 rounded-2xl m-1 p-2 border bg-white dark:bg-gray-600 separator flex justify-center items-center"
               >
                 <BrandIcon label={stack} />
               </div>

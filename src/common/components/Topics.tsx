@@ -28,7 +28,7 @@ const Topics: React.FC<TopicsProps> = (props: TopicsProps) => {
   };
 
   return (
-    <div className="mb-6 border-l border-gray-400 rounded-2xl px-3 py-1">
+    <div className="mb-6 border-l separator rounded-2xl px-3 py-1">
       <div>
         <h2 className="text-lg mb-2">Topics</h2>
         {error ? (
@@ -43,7 +43,7 @@ const Topics: React.FC<TopicsProps> = (props: TopicsProps) => {
                 key={topic}
                 onClick={() => props.onTopicClick(topic)}
                 className={
-                  "border capitalize rounded-full py-1 px-3 border-gray-300 dark:border-gray-600 hover:border-brand dark:hover:border-brand-light hover:text-brand-light" +
+                  "border capitalize rounded-full py-1 px-3 separator hover:border-brand dark:hover:border-brand-light hover:text-brand-light" +
                   (isCurrentPath(topic)
                     ? " text-brand-light border-brand dark:border-brand"
                     : "")

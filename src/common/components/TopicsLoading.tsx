@@ -2,7 +2,7 @@ import React from "react";
 
 const TopicsLoading = () => {
   return (
-    <div className="mb-6 border-l border-gray-400 rounded-2xl px-3 py-1">
+    <div className="mb-6 border-l separator rounded-2xl px-3 py-1">
       <div>
         <h2 className="text-lg mb-2">Topics</h2>
         <div className="flex animate-pulse flex-wrap gap-2 mb-2 text-xs text-gray-400">

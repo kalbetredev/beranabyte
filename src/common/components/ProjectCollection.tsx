@@ -16,9 +16,7 @@ interface ProjectCollectionProps {
 const ProjectCollection: React.FC<ProjectCollectionProps> = (
   props: ProjectCollectionProps
 ) => {
-  const borderStyle = props.hideTitleDivider
-    ? ""
-    : "border-b border-gray-300 dark:border-gray-700";
+  const borderStyle = props.hideTitleDivider ? "" : "border-b separator";
 
   if (props.isLoading)
     return (

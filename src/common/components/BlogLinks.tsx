@@ -15,7 +15,7 @@ const BlogLinks: React.FC<BlogLinksProps> = (props: BlogLinksProps) => {
   if (props.isLoading) return <BlogLinksLoading title={props.title} />;
 
   return (
-    <div className="mb-6 border-l border-gray-400 rounded-2xl px-3 py-1">
+    <div className="mb-6 border-l separator rounded-2xl px-3 py-1">
       <div>
         <h2 className="text-lg mb-2">{props.title}</h2>
         {props.isError ? (

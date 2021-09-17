@@ -44,7 +44,7 @@ const FormInputWithButton: React.FC<FormInputWithButtonProps> = (
         <div className="absolute right-0 top-0">
           <button
             type="submit"
-            className="w-24 sm:w-32 flex capitalize justify-center py-2 px-4 my-0 border border-gray-300 dark:border-gray-600 rounded-md rounded-l-none text-sm font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 outline-none"
+            className="w-24 sm:w-32 flex capitalize justify-center py-2 px-4 my-0 border separator rounded-md rounded-l-none text-sm font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 outline-none"
           >
             {props.btnLabel}
           </button>

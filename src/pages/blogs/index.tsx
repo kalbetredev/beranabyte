@@ -96,7 +96,7 @@ const BlogsPage: React.FC<BlogsPageProps> = (props: BlogsPageProps) => {
               />
             )}
           </div>
-          <div className="w-full border-t border-gray-300 dark:border-gray-700 md:pl-10 pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
+          <div className="w-full border-t separator md:pl-10 pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
             <Topics
               showActiveTopic={!isSearching}
               onTopicClick={onTopicChange}

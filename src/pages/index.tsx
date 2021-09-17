@@ -35,7 +35,7 @@ const IndexPage: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="border-t w-full dark:border-gray-700 mt-10 pt-10">
+        <div className="border-t w-full separator mt-10 pt-10">
           <div className="w-full flex flex-wrap">
             <div className="w-full md:w-1/2 md:pr-2">
               <BlogLinks
@@ -55,7 +55,7 @@ const IndexPage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="border-t w-full dark:border-gray-700 mt-6">
+        <div className="border-t w-full separator mt-6">
           <div className="flex flex-col md:flex-row md:mt-8">
             <div className="flex-1">
               <ProjectCollection
@@ -66,7 +66,7 @@ const IndexPage: React.FC = () => {
                 hideTitleDivider
               />
             </div>
-            <div className="w-full md:ml-10 border-t border-gray-300 dark:border-gray-700 pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
+            <div className="w-full md:ml-10 border-t separator pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
               <BlogLinks
                 title="Related Blogs"
                 blogs={blogData.projectRelatedBlogs}
@@ -76,7 +76,7 @@ const IndexPage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="border-t w-full dark:border-gray-700 mt-8 pt-10">
+        <div className="border-t w-full separator mt-8 pt-10">
           <div className="flex flex-col md:flex-row mt-1">
             <div className="flex-1">
               <SubscriptionForm />

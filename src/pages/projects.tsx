@@ -81,7 +81,7 @@ const ProjectsPage = () => {
               </>
             )}
           </div>
-          <div className="w-full md:ml-10 border-t border-gray-300 dark:border-gray-700 pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
+          <div className="w-full md:ml-10 border-t separator pt-8 mt-4 md:pt-0 md:mt-14 md:w-[280px] md:border-none">
             <BlogLinks
               title="Related Blogs"
               blogs={blogData.projectRelatedBlogs}

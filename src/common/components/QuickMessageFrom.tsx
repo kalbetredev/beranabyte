@@ -12,7 +12,7 @@ const QuickMessageFrom = () => {
   };
 
   return (
-    <div className="shadow max-w-2xl p-5 rounded-lg border dark:border-gray-700 ">
+    <div className="shadow max-w-2xl p-5 rounded-lg border separator">
       <h2 className="text-xl">For Your Quick thoughts ...</h2>
       <FormInputWithButton
         inputName="message"

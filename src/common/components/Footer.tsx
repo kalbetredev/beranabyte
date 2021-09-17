@@ -3,9 +3,9 @@ import SocialMediaLinks from "./SocialMediaLinks";
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t dark:border-gray-700">
+    <footer className="w-full border-t separator">
       <div className="flex mx-auto flex-col sm:flex-row flex-grow max-w-[960px] sm:px-6 mt-4">
-        <div className="sm:w-1/2 flex flex-col items-center sm:items-end justify-center pr-4 py-2 sm:border-r sm:border-gray-600 text-gray-400">
+        <div className="sm:w-1/2 flex flex-col items-center sm:items-end justify-center pr-4 py-2 sm:border-r sm:separator text-gray-400">
           <div className="flex items-center flex-wrap">
             <SocialMediaLinks />
           </div>

@@ -18,7 +18,7 @@ const BlogCollection: React.FC<BlogCollectionProps> = (
   if (props.isLoading)
     return (
       <div className="w-full">
-        <h2 className="uppercase py-3 mb-4 text-xl border-b border-gray-300 dark:border-gray-700">
+        <h2 className="uppercase py-3 mb-4 text-xl border-b separator">
           {props.title}
         </h2>
         <BlogItemLoading />
@@ -29,7 +29,7 @@ const BlogCollection: React.FC<BlogCollectionProps> = (
 
   return (
     <div className="w-full">
-      <h2 className="uppercase py-3 mb-4 text-xl border-b border-gray-300 dark:border-gray-700">
+      <h2 className="uppercase py-3 mb-4 text-xl border-b separator">
         {props.title}
       </h2>
       {props.isError ? (

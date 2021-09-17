@@ -12,7 +12,7 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
   const { title, liveDemoLink, githubLink, summary, techStack, tags } =
     props.project;
   return (
-    <div className="mb-10 shadow rounded-lg border dark:border-gray-700">
+    <div className="mb-10 shadow rounded-lg border separator">
       <div className="p-3 dark:bg-gray-700 dark:bg-opacity-50">
         <h3 className="text-lg font-medium">{title}</h3>
         <div className="flex">
@@ -27,11 +27,11 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
         </div>
       </div>
 
-      <div className="flex flex-wrap shadow-inner bg-gray-100 dark:bg-gray-800 py-2 px-1 border-t border-b dark:border-gray-700">
+      <div className="flex flex-wrap shadow-inner bg-gray-100 dark:bg-gray-800 py-2 px-1 border-t border-b separator">
         {techStack.map((stack, index) => (
           <div
             key={index}
-            className="w-16 h-16 rounded-2xl m-1 border bg-white dark:bg-gray-600 border-gray-200 dark:border-gray-600 flex justify-center items-center"
+            className="w-16 h-16 rounded-2xl m-1 border bg-white dark:bg-gray-600 separator flex justify-center items-center"
           >
             <BrandIcon label={stack} />
           </div>
@@ -43,7 +43,7 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
           <a
             href={liveDemoLink}
             target="_blank"
-            className="w-36 h-8 text-sm m-2 flex justify-center items-center border hover:bg-gray-100 dark:hover:bg-gray-700 dark:border-gray-600 border-gray-200 rounded-md py-1 px-2"
+            className="w-36 h-8 text-sm m-2 flex justify-center items-center border hover:bg-gray-100 dark:hover:bg-gray-700 separator rounded-md py-1 px-2"
           >
             <span className="w-4 h-4">
               <CubeIcon />
@@ -55,7 +55,7 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
         <a
           href={githubLink}
           target="_blank"
-          className="w-36 h-8 text-sm m-2 flex justify-center items-center border hover:bg-gray-100 dark:hover:bg-gray-700 dark:border-gray-600 border-gray-200 rounded-md py-1 px-2"
+          className="w-36 h-8 text-sm m-2 flex justify-center items-center border hover:bg-gray-100 dark:hover:bg-gray-700 button-border rounded-md py-1 px-2"
         >
           <GitHubIcon size="small" />
           <span className="ml-2 text-xs">Open On Github</span>

@@ -39,7 +39,7 @@ const ContactPage = () => {
           Contact <span className="text-brand">Kalkidan</span>
         </h1>
         <h2 className="mt-5">Use Social Media</h2>
-        <div className="flex mt-3 mb-10 pb-6 border-b border-gray-300 dark:border-gray-700">
+        <div className="flex mt-3 mb-10 pb-6 border-b separator">
           <SocialMediaLinks />
         </div>
         <h2 className="mt-5">You Can Also Leave a message</h2>
@@ -86,7 +86,7 @@ const ContactPage = () => {
                   placeholder="Your Message"
                   {...register("message")}
                   className={
-                    "w-full text-sm border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 focus:border-brand focus:border-opacity-25 focus:ring-brand focus:ring-opacity-50" +
+                    "w-full text-sm separator rounded-md shadow-sm dark:bg-gray-700 focus:border-brand focus:border-opacity-25 focus:ring-brand focus:ring-opacity-50" +
                     (errors.message ? " error-ring" : "")
                   }
                   rows={10}
