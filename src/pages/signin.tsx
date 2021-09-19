@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import Page from "../common/layouts/Page";
 import Logo from "../common/components/Logo";
-import {
-  REGISTER_PAGE_SLUG,
-  SEND_PASSWORD_RESET,
-} from "../common/constants/page-slugs";
+import pageSlugs from "../common/constants/page-slugs";
 import Link from "next/link";
 import LinkButton from "../common/components/LinkButton";
 import FormErrorMessage from "../common/components/FormErrorMessage";
@@ -69,7 +66,7 @@ const SignInPage: React.FC = () => {
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
-        <div className="p-4 sm:p-6 shadow rounded-md border border-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:bg-opacity-80">
+        <div className="p-4 sm:p-6 shadow rounded-md border separator dark:bg-gray-700 dark:bg-opacity-80">
           <div className="flex flex-col justify-center items-center mb-5">
             <div className={"w-36" + (loading ? " animate-pulse" : "")}>
               <Logo />
@@ -143,20 +140,23 @@ const SignInPage: React.FC = () => {
                   Forgot Your Password ?
                 </p>
               ) : (
-                <Link href={SEND_PASSWORD_RESET}>
+                <Link href={pageSlugs.passwordRestPageSlug(continuePath)}>
                   <a className="text-brand dark:text-brand-light hover:text-gray-400 dark:hover:text-gray-300">
                     Forgot Your Password ?
                   </a>
                 </Link>
               )}
             </div>
-            <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
+            <div className="border-t form-separator mt-4 pt-2">
               {loading ? (
                 <button disabled className="w-full disabled-btn">
                   Create Account
                 </button>
               ) : (
-                <LinkButton label="Create Account" slug={REGISTER_PAGE_SLUG} />
+                <LinkButton
+                  label="Create Account"
+                  slug={pageSlugs.signUpPage(continuePath)}
+                />
               )}
             </div>
           </form>
