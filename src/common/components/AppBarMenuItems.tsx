@@ -7,13 +7,7 @@ import {
   UserIcon,
 } from "@heroicons/react/solid";
 import { InformationCircleIcon, ChatIcon } from "@heroicons/react/outline";
-import {
-  ABOUT_PAGE_SLUG,
-  ACC_SETTINGS_PAGE_SLUG,
-  CONTACT_PAGE_SLUG,
-  REGISTER_PAGE_SLUG,
-  SIGNIN_PAGE_SLUG,
-} from "../constants/page-slugs";
+import pageSlugs from "../constants/page-slugs";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 
 const AppBarMenuItems = () => {
@@ -30,7 +24,7 @@ const AppBarMenuItems = () => {
           <MenuItem
             icon={<UserIcon className="w-5 h-5" aria-hidden="true" />}
             label="Account Settings"
-            slug={ACC_SETTINGS_PAGE_SLUG}
+            slug={pageSlugs.accountSettingsPage}
           />
           <MenuItem
             icon={<LogoutIcon className="w-5 h-5" aria-hidden="true" />}
@@ -44,12 +38,12 @@ const AppBarMenuItems = () => {
           <MenuItem
             icon={<PencilAltIcon className="w-5 h-5" aria-hidden="true" />}
             label="Register"
-            slug={REGISTER_PAGE_SLUG}
+            slug={pageSlugs.signUpPage()}
           />
           <MenuItem
             icon={<LoginIcon className="w-5 h-5" aria-hidden="true" />}
             label="Sign In"
-            slug={SIGNIN_PAGE_SLUG}
+            slug={pageSlugs.signInPageSlug()}
           />
         </div>
       )}
@@ -60,12 +54,12 @@ const AppBarMenuItems = () => {
             <InformationCircleIcon className="w-5 h-5" aria-hidden="true" />
           }
           label="About"
-          slug={ABOUT_PAGE_SLUG}
+          slug={pageSlugs.aboutPage}
         />
         <MenuItem
           icon={<ChatIcon className="w-5 h-5" aria-hidden="true" />}
           label="Contact Kalkidan B."
-          slug={CONTACT_PAGE_SLUG}
+          slug={pageSlugs.contactPage}
         />
       </div>
     </>

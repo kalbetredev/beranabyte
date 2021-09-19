@@ -1,6 +1,6 @@
 import React from "react";
 import { NewspaperIcon, CodeIcon } from "@heroicons/react/solid";
-import { BLOGS_PAGE_SLUG, PROJECTS_PAGE_SLUG } from "../constants/page-slugs";
+import pageSlugs from "../constants/page-slugs";
 import MenuItem from "./MenuItem";
 
 const NavMenuItems = () => {
@@ -10,12 +10,12 @@ const NavMenuItems = () => {
         <MenuItem
           icon={<NewspaperIcon className="w-5 h-5" aria-hidden="true" />}
           label="Blogs"
-          slug={BLOGS_PAGE_SLUG}
+          slug={pageSlugs.blogsPage}
         />
         <MenuItem
           icon={<CodeIcon className="w-5 h-5" aria-hidden="true" />}
           label="Projects"
-          slug={PROJECTS_PAGE_SLUG}
+          slug={pageSlugs.projectsPage}
         />
       </div>
     </>

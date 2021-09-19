@@ -1,21 +1,15 @@
-const BLOGS_PAGE_SLUG: string = "/blogs";
-const PROJECTS_PAGE_SLUG: string = "/projects";
-const ABOUT_PAGE_SLUG: string = "/about";
-const REGISTER_PAGE_SLUG: string = "/register";
-const SIGNIN_PAGE_SLUG: string = "/signin";
-const CONTACT_PAGE_SLUG: string = "/contact";
-const ACC_SETTINGS_PAGE_SLUG = "/account-settings";
-const BOOKMARKED_PAGE_SLUG = "/bookmarked";
-const SEND_PASSWORD_RESET = "/password-reset";
-
-export {
-  BLOGS_PAGE_SLUG,
-  PROJECTS_PAGE_SLUG,
-  ABOUT_PAGE_SLUG,
-  REGISTER_PAGE_SLUG,
-  ACC_SETTINGS_PAGE_SLUG,
-  BOOKMARKED_PAGE_SLUG,
-  SIGNIN_PAGE_SLUG,
-  CONTACT_PAGE_SLUG,
-  SEND_PASSWORD_RESET,
+const pageSlugs = {
+  blogsPage: "/blogs",
+  projectsPage: "/projects",
+  aboutPage: "/about",
+  contactPage: "/contact",
+  accountSettingsPage: "/account-settings",
+  signUpPage: (continue_to?: string) =>
+    `/register${continue_to != "" ? "?continue_to=" + continue_to : ""}`,
+  signInPageSlug: (continue_to?: string) =>
+    `/signin${continue_to != "" ? "?continue_to=" + continue_to : ""}`,
+  passwordRestPageSlug: (continue_to?: string) =>
+    `/password-reset${continue_to != "" ? "?continue_to=" + continue_to : ""}`,
 };
+
+export default pageSlugs;

@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { BLOGS_PAGE_SLUG, PROJECTS_PAGE_SLUG } from "../constants/page-slugs";
+import pageSlugs from "../constants/page-slugs";
 
 const AppBarPageLinks: React.FC = () => {
   const router = useRouter();
 
   const mainPages = [
     { slug: "/", label: "home" },
-    { slug: BLOGS_PAGE_SLUG, label: "blogs" },
-    { slug: PROJECTS_PAGE_SLUG, label: "projects" },
+    { slug: pageSlugs.blogsPage, label: "blogs" },
+    { slug: pageSlugs.projectsPage, label: "projects" },
   ];
 
   return (

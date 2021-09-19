@@ -3,11 +3,11 @@ import Link from "next/link";
 import BlogLinks from "../common/components/BlogLinks";
 import ProjectCollection from "../common/components/ProjectCollection";
 import SubscriptionForm from "../common/components/SubscriptionForm";
-import { REGISTER_PAGE_SLUG } from "../common/constants/page-slugs";
 import Page from "../common/layouts/Page";
 import QuickMessageFrom from "../common/components/QuickMessageFrom";
 import useBlogs from "../common/hooks/useBlogs";
 import useProjects from "../common/hooks/useProjects";
+import pageSlugs from "../common/constants/page-slugs";
 
 const IndexPage: React.FC = () => {
   const blogData = useBlogs();
@@ -84,7 +84,7 @@ const IndexPage: React.FC = () => {
             <div className="w-full md:ml-10 mt-4 md:mt-0 md:w-[280px] hidden md:block">
               <h2 className="text-xl mb-1 mt-3 md:mt-0">Your Can Also ...</h2>
               <p className="text-sm text-gray-400 dark:text-gray-300">
-                <Link href={REGISTER_PAGE_SLUG}>
+                <Link href={pageSlugs.signUpPage()}>
                   <a className="font-bold text-brand hover:text-brand-light">
                     Sign Up
                   </a>
