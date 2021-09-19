@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Page from "../common/layouts/Page";
 import Logo from "../common/components/Logo";
-import { SIGNIN_PAGE_SLUG } from "../common/constants/page-slugs";
+import pageSlugs from "../common/constants/page-slugs";
 import LinkButton from "../common/components/LinkButton";
 import FormErrorMessage from "../common/components/FormErrorMessage";
 import Joi from "joi";
@@ -27,12 +27,15 @@ const registerFormSchema = Joi.object({
 });
 
 const RegisterPage = () => {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { continue_to } = router.query;
+  const continuePath = continue_to?.toString() || "";
+
   const auth: AuthProvider = useAuth();
   if (auth.user) router.replace("/");
 
   const alert: AlertProvider = useAlert();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -47,7 +50,7 @@ const RegisterPage = () => {
       .signUp(email, password)
       .then(() => {
         alert.success("Your account has been created.");
-        router.replace("/");
+        router.replace("/" + continuePath);
         setLoading(false);
       })
       .catch((error) => {
@@ -64,7 +67,7 @@ const RegisterPage = () => {
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
-        <div className="p-4 sm:p-6 shadow rounded-md border border-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:bg-opacity-80">
+        <div className="p-4 sm:p-6 shadow rounded-md border separator dark:bg-gray-700 dark:bg-opacity-80">
           <div className="flex flex-col justify-center items-center mb-5">
             <div className={"w-36" + (loading ? " animate-pulse" : "")}>
               <Logo />
@@ -156,8 +159,11 @@ const RegisterPage = () => {
             <button type="submit" className="w-full primary-btn">
               Sign Up
             </button>
-            <div className="border-t border-gray-300 dark:border-gray-600 mt-4 pt-4">
-              <LinkButton label="Sign In" slug={SIGNIN_PAGE_SLUG} />
+            <div className="border-t form-separator mt-4 pt-2">
+              <LinkButton
+                label="Sign In"
+                slug={pageSlugs.signInPageSlug(continuePath)}
+              />
             </div>
           </form>
         </div>
