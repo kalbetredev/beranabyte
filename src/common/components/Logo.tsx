@@ -3,7 +3,7 @@ import Link from "next/link";
 const Logo: React.FC = () => {
   return (
     <Link href="/">
-      <a className="h-[23.81px] w-[100px] ml-2 sm:ml-0">
+      <a className="h-[23.81px] w-[100px]">
         <svg
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"

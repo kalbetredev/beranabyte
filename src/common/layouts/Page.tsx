@@ -48,7 +48,7 @@ const PageContainer = (props: PageContainerProps) => {
       <div>
         <AppBar />
         <main className="mx-auto">
-          <div className="max-w-[960px] px-3 sm:px-6 mx-auto">
+          <div className="max-w-[960px] px-4 sm:px-6 mx-auto">
             {props.children}
           </div>
         </main>

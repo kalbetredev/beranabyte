@@ -21,9 +21,10 @@ const getMarkdownItInstance = (
   });
 
   md.use(anchor, {
-    permalink: true,
-    permalinkBefore: true,
-    permalinkSymbol: "§",
+    permalink: anchor.permalink.ariaHidden({
+      placement: "before",
+      symbol: "🔗",
+    }),
   });
 
   if (options.enableTocPlugin) md.use(markdownItTocDoneRight);
