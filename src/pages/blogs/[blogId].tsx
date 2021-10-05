@@ -21,6 +21,7 @@ import {
   getTableOfContent,
 } from "../../common/utils/markdown";
 import BlogViewCount from "../../common/components/BlogViewCount";
+import Comments from "../../common/components/Comments";
 
 interface BlogPageProps {
   blog: Blog;
@@ -63,7 +64,6 @@ const BlogPage: React.FC<BlogPageProps> = (props: BlogPageProps) => {
               <LinkedInIcon />
             </IconButton>
           </div>
-
           <div>
             <img
               className="w-full rounded-md shadow-lg object-cover"
@@ -79,6 +79,7 @@ const BlogPage: React.FC<BlogPageProps> = (props: BlogPageProps) => {
               }}
             ></article>
           )}
+          <Comments blogId={props.blog._id} />
         </div>
       </div>
     </Page>
