@@ -1,12 +1,12 @@
 import axiosInstance from "../../common/utils/axiosInstance";
-import {
-  AUTH_REGISTER_API_ROUTE,
-  AUTH_LOGIN_API_ROUTE,
-  CURRENT_USER_API_ROUTE,
-} from "../../api/constants/constants";
 import { deleteToken, getToken, setToken } from "../../common/utils/token";
 import User from "./models/User";
 import APIError from "../../api/models/APIError";
+import {
+  AUTH_REGISTER_API_ENDPOINT,
+  AUTH_LOGIN_API_ENDPOINT,
+  CURRENT_USER_API_ENDPOINT,
+} from "../../api/endpoints";
 
 const throwError = (error) => {
   const { msg } = error.response.data;
@@ -19,7 +19,7 @@ export const registerUser = async (
   password: string
 ): Promise<User> => {
   const response = await axiosInstance
-    .post(AUTH_REGISTER_API_ROUTE, {
+    .post(AUTH_REGISTER_API_ENDPOINT, {
       email: email,
       password: password,
     })
@@ -33,7 +33,7 @@ export const signIn = async (
   password: string
 ): Promise<User> => {
   const response = await axiosInstance
-    .post(AUTH_LOGIN_API_ROUTE, {
+    .post(AUTH_LOGIN_API_ENDPOINT, {
       email: email,
       password: password,
     })
@@ -57,7 +57,7 @@ export const getCurrentUser = async (): Promise<User> => {
     };
 
     const user = await axiosInstance
-      .get(CURRENT_USER_API_ROUTE, config)
+      .get(CURRENT_USER_API_ENDPOINT, config)
       .then((response) => {
         return getUserFromResponse(response);
       })
