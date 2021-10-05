@@ -1,18 +1,12 @@
 import axiosInstance from "../../common/utils/axiosInstance";
 import { deleteToken, getToken, setToken } from "../../common/utils/token";
 import User from "./models/User";
-import APIError from "../../api/models/APIError";
 import {
   AUTH_REGISTER_API_ENDPOINT,
   AUTH_LOGIN_API_ENDPOINT,
   CURRENT_USER_API_ENDPOINT,
 } from "../../api/endpoints";
-
-const throwError = (error) => {
-  const { msg } = error.response.data;
-  if (msg) throw new APIError(error.response.data.msg);
-  else throw new Error(error.message);
-};
+import { throwError } from "../../common/utils/error";
 
 export const registerUser = async (
   email: string,
