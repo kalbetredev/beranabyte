@@ -108,6 +108,15 @@ module.exports = {
             figcaption: {
               color: theme("colors.gray.500"),
             },
+            table: {
+              color: theme("colors.gray.300"),
+            },
+            th: {
+              color: theme("colors.gray.300"),
+            },
+            blockquote: {
+              color: theme("colors.gray.300"),
+            },
           },
         },
       }),
