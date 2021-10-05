@@ -8,8 +8,9 @@ import Menu from "./Menu";
 import AppBarMenuItems from "./AppBarMenuItems";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import NavMenuItems from "./NavMenuItems";
-import { SunIcon, UserCircleIcon } from "@heroicons/react/outline";
+import { SunIcon } from "@heroicons/react/outline";
 import { MoonIcon } from "@heroicons/react/solid";
+import UserAvatar from "./UserAvatar";
 
 const AppBar: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -33,7 +34,7 @@ const AppBar: React.FC = () => {
             <div className="hidden sm:visible sm:flex border-r-2 pr-2 mr-2">
               <AppBarPageLinks />
             </div>
-            {auth.user && <UserCircleIcon className="h-6 w-6" />}
+            <UserAvatar userId={auth.user ? auth.user._id : ""} size="small" />
             <IconButton onClick={switchTheme}>
               {mounted &&
                 (theme === Theme.LIGHT ? (
