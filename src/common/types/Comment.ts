@@ -2,7 +2,7 @@ interface Comment {
   _id: string;
   blogId: string;
   authorId: string;
-  text: string;
+  content: string;
   date: string;
 }
 
