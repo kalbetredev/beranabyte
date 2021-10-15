@@ -6,7 +6,6 @@ import { useTheme } from "next-themes";
 import Theme from "../enums/Theme";
 import Menu from "./Menu";
 import AppBarMenuItems from "./AppBarMenuItems";
-import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import NavMenuItems from "./NavMenuItems";
 import { SunIcon } from "@heroicons/react/outline";
 import { MoonIcon } from "@heroicons/react/solid";
@@ -15,7 +14,6 @@ import UserAvatar from "./UserAvatar";
 const AppBar: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const auth: AuthProvider = useAuth();
 
   useEffect(() => setMounted(true), []);
 
@@ -34,7 +32,7 @@ const AppBar: React.FC = () => {
             <div className="hidden sm:visible sm:flex border-r-2 pr-2 mr-2">
               <AppBarPageLinks />
             </div>
-            <UserAvatar userId={auth.user ? auth.user._id : ""} size="small" />
+            <UserAvatar size="small" />
             <IconButton onClick={switchTheme}>
               {mounted &&
                 (theme === Theme.LIGHT ? (
