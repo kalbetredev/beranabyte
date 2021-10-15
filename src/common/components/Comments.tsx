@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import useComments from "../hooks/useComments";
 import UserAvatar from "./UserAvatar";
-import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import MarkdownEditor from "./MarkdownEditor";
 import Joi from "joi";
 import CommentList from "./CommentList";
@@ -16,8 +15,6 @@ const commentMarkdownSchema = Joi.object({
 
 const Comments: React.FC<CommentsProps> = (props: CommentsProps) => {
   const [isSending, setIsSending] = useState(false);
-  const auth: AuthProvider = useAuth();
-
   const { sendComment } = useComments(props.blogId);
 
   const addComment = (comment, clearContent: () => void) => {
@@ -31,7 +28,7 @@ const Comments: React.FC<CommentsProps> = (props: CommentsProps) => {
   return (
     <div className="border-t separator mt-8 pt-4 group">
       <div className="flex mt-2">
-        <UserAvatar userId={auth.user ? auth.user._id : ""} />
+        <UserAvatar />
         <div className="relative flex-1">
           <div className="w-3 inline-block absolute z-50 top-3 -left-1">
             <div className="h-3 bg-gray-50 dark:bg-gray-700 border border-r-0 border-b-0 border-gray-200 dark:border-gray-600 -rotate-45 transform origin-top-right"></div>
