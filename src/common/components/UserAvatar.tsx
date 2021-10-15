@@ -13,6 +13,8 @@ interface UserAvatarProps {
 }
 
 const UserAvatar: React.FC<UserAvatarProps> = (props: UserAvatarProps) => {
+  if (props.userId == "") return null;
+
   const { data, error } = useSWR(USERS_API_ENDPOINT + "/" + props.userId);
   const isLoading = !error && !data;
 
