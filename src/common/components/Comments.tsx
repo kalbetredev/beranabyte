@@ -4,7 +4,7 @@ import UserAvatar from "./UserAvatar";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import MarkdownEditor from "./MarkdownEditor";
 import Joi from "joi";
-import CommentItem from "./CommentItem";
+import CommentList from "./CommentList";
 
 interface CommentsProps {
   blogId: string;
@@ -18,9 +18,7 @@ const Comments: React.FC<CommentsProps> = (props: CommentsProps) => {
   const [isSending, setIsSending] = useState(false);
   const auth: AuthProvider = useAuth();
 
-  const { isLoading, comments, isError, sendComment } = useComments(
-    props.blogId
-  );
+  const { sendComment } = useComments(props.blogId);
 
   const addComment = (comment, clearContent: () => void) => {
     setIsSending(true);
@@ -47,18 +45,10 @@ const Comments: React.FC<CommentsProps> = (props: CommentsProps) => {
           />
         </div>
       </div>
-      <div className="border-t mt-6 pt-4">
+      <div className="border-t separator mt-6 pt-4">
         <h3 className="font-medium">Comments</h3>
         <div className="mt-4">
-          {comments && comments.length > 0 ? (
-            comments.map((comment) => (
-              <CommentItem key={comment._id} comment={comment} />
-            ))
-          ) : (
-            <p className="text-xs">
-              No Comments Yet. Be the first to share your thoughts ....
-            </p>
-          )}
+          <CommentList blogId={props.blogId} />
         </div>
       </div>
     </div>
