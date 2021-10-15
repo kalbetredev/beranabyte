@@ -9,13 +9,14 @@ type AvatarSize = "small" | "default";
 interface UserAvatarProps {
   userId: string;
   size?: AvatarSize;
+  hideOnError?: boolean;
 }
 
 const UserAvatar: React.FC<UserAvatarProps> = (props: UserAvatarProps) => {
   const { data, error } = useSWR(USERS_API_ENDPOINT + "/" + props.userId);
   const isLoading = !error && !data;
 
-  if (error) return <IconButtonError />;
+  if (error) return props.hideOnError ? null : <IconButtonError />;
 
   const sizeClasses =
     props.size == "small" ? "w-7 h-7 text-xs" : "w-9 h-9 text-sm";
@@ -38,6 +39,7 @@ const UserAvatar: React.FC<UserAvatarProps> = (props: UserAvatarProps) => {
 
 UserAvatar.defaultProps = {
   size: "default",
+  hideOnError: true,
 };
 
 export default UserAvatar;
