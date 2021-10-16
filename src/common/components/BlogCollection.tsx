@@ -19,7 +19,7 @@ const BlogCollection: React.FC<BlogCollectionProps> = (
     return (
       <div className="w-full">
         <h2 className="uppercase py-3 mb-4 text-xl border-b separator">
-          {props.title}
+          <div className="w-48 h-5 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
         </h2>
         <BlogItemLoading />
         <BlogItemLoading />
@@ -29,18 +29,20 @@ const BlogCollection: React.FC<BlogCollectionProps> = (
 
   return (
     <div className="w-full">
-      <h2 className="uppercase py-3 mb-4 text-xl border-b separator">
-        {props.title}
-      </h2>
       {props.isError ? (
         <h3 className="text-xs text-red-900 dark:text-red-300 mb-2 flex">
           <ExclamationIcon className="w-4 h-4 text-red-400 mr-1" />
-          {props.errorMessage
-            ? props.errorMessage
-            : `Error loading ${props.title} blogs`}
+          {props.errorMessage ? props.errorMessage : `Error loading blogs`}
         </h3>
       ) : (
-        props.blogs.map((blog) => <BlogItem key={blog._id} blog={blog} />)
+        <>
+          <h2 className="uppercase py-3 mb-4 text-xl border-b separator">
+            {props.title}
+          </h2>
+          {props.blogs.map((blog) => (
+            <BlogItem key={blog._id} blog={blog} />
+          ))}
+        </>
       )}
     </div>
   );
