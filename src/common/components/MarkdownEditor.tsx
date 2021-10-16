@@ -136,14 +136,14 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = (
           </div>
           <div className="rounded-b-lg rounded-r-lg">
             <div className={showPreview ? "hidden" : "block"}>
-              <div className="border dark:border-gray-600 rounded-lg focus-within:border-brand focus-within:border-opacity-30">
+              <div className="border dark:border-gray-600 rounded-lg focus-within:border-brand-light dark:focus-within:border-brand-dark">
                 <textarea
                   form="commentForm"
                   id="comment"
                   placeholder={placeHolder}
                   {...rest}
                   className={
-                    "w-full min-h-[80px] max-h-60 block text-sm rounded-t-lg border-0 border-b dark:border-gray-600 focus:border-gray-300 border-dashed border-gray-300 ring-0 focus:ring-0 " +
+                    "w-full min-h-[80px] max-h-60 block text-sm rounded-t-lg border-0 border-b dark:border-gray-600 focus:border-gray-300 border-dashed border-gray-300 ring-0 focus:ring-0 overflow-hidden " +
                     (isLoading
                       ? "bg-gray-100 dark:bg-gray-700 "
                       : "bg-white dark:bg-gray-800")
@@ -177,7 +177,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = (
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <div className="m-1">
+                  <div className="m-1 w-4 h-4">
                     <SpinnerIcon />
                   </div>
                 ) : null}
