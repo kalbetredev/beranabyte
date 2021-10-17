@@ -159,14 +159,14 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = (
                   Styling with markdown is supported
                 </div>
               </div>
-              {errors.markdown ? (
-                <div className="mt-3">
-                  <FormErrorMessage
-                    message={errors.markdown.message.replace(/['"]+/g, "")}
-                  />
-                </div>
-              ) : null}
             </div>
+            {errors.markdown ? (
+              <div className="mt-3">
+                <FormErrorMessage
+                  message={errors.markdown.message.replace(/['"]+/g, "")}
+                />
+              </div>
+            ) : null}
             <div className="flex flex-col items-end pt-2">
               <button
                 type="submit"
