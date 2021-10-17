@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: rgba(64, 64, 64, 0.5);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: teal;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #116666;
+  }
+}
+
+@layer components {
+  .form-input {
+    @apply text-sm border border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 focus:border-brand focus:border-opacity-25 focus:ring-brand focus:ring-opacity-50;
+  }
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 capitalize;
+  }
+  .secondary-btn {
+    @apply flex my-2 capitalize justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-600 outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-700 focus:ring-brand-light;
+  }
+  .primary-btn {
+    @apply flex my-2 capitalize justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-brand hover:bg-brand-light outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-700 focus:ring-brand-light;
+  }
+  .disabled-btn {
+    @apply flex my-2 capitalize justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-gray-400 outline-none cursor-not-allowed bg-gray-200 dark:bg-gray-600;
+  }
+  .error-ring {
+    @apply ring-1 ring-red-300 focus:ring-red-300 dark:ring-red-800 dark:focus:ring-red-800;
+  }
+  .separator {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+  .form-separator {
+    @apply border-gray-300 dark:border-gray-600;
+  }
+  .button-border {
+    @apply border-gray-200 dark:border-gray-600;
+  }
+}
+
+/* raleway-regular - latin */
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("/fonts/raleway-v19-latin-regular.woff2") format("woff2"),
+    url("/fonts/raleway-v19-latin-regular.woff") format("woff");
+}
+
+/* raleway-700 - latin */
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""), url("/fonts/raleway-v19-latin-700.woff2") format("woff2"),
+    url("/fonts/raleway-v19-latin-700.woff") format("woff");
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Raleway, Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif !important;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*Remove autofill background on chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  transition: background-color 10000s ease-in-out 0s;
+}
+
+/* Animations */
+.zoom-appear {
+  opacity: 0;
+  transform: scale(0);
+}
+.zoom-appear-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 300ms, transform 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.zoom-enter {
+  opacity: 0;
+  transform: scale(0);
+}
+.zoom-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 300ms, transform 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.zoom-exit {
+  transform: scale(1);
+  opacity: 1;
+}
+.zoom-exit-active {
+  transform: scale(0);
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
