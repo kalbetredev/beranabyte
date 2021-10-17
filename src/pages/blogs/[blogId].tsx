@@ -21,7 +21,7 @@ import {
   getTableOfContent,
 } from "../../common/utils/markdown";
 import BlogViewCount from "../../common/components/BlogViewCount";
-import Comments from "../../common/components/Comments";
+import CommentsSection from "../../common/components/Comment/CommentsSection";
 
 interface BlogPageProps {
   blog: Blog;
@@ -79,7 +79,7 @@ const BlogPage: React.FC<BlogPageProps> = (props: BlogPageProps) => {
               }}
             ></article>
           )}
-          <Comments blogId={props.blog._id} />
+          <CommentsSection blogId={props.blog._id} />
         </div>
       </div>
     </Page>

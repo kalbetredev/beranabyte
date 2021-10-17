@@ -1,6 +1,6 @@
 import React from "react";
-import useReply from "../hooks/useReply";
-import ReplyItem from "./ReplyItem";
+import useReply from "../../hooks/useReply";
+import ReplyListItem from "./ReplyListItem";
 
 interface ReplyListProps {
   commentId: string;
@@ -14,7 +14,9 @@ const ReplyList: React.FC<ReplyListProps> = (props: ReplyListProps) => {
   return (
     <>
       {replies && replies.length > 0
-        ? replies.map((reply) => <ReplyItem key={reply._id} reply={reply} />)
+        ? replies.map((reply) => (
+            <ReplyListItem key={reply._id} reply={reply} />
+          ))
         : null}
     </>
   );

@@ -1,26 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import Joi from "joi";
-import SpinnerIcon from "../../icons/SpinnerIcon";
-import FormErrorMessage from "./FormErrorMessage";
+import SpinnerIcon from "../../../icons/SpinnerIcon";
+import FormErrorMessage from "../FormErrorMessage";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import UserAvatar from "./UserAvatar";
-import useReply from "../hooks/useReply";
+import UserAvatar from "../UserAvatar";
+import useReply from "../../hooks/useReply";
 
-type ReplyForm = {
+type ReplyInputForm = {
   text: string;
 };
 
-const replySchema = Joi.object({
+const replyInputSchema = Joi.object({
   text: Joi.string().min(2).max(300).required(),
 });
 
-interface ReplyProps {
+interface ReplyInputProps {
   commentId: string;
   onCancel: () => void;
 }
 
-const Reply: React.FC<ReplyProps> = (props: ReplyProps) => {
+const ReplyInput: React.FC<ReplyInputProps> = (props: ReplyInputProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const textareaEl = useRef<HTMLTextAreaElement>(null);
   const { sendReply } = useReply(props.commentId);
@@ -29,8 +29,8 @@ const Reply: React.FC<ReplyProps> = (props: ReplyProps) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ReplyForm>({
-    resolver: joiResolver(replySchema),
+  } = useForm<ReplyInputForm>({
+    resolver: joiResolver(replyInputSchema),
   });
 
   const { ref, ...rest } = register("text");
@@ -131,4 +131,4 @@ const Reply: React.FC<ReplyProps> = (props: ReplyProps) => {
   );
 };
 
-export default Reply;
+export default ReplyInput;

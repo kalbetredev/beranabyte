@@ -1,6 +1,6 @@
 import React from "react";
 
-const CommentItemLoading = () => {
+const CommentListItemLoading = () => {
   return (
     <div className="flex mb-3 pb-3 animate-pulse">
       <div className="w-10">
@@ -15,4 +15,4 @@ const CommentItemLoading = () => {
   );
 };
 
-export default CommentItemLoading;
+export default CommentListItemLoading;

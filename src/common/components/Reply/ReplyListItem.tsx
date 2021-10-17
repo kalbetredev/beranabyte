@@ -1,16 +1,18 @@
 import React from "react";
-import useUser from "../hooks/useUser";
-import Reply from "../types/Reply";
 import { format } from "date-fns";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import CommentItemLoading from "./CommentItemLoading";
-import UserAvatar from "./UserAvatar";
+import useUser from "../../hooks/useUser";
+import CommentListItemLoading from "../Comment/CommentListItemLoading";
+import UserAvatar from "../UserAvatar";
+import Reply from "../../types/Reply";
 
-interface ReplyItemProps {
+interface ReplyListItemProps {
   reply: Reply;
 }
 
-const ReplyItem: React.FC<ReplyItemProps> = (props: ReplyItemProps) => {
+const ReplyListItem: React.FC<ReplyListItemProps> = (
+  props: ReplyListItemProps
+) => {
   const { reply } = props;
   const { user, isLoading, error } = useUser(reply.authorId);
   const date = new Date(reply.date);
@@ -25,7 +27,7 @@ const ReplyItem: React.FC<ReplyItemProps> = (props: ReplyItemProps) => {
       </h3>
     );
 
-  if (isLoading) return <CommentItemLoading />;
+  if (isLoading) return <CommentListItemLoading />;
 
   return (
     <div className="flex mb-3 pb-3">
@@ -46,4 +48,4 @@ const ReplyItem: React.FC<ReplyItemProps> = (props: ReplyItemProps) => {
   );
 };
 
-export default ReplyItem;
+export default ReplyListItem;

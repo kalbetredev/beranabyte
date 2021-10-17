@@ -1,8 +1,8 @@
 import React from "react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import useComments from "../hooks/useComments";
-import CommentItem from "./CommentItem";
-import CommentItemLoading from "./CommentItemLoading";
+import CommentListItem from "./CommentListItem";
+import CommentListItemLoading from "./CommentListItemLoading";
+import useComments from "../../hooks/useComments";
 
 interface CommentListProps {
   blogId: string;
@@ -14,9 +14,9 @@ const CommentList: React.FC<CommentListProps> = (props: CommentListProps) => {
   if (isLoading)
     return (
       <>
-        <CommentItemLoading />
-        <CommentItemLoading />
-        <CommentItemLoading />
+        <CommentListItemLoading />
+        <CommentListItemLoading />
+        <CommentListItemLoading />
       </>
     );
 
@@ -32,7 +32,7 @@ const CommentList: React.FC<CommentListProps> = (props: CommentListProps) => {
     <>
       {comments && comments.length > 0 ? (
         comments.map((comment) => (
-          <CommentItem key={comment._id} comment={comment} />
+          <CommentListItem key={comment._id} comment={comment} />
         ))
       ) : (
         <p className="text-xs">

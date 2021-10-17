@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import useUser from "../hooks/useUser";
-import Comment from "../types/Comment";
-import UserAvatar from "./UserAvatar";
+import useUser from "../../hooks/useUser";
+import Comment from "../../types/Comment";
+import UserAvatar from "../UserAvatar";
 import { format } from "date-fns";
 import { ExclamationIcon, ReplyIcon } from "@heroicons/react/outline";
-import CommentItemLoading from "./CommentItemLoading";
-import Reply from "./Reply";
-import ReplyList from "./ReplyList";
+import CommentListItemLoading from "./CommentListItemLoading";
+import ReplyInput from "../Reply/ReplyInput";
+import ReplyList from "../Reply/ReplyList";
 
 interface CommentItemProps {
   comment: Comment;
 }
 
-const CommentItem: React.FC<CommentItemProps> = (props: CommentItemProps) => {
+const CommentListItem: React.FC<CommentItemProps> = (
+  props: CommentItemProps
+) => {
   const { comment } = props;
   const { user, isLoading, error } = useUser(comment.authorId);
   const date = new Date(comment.date);
@@ -28,7 +30,7 @@ const CommentItem: React.FC<CommentItemProps> = (props: CommentItemProps) => {
       </h3>
     );
 
-  if (isLoading) return <CommentItemLoading />;
+  if (isLoading) return <CommentListItemLoading />;
 
   const openReply = () => {
     setShowReply(true);
@@ -59,7 +61,7 @@ const CommentItem: React.FC<CommentItemProps> = (props: CommentItemProps) => {
         ></article>
         <div className="flex-1 mt-1">
           {showReply ? (
-            <Reply commentId={comment._id} onCancel={closeReply} />
+            <ReplyInput commentId={comment._id} onCancel={closeReply} />
           ) : (
             <button
               onClick={openReply}
@@ -78,4 +80,4 @@ const CommentItem: React.FC<CommentItemProps> = (props: CommentItemProps) => {
   );
 };
 
-export default CommentItem;
+export default CommentListItem;
