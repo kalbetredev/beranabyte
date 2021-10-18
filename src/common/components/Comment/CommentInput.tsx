@@ -3,6 +3,9 @@ import Joi from "joi";
 import useComments from "../../hooks/useComments";
 import MarkdownEditor from "../MarkdownEditor";
 import UserAvatar from "../UserAvatar";
+import useAuth, { AuthProvider } from "../../../modules/auth/hooks/useAuth";
+import useModal, { ModalProvider } from "../../hooks/useModal";
+import SignInDialog from "../SignInDialog";
 
 interface CommentInputProps {
   blogId: string;
@@ -17,13 +20,25 @@ const CommentInput: React.FC<CommentInputProps> = (
 ) => {
   const [isSending, setIsSending] = useState(false);
   const { sendComment } = useComments(props.blogId);
+  const auth: AuthProvider = useAuth();
+  const modal: ModalProvider = useModal();
 
   const addComment = (comment, clearContent: () => void) => {
     setIsSending(true);
-    sendComment(props.blogId, comment, (success: boolean) => {
-      setIsSending(false);
-      if (success) clearContent();
-    });
+
+    const send = () =>
+      sendComment(props.blogId, comment, (success: boolean) => {
+        setIsSending(false);
+        if (success) clearContent();
+      });
+
+    if (auth.user) send();
+    else {
+      modal.addOnCloseHandler(() => setIsSending(false));
+      modal.openModal(
+        <SignInDialog onSuccess={() => send()} onClose={modal.closeModal} />
+      );
+    }
   };
 
   return (
