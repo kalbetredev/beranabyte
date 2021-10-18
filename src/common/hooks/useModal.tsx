@@ -6,13 +6,16 @@ const ModalContext = createContext(null);
 export interface ModalProvider {
   openModal: (content: React.ReactNode) => void;
   closeModal: () => void;
+  addOnCloseHandler: (handler: () => void) => void;
 }
 
 export const ProvideModal = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  const [onCloseHandlers, setOnCloseHandlers] = useState<(() => void)[]>([]);
 
   const closeModal = () => {
+    onCloseHandlers.forEach((handler) => handler());
     setIsOpen(false);
   };
 
@@ -21,9 +24,13 @@ export const ProvideModal = ({ children }) => {
     setIsOpen(true);
   };
 
+  const addOnCloseHandler = (handler: () => void) => {
+    setOnCloseHandlers((prev) => [...prev, handler]);
+  };
+
   return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+    <ModalContext.Provider value={{ openModal, closeModal, addOnCloseHandler }}>
+      <Modal isOpen={isOpen} onClose={() => closeModal()}>
         {modalContent}
       </Modal>
       {children}
