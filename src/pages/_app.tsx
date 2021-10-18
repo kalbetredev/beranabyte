@@ -7,6 +7,7 @@ import "../styles/globals.css";
 import { SWRConfig } from "swr";
 import axiosFetcher from "../common/utils/fetcher";
 import { ProvideAlert } from "../common/hooks/useAlert";
+import { ProvideModal } from "../common/hooks/useModal";
 
 function BeranabyteApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -22,9 +23,11 @@ function BeranabyteApp(props: AppProps) {
       <SWRConfig value={{ fetcher: axiosFetcher }}>
         <ProvideAuth>
           <ProvideAlert>
-            <ThemeProvider attribute="class">
-              <Component {...pageProps} />
-            </ThemeProvider>
+            <ProvideModal>
+              <ThemeProvider attribute="class">
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </ProvideModal>
           </ProvideAlert>
         </ProvideAuth>
       </SWRConfig>
