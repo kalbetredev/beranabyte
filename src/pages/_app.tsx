@@ -22,13 +22,13 @@ function BeranabyteApp(props: AppProps) {
       </Head>
       <SWRConfig value={{ fetcher: axiosFetcher }}>
         <ProvideAuth>
-          <ProvideModal>
-            <ProvideAlert>
+          <ProvideAlert>
+            <ProvideModal>
               <ThemeProvider attribute="class">
                 <Component {...pageProps} />
               </ThemeProvider>
-            </ProvideAlert>
-          </ProvideModal>
+            </ProvideModal>
+          </ProvideAlert>
         </ProvideAuth>
       </SWRConfig>
     </>
