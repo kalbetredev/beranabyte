@@ -7,6 +7,9 @@ import { ExclamationIcon, ReplyIcon } from "@heroicons/react/outline";
 import CommentListItemLoading from "./CommentListItemLoading";
 import ReplyInput from "../Reply/ReplyInput";
 import ReplyList from "../Reply/ReplyList";
+import useAuth, { AuthProvider } from "../../../modules/auth/hooks/useAuth";
+import useModal, { ModalProvider } from "../../hooks/useModal";
+import SignInDialog from "../SignInDialog";
 
 interface CommentItemProps {
   comment: Comment;
@@ -21,6 +24,8 @@ const CommentListItem: React.FC<CommentItemProps> = (
   const formattedDate = format(new Date(comment.date), "MMM d, yyyy");
   const dot = <span className="h-1 w-1 rounded-full bg-gray-400 mx-2"></span>;
   const [showReply, setShowReply] = useState(false);
+  const auth: AuthProvider = useAuth();
+  const modal: ModalProvider = useModal();
 
   if (error)
     return (
@@ -33,7 +38,15 @@ const CommentListItem: React.FC<CommentItemProps> = (
   if (isLoading) return <CommentListItemLoading />;
 
   const openReply = () => {
-    setShowReply(true);
+    if (auth.user) setShowReply(true);
+    else {
+      modal.openModal(
+        <SignInDialog
+          onSuccess={() => setShowReply(true)}
+          onClose={modal.closeModal}
+        />
+      );
+    }
   };
 
   const closeReply = () => {
