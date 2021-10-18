@@ -4,12 +4,18 @@ import SignInForm from "./SignInForm";
 
 interface SignInDialogProps {
   onClose: () => void;
+  onSuccess: () => void;
 }
 
 const SignInDialog: React.FC<SignInDialogProps> = (
   props: SignInDialogProps
 ) => {
-  const { onClose } = props;
+  const { onClose, onSuccess } = props;
+
+  const handleSuccess = () => {
+    onSuccess();
+    onClose();
+  };
 
   return (
     <div className="relative">
@@ -19,7 +25,7 @@ const SignInDialog: React.FC<SignInDialogProps> = (
       >
         <XIcon className="w-5 h-5 text-red-400" />
       </button>
-      <SignInForm onSuccess={onClose} />
+      <SignInForm onSuccess={handleSuccess} />
     </div>
   );
 };
