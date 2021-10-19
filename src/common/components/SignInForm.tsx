@@ -10,6 +10,7 @@ import pageSlugs from "../constants/page-slugs";
 import useAlert, { AlertProvider } from "../hooks/useAlert";
 import FormErrorMessage from "./FormErrorMessage";
 import LinkButton from "./LinkButton";
+import { useRouter } from "next/router";
 
 type SignInFormData = {
   email: string;
@@ -31,6 +32,7 @@ interface SignInFormProps {
 const SignInForm: React.FC<SignInFormProps> = (props: SignInFormProps) => {
   const { onSuccess, continuePath } = props;
   const auth: AuthProvider = useAuth();
+  const router = useRouter();
 
   const alert: AlertProvider = useAlert();
   const [loading, setLoading] = useState(false);
@@ -137,7 +139,11 @@ const SignInForm: React.FC<SignInFormProps> = (props: SignInFormProps) => {
               Forgot Your Password ?
             </p>
           ) : (
-            <Link href={pageSlugs.passwordRestPageSlug(continuePath)}>
+            <Link
+              href={pageSlugs.passwordRestPageSlug(
+                continuePath ? continuePath : router.asPath
+              )}
+            >
               <a className="text-brand dark:text-brand-light hover:text-gray-400 dark:hover:text-gray-300">
                 Forgot Your Password ?
               </a>
@@ -152,17 +158,15 @@ const SignInForm: React.FC<SignInFormProps> = (props: SignInFormProps) => {
           ) : (
             <LinkButton
               label="Create Account"
-              slug={pageSlugs.signUpPageSlug(continuePath)}
+              slug={pageSlugs.signUpPageSlug(
+                continuePath ? continuePath : router.asPath
+              )}
             />
           )}
         </div>
       </form>
     </div>
   );
-};
-
-SignInForm.defaultProps = {
-  continuePath: "/",
 };
 
 export default SignInForm;
