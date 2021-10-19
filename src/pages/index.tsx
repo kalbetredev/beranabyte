@@ -84,7 +84,7 @@ const IndexPage: React.FC = () => {
             <div className="w-full md:ml-10 mt-4 md:mt-0 md:w-[280px] hidden md:block">
               <h2 className="text-xl mb-1 mt-3 md:mt-0">Your Can Also ...</h2>
               <p className="text-sm text-gray-400 dark:text-gray-300">
-                <Link href={pageSlugs.signUpPage()}>
+                <Link href={pageSlugs.signUpPageSlug()}>
                   <a className="font-bold text-brand hover:text-brand-light">
                     Sign Up
                   </a>

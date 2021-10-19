@@ -152,7 +152,7 @@ const SignInForm: React.FC<SignInFormProps> = (props: SignInFormProps) => {
           ) : (
             <LinkButton
               label="Create Account"
-              slug={pageSlugs.signUpPage(continuePath)}
+              slug={pageSlugs.signUpPageSlug(continuePath)}
             />
           )}
         </div>
