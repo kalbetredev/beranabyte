@@ -9,9 +9,11 @@ import {
 import { InformationCircleIcon, ChatIcon } from "@heroicons/react/outline";
 import pageSlugs from "../constants/page-slugs";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
+import { useRouter } from "next/router";
 
 const AppBarMenuItems = () => {
   const auth: AuthProvider = useAuth();
+  const router = useRouter();
 
   const handleSignOut = () => {
     auth.signOut();
@@ -38,12 +40,12 @@ const AppBarMenuItems = () => {
           <MenuItem
             icon={<PencilAltIcon className="w-5 h-5" aria-hidden="true" />}
             label="Register"
-            slug={pageSlugs.signUpPage()}
+            slug={pageSlugs.signUpPage(router.asPath)}
           />
           <MenuItem
             icon={<LoginIcon className="w-5 h-5" aria-hidden="true" />}
             label="Sign In"
-            slug={pageSlugs.signInPageSlug()}
+            slug={pageSlugs.signInPageSlug(router.asPath)}
           />
         </div>
       )}
