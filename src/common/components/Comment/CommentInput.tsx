@@ -32,11 +32,16 @@ const CommentInput: React.FC<CommentInputProps> = (
         if (success) clearContent();
       });
 
+    const handleModalClose = () => {
+      modal.closeModal();
+      setIsSending(false);
+    };
+
     if (auth.user) send();
     else {
-      modal.addOnCloseHandler(() => setIsSending(false));
+      modal.addOnCloseHandler(handleModalClose);
       modal.openModal(
-        <SignInDialog onSuccess={() => send()} onClose={modal.closeModal} />
+        <SignInDialog onSuccess={() => send()} onClose={handleModalClose} />
       );
     }
   };
