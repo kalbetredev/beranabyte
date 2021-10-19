@@ -19,6 +19,20 @@ const AppBarMenuItems = () => {
     auth.signOut();
   };
 
+  const getSignUpPageSlug = () => {
+    if (router.pathname == "/signup") return router.asPath;
+    if (router.query["continue_to"] != null)
+      return pageSlugs.signUpPageSlug(router.query["continue_to"].toString());
+    else return pageSlugs.signUpPageSlug(router.asPath);
+  };
+
+  const getSignInPageSlug = () => {
+    if (router.pathname == "/signin") return router.asPath;
+    if (router.query["continue_to"] != null)
+      return pageSlugs.signInPageSlug(router.query["continue_to"].toString());
+    else return pageSlugs.signInPageSlug(router.asPath);
+  };
+
   return (
     <>
       {auth.user ? (
@@ -39,13 +53,13 @@ const AppBarMenuItems = () => {
         <div className="px-1 py-1 ">
           <MenuItem
             icon={<PencilAltIcon className="w-5 h-5" aria-hidden="true" />}
-            label="Register"
-            slug={pageSlugs.signUpPage(router.asPath)}
+            label="Sign Up"
+            slug={getSignUpPageSlug()}
           />
           <MenuItem
             icon={<LoginIcon className="w-5 h-5" aria-hidden="true" />}
             label="Sign In"
-            slug={pageSlugs.signInPageSlug(router.asPath)}
+            slug={getSignInPageSlug()}
           />
         </div>
       )}
