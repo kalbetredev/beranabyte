@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "../common/layouts/Page";
-import useAuth, { AuthProvider } from "../modules/auth/hooks/useAuth";
 import { useRouter } from "next/router";
+import useAuth, { AuthProvider } from "../modules/auth/hooks/useAuth";
 import SignInForm from "../common/components/SignInForm";
 
 const SignInPage: React.FC = () => {
@@ -18,7 +18,7 @@ const SignInPage: React.FC = () => {
   return (
     <Page>
       <div className="mt-20 mb-40 mx-auto w-full max-w-sm">
-        <div className="p-4 sm:p-6 shadow rounded-md border separator dark:bg-gray-700 dark:bg-opacity-80">
+        <div className="bg-white dark:bg-gray-700 dark:bg-opacity-80 rounded-md separator border shadow overflow-hidden">
           <SignInForm onSuccess={onSuccess} continuePath={continuePath} />
         </div>
       </div>
