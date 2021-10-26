@@ -8,6 +8,8 @@ import TailwindCSSIcon from "../../icons/TailwindCSSIcon";
 import TypeScriptIcon from "../../icons/TypeScriptIcon";
 import MongoDbIcon from "../../icons/MongoDbIcon";
 import ExpressJsIcon from "../../icons/ExpressJsIcon";
+import JavaIcon from "../../icons/JavaIcon";
+import DartIcon from "../../icons/DartIcon";
 
 const iconLabels = [
   "python",
@@ -18,6 +20,8 @@ const iconLabels = [
   "typescript",
   "mongodb",
   "expressjs",
+  "java",
+  "dart",
 ];
 
 const icons = [
@@ -29,6 +33,8 @@ const icons = [
   TypeScriptIcon,
   MongoDbIcon,
   ExpressJsIcon,
+  JavaIcon,
+  DartIcon,
 ];
 
 interface BrandIconProps {
