@@ -1,24 +1,22 @@
 import { MESSAGE_API_ENDPOINT } from "../../api/endpoints";
 import axiosInstance from "../utils/axiosInstance";
-import { throwError } from "../utils/error";
 
 const useMessage = () => {
   const sendMessage = (
     callback: (success: boolean) => void,
-    message: string,
+    content: string,
     email?: string
   ) => {
     axiosInstance
       .post(MESSAGE_API_ENDPOINT, {
-        email: email ? email : "anonymous",
-        message: message,
+        email: email ? email : "anonymous@beranabyte.com",
+        content: content,
       })
       .then(() => {
         callback(true);
       })
-      .catch((error) => {
+      .catch(() => {
         callback(false);
-        throwError(error);
       });
   };
 
