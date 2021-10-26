@@ -5,6 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import FormErrorMessage from "../common/components/FormErrorMessage";
 import MarkdownFormEditor from "../common/components/MarkdownEditor";
 import SocialMediaLinks from "../common/components/SocialMediaLinks";
+import useMessage from "../common/hooks/useMessage";
 import Page from "../common/layouts/Page";
 import SpinnerIcon from "../icons/SpinnerIcon";
 
@@ -29,8 +30,16 @@ const ContactPage = () => {
     defaultValues: { email: "", markdown: "" },
   });
 
-  const onSubmit = ({ email, message }: ContactForm) => {
-    console.log(email, message);
+  const onSubmit = ({ email, markdown }: ContactForm) => {
+    setIsSending(true);
+    sendMessage(
+      (success: boolean) => {
+        setIsSending(false);
+        if (success) methods.reset();
+      },
+      markdown,
+      email
+    );
   };
 
   return (
