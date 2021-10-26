@@ -1,31 +1,32 @@
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import FormErrorMessage from "../common/components/FormErrorMessage";
+import MarkdownFormEditor from "../common/components/MarkdownEditor";
 import SocialMediaLinks from "../common/components/SocialMediaLinks";
 import Page from "../common/layouts/Page";
+import SpinnerIcon from "../icons/SpinnerIcon";
 
 type ContactForm = {
   email: string;
-  message: string;
+  markdown: string;
 };
 
 const contactFormSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
-  message: Joi.string().min(10).max(1000).required(),
+  markdown: Joi.string().min(10).max(1000).required(),
 });
 
 const ContactPage = () => {
-  const [loading, setLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ContactForm>({
+  const [isSending, setIsSending] = useState(false);
+  const { sendMessage } = useMessage();
+
+  const methods = useForm<ContactForm>({
     resolver: joiResolver(contactFormSchema),
+    defaultValues: { email: "", markdown: "" },
   });
 
   const onSubmit = ({ email, message }: ContactForm) => {
@@ -44,70 +45,73 @@ const ContactPage = () => {
         </div>
         <h2 className="mt-5">You Can Also Leave a message</h2>
         <div className="mt-5">
-          <form onSubmit={handleSubmit(onSubmit)} name="contactForm">
-            <div className="mb-6">
-              <label
-                htmlFor="email"
-                className={"form-label" + (loading ? " text-gray-400" : "")}
-              >
-                email
-              </label>
-              <div className="mt-1">
-                <input
-                  type="email"
-                  id="email"
-                  disabled={loading}
-                  autoComplete="off"
-                  {...register("email")}
-                  className={
-                    "form-input w-full" + (errors.email ? " error-ring" : "")
-                  }
-                />
-                {errors.email ? (
-                  <div className="mt-3">
-                    <FormErrorMessage
-                      message={errors.email.message.replace(/['"]+/g, "")}
-                    />
-                  </div>
-                ) : null}
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)} name="contactForm">
+              <div className="mb-6">
+                <label
+                  htmlFor="email"
+                  className={"form-label" + (isSending ? " text-gray-400" : "")}
+                >
+                  email
+                </label>
+                <div className="mt-1">
+                  <input
+                    type="email"
+                    id="email"
+                    disabled={isSending}
+                    autoComplete="off"
+                    {...methods.register("email")}
+                    className={
+                      "form-input w-full" +
+                      (methods.formState.errors.email ? " error-ring" : "")
+                    }
+                  />
+                  {methods.formState.errors.email ? (
+                    <div className="mt-3">
+                      <FormErrorMessage
+                        message={methods.formState.errors.email.message.replace(
+                          /['"]+/g,
+                          ""
+                        )}
+                      />
+                    </div>
+                  ) : null}
+                </div>
               </div>
-            </div>
-            <div className="mb-6">
-              <label
-                htmlFor="message"
-                className={"form-label" + (loading ? " text-gray-400" : "")}
-              >
-                Message
-              </label>
-              <div className="mt-1">
-                <textarea
-                  form="contactForm"
-                  id="message"
-                  placeholder="Your Message"
-                  {...register("message")}
-                  className={
-                    "w-full text-sm separator rounded-md shadow-sm dark:bg-gray-700 focus:border-brand focus:border-opacity-25 focus:ring-brand focus:ring-opacity-50" +
-                    (errors.message ? " error-ring" : "")
-                  }
-                  rows={10}
-                ></textarea>
-                {errors.message ? (
-                  <div className="mt-3">
-                    <FormErrorMessage
-                      message={errors.message.message.replace(/['"]+/g, "")}
-                    />
-                  </div>
-                ) : null}
+              <div className="mb-6">
+                <label
+                  htmlFor="message"
+                  className={"form-label" + (isSending ? " text-gray-400" : "")}
+                >
+                  Message
+                </label>
+                <div className="mt-1">
+                  <MarkdownFormEditor
+                    placeholder="Your Comment ...."
+                    fromName="commentForm"
+                    disabled={isSending}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex justify-end items-center">
-              <div className="w-full max-w-[200px]">
-                <button type="submit" className="w-full primary-btn">
+              <div className="flex justify-end items-center">
+                <button
+                  type="submit"
+                  className={
+                    "w-32 h-8 mb-1 flex justify-center items-center py-0 my-0 " +
+                    (isSending ? "disabled-btn" : "primary-btn")
+                  }
+                  disabled={isSending}
+                >
+                  {isSending ? (
+                    <div className="m-1 w-4 h-4">
+                      <SpinnerIcon />
+                    </div>
+                  ) : null}
                   Send
                 </button>
               </div>
-            </div>
-          </form>
+            </form>
+          </FormProvider>
         </div>
       </div>
     </Page>
