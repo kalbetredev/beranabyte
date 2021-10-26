@@ -70,32 +70,34 @@ const CommentInput: React.FC<CommentInputProps> = (
         <div className="w-3 inline-block absolute z-50 top-3 -left-1">
           <div className="h-3 bg-gray-50 dark:bg-gray-700 border border-r-0 border-b-0 border-gray-200 dark:border-gray-600 -rotate-45 transform origin-top-right"></div>
         </div>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)} name="commentForm">
-            <MarkdownFormEditor
-              placeholder="Your Comment ...."
-              fromName="commentForm"
-              disabled={isSending}
-            />
-            <div className="flex flex-col items-end pt-2">
-              <button
-                type="submit"
-                className={
-                  "w-28 h-7 text-xs mb-1 flex justify-center items-center py-0 my-0 " +
-                  (isSending ? "disabled-btn" : "primary-btn")
-                }
+        <div className="ml-2">
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)} name="commentForm">
+              <MarkdownFormEditor
+                placeholder="Your Comment ...."
+                fromName="commentForm"
                 disabled={isSending}
-              >
-                {isSending ? (
-                  <div className="m-1 w-4 h-4">
-                    <SpinnerIcon />
-                  </div>
-                ) : null}
-                comment
-              </button>
-            </div>
-          </form>
-        </FormProvider>
+              />
+              <div className="flex flex-col items-end pt-2">
+                <button
+                  type="submit"
+                  className={
+                    "w-28 h-7 text-xs mb-1 flex justify-center items-center py-0 my-0 " +
+                    (isSending ? "disabled-btn" : "primary-btn")
+                  }
+                  disabled={isSending}
+                >
+                  {isSending ? (
+                    <div className="m-1 w-4 h-4">
+                      <SpinnerIcon />
+                    </div>
+                  ) : null}
+                  comment
+                </button>
+              </div>
+            </form>
+          </FormProvider>
+        </div>
       </div>
     </div>
   );
