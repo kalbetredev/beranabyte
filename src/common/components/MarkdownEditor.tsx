@@ -70,7 +70,7 @@ const MarkdownFormEditor: React.FC<MarkdownFormEditorProps> = (
     "border-b-0 border-l border-r border-t border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800";
 
   return (
-    <div className="flex flex-col border border-gray-200 dark:border-gray-600 rounded-md ml-2">
+    <div className="flex flex-col border border-gray-200 dark:border-gray-600 rounded-md">
       <div className="flex pt-2 w-full justify-end bg-gray-50 dark:bg-gray-700">
         <div className="flex flex-1 border-b dark:border-gray-600"></div>
         <input
