@@ -5,6 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import FormErrorMessage from "../common/components/FormErrorMessage";
 import MarkdownFormEditor from "../common/components/MarkdownEditor";
 import SocialMediaLinks from "../common/components/SocialMediaLinks";
+import useAlert, { AlertProvider } from "../common/hooks/useAlert";
 import useMessage from "../common/hooks/useMessage";
 import Page from "../common/layouts/Page";
 import SpinnerIcon from "../icons/SpinnerIcon";
@@ -23,6 +24,8 @@ const contactFormSchema = Joi.object({
 
 const ContactPage = () => {
   const [isSending, setIsSending] = useState(false);
+  const alert: AlertProvider = useAlert();
+
   const { sendMessage } = useMessage();
 
   const methods = useForm<ContactForm>({
@@ -35,7 +38,12 @@ const ContactPage = () => {
     sendMessage(
       (success: boolean) => {
         setIsSending(false);
-        if (success) methods.reset();
+        if (success) {
+          methods.reset();
+          alert.success("Your message has been sent.");
+        } else {
+          alert.error("Error occurred sending your message. Please try again.");
+        }
       },
       markdown,
       email
