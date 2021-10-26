@@ -1,7 +1,6 @@
 import React from "react";
-import Joi from "joi";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
+import SpinnerIcon from "../../icons/SpinnerIcon";
 import FormErrorMessage from "./FormErrorMessage";
 
 interface FormInputWithButtonProps {
@@ -10,8 +9,7 @@ interface FormInputWithButtonProps {
   inputPlaceholder?: string;
   btnLabel: string;
   className?: string;
-  validationSchema?: Joi.ObjectSchema<any>;
-  onSubmit: (data) => void;
+  isLoading?: boolean;
 }
 
 const FormInputWithButton: React.FC<FormInputWithButtonProps> = (
@@ -19,33 +17,41 @@ const FormInputWithButton: React.FC<FormInputWithButtonProps> = (
 ) => {
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: props.validationSchema
-      ? joiResolver(props.validationSchema)
-      : null,
-  });
+  } = useFormContext();
 
   return (
-    <form onSubmit={handleSubmit(props.onSubmit)}>
+    <div>
       <div className={"relative " + props.className}>
         <div>
           <input
             type={props.inputType}
+            autoComplete="off"
             placeholder={props.inputPlaceholder}
             {...register(props.inputName)}
             className={
               "w-full form-input pr-28 md:pr-36" +
               (errors[props.inputName] ? " error-ring" : "")
             }
+            disabled={props.isLoading}
           />
         </div>
         <div className="absolute right-0 top-0">
           <button
             type="submit"
-            className="w-24 sm:w-32 flex capitalize justify-center py-2 px-4 my-0 border separator rounded-md rounded-l-none text-sm font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 outline-none"
+            className={
+              "w-24 sm:w-32 flex capitalize justify-center items-center py-2 px-4 my-0 border separator rounded-md rounded-l-none text-sm font-medium outline-none" +
+              (props.isLoading
+                ? " text-gray-400 cursor-not-allowed bg-gray-200 dark:bg-gray-600"
+                : " bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 ")
+            }
+            disabled={props.isLoading}
           >
+            {props.isLoading ? (
+              <div className="mr-1 w-4 h-4">
+                <SpinnerIcon />
+              </div>
+            ) : null}
             {props.btnLabel}
           </button>
         </div>
@@ -57,13 +63,14 @@ const FormInputWithButton: React.FC<FormInputWithButtonProps> = (
           />
         </div>
       ) : null}
-    </form>
+    </div>
   );
 };
 
 FormInputWithButton.defaultProps = {
   inputType: "text",
   className: "",
+  isLoading: false,
 };
 
 export default FormInputWithButton;
