@@ -21,3 +21,6 @@ export const CURRENT_USER_API_ENDPOINT = `${USERS_API_ENDPOINT}/account`;
 
 // Messages
 export const MESSAGE_API_ENDPOINT = `${API_ENDPOINT}/message`;
+
+// Subscription
+export const SUBSCRIBE_API_ENDPOINT = `${API_ENDPOINT}/subscribe`;
