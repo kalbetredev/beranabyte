@@ -4,7 +4,7 @@ import Joi from "joi";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import APIError from "../../api/models/APIError";
-import BeranaByteIcon from "../../icons/BeranabyteIcon";
+import BeranaByteIcon from "../../icons/BeranaByteIcon";
 import useAuth, { AuthProvider } from "../../modules/auth/hooks/useAuth";
 import pageSlugs from "../constants/page-slugs";
 import useAlert, { AlertProvider } from "../hooks/useAlert";

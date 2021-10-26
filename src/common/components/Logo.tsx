@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import BeranaByteIcon from "../../icons/BeranabyteIcon";
+import BeranaByteIcon from "../../icons/BeranaByteIcon";
 
 const Logo: React.FC = () => {
   return (
