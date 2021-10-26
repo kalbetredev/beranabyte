@@ -9,13 +9,16 @@ interface LinkButtonProps {
 
 const LinkButton: React.FC<LinkButtonProps> = (props: LinkButtonProps) => {
   return (
-    <div className={"secondary-btn " + props.className}>
-      <Link href={props.slug}>
-        <a className="w-full text-sm text-center cursor-default">
-          {props.label}
-        </a>
-      </Link>
-    </div>
+    <Link href={props.slug}>
+      <a
+        className={
+          "secondary-btn w-full text-sm text-center cursor-default " +
+          props.className
+        }
+      >
+        {props.label}
+      </a>
+    </Link>
   );
 };
 
