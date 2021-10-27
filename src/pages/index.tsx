@@ -60,7 +60,7 @@ const IndexPage: React.FC = () => {
             <div className="flex-1">
               <ProjectCollection
                 title="Featured Projects"
-                projects={projects.openSource}
+                projects={projects.featured}
                 isLoading={projects.isLoading}
                 isError={projects.isError}
                 hideTitleDivider
