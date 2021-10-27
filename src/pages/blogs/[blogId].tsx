@@ -23,6 +23,7 @@ import BlogViewCount from "../../common/components/BlogViewCount";
 import CommentsSection from "../../common/components/Comment/CommentsSection";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
+import BlogMeta from "../../common/types/BlogMeta";
 
 interface BlogPageProps {
   blog: Blog;
@@ -87,10 +88,26 @@ const BlogPage: React.FC<BlogPageProps> = (props: BlogPageProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext<ParsedUrlQuery>
-) => {
-  const { params } = context;
+export async function getStaticPaths() {
+  const { blogs }: { blogs: BlogMeta[] } =
+    (await axiosFetcher(BLOGS_API_ENDPOINT)) ?? [];
+
+  const paths = [];
+  blogs.map((blog) => {
+    paths.push({
+      params: {
+        blogId: blog._id,
+      },
+    });
+  });
+
+  return {
+    paths: paths,
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps({ params }) {
   let { blog }: { blog: Blog } =
     (await axiosFetcher(`${BLOGS_API_ENDPOINT}/${params.blogId}`)) ?? null;
 
@@ -105,7 +122,8 @@ export const getServerSideProps: GetServerSideProps = async (
       toc: toc,
       readingTime: readingTimeInMin,
     },
+    revalidate: 10,
   };
-};
+}
 
 export default BlogPage;
