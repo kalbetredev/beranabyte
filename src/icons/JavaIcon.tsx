@@ -10,6 +10,8 @@ const JavaIcon = () => {
         imageRendering="optimizeQuality"
         fillRule="evenodd"
         clipRule="evenodd"
+        height="100%"
+        width="100%"
         viewBox="0 0 90.63 122.88"
       >
         <path

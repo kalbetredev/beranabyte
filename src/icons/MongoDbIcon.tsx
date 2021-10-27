@@ -5,12 +5,14 @@ const MongoDbIcon = () => {
     <span className="h-5 w-5 flex justify-center items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 598.88 1333.33"
         shapeRendering="geometricPrecision"
         textRendering="geometricPrecision"
         imageRendering="optimizeQuality"
         fillRule="evenodd"
         clipRule="evenodd"
+        height="100%"
+        width="100%"
+        viewBox="0 0 598.88 1333.33"
       >
         <path
           d="M295.27 3.65l35.58 66.83c8 12.33 16.67 23.25 26.87 33.42 29.79 29.79 58.08 60.99 83.5 94.41 60.28 79.16 100.95 167.07 129.98 262.14 17.42 58.08 26.87 117.66 27.58 177.9 2.91 180.11-58.83 334.76-183.31 463.28-20.33 20.33-42.08 39.16-65.41 55.91-12.33 0-18.17-9.46-23.25-18.16-9.45-15.96-15.25-34.17-18.16-52.29-4.38-21.8-7.25-43.58-5.83-66.08v-10.16c-1-2.17-11.87-1002.07-7.54-1007.19v.01z"

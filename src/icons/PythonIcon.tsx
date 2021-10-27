@@ -10,6 +10,8 @@ const PythonIcon = () => {
         imageRendering="optimizeQuality"
         fillRule="evenodd"
         clipRule="evenodd"
+        height="100%"
+        width="100%"
         viewBox="0 0 48 48"
       >
         <path

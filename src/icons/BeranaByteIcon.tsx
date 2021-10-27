@@ -3,6 +3,8 @@ const BeranaByteIcon = () => {
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
+      height="100%"
+      width="100%"
       viewBox="0 0 353.5 84.2"
     >
       <path

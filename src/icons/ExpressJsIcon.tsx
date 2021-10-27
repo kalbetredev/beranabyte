@@ -5,12 +5,14 @@ const ExpressJsIcon = () => {
     <span className="text-black dark:text-white h-16 w-16 flex justify-center items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1333.33 773.55"
         shapeRendering="geometricPrecision"
         textRendering="geometricPrecision"
         imageRendering="optimizeQuality"
         fillRule="evenodd"
         clipRule="evenodd"
+        height="100%"
+        width="100%"
+        viewBox="0 0 1333.33 773.55"
       >
         <path
           fill="currentColor"

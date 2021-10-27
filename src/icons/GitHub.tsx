@@ -16,6 +16,8 @@ const GitHubIcon: React.FC<GitHubIconProps> = (props: GitHubIconProps) => {
         imageRendering="optimizeQuality"
         fillRule="evenodd"
         clipRule="evenodd"
+        height="100%"
+        width="100%"
         viewBox="0 0 640 640"
       >
         <path

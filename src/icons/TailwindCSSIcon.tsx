@@ -9,6 +9,8 @@ const TailwindCSSIcon = () => {
       imageRendering="optimizeQuality"
       fillRule="evenodd"
       clipRule="evenodd"
+      height="100%"
+      width="100%"
       viewBox="0 0 122.88 73.29"
     >
       <path

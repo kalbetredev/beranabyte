@@ -6,12 +6,14 @@ const FacebookIcon: React.FC = () => {
       <span className="h-6 w-6 text-gray-500 dark:text-gray-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 3333 3333"
           shapeRendering="geometricPrecision"
           textRendering="geometricPrecision"
           imageRendering="optimizeQuality"
           fillRule="evenodd"
           clipRule="evenodd"
+          height="100%"
+          width="100%"
+          viewBox="0 0 3333 3333"
         >
           <path
             fill="currentColor"
