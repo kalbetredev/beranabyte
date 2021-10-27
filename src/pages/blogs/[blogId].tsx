@@ -1,6 +1,5 @@
 import React from "react";
 import Blog from "../../common/types/Blog";
-import BlogMeta from "../../common/types/BlogMeta";
 import axiosFetcher from "../../common/utils/fetcher";
 import { BLOGS_API_ENDPOINT } from "../../api/endpoints";
 import Page from "../../common/layouts/Page";
@@ -22,6 +21,8 @@ import {
 } from "../../common/utils/markdown";
 import BlogViewCount from "../../common/components/BlogViewCount";
 import CommentsSection from "../../common/components/Comment/CommentsSection";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { ParsedUrlQuery } from "querystring";
 
 interface BlogPageProps {
   blog: Blog;
@@ -86,26 +87,10 @@ const BlogPage: React.FC<BlogPageProps> = (props: BlogPageProps) => {
   );
 };
 
-export async function getStaticPaths() {
-  const { blogs }: { blogs: BlogMeta[] } =
-    (await axiosFetcher(BLOGS_API_ENDPOINT)) ?? [];
-
-  const paths = [];
-  blogs.map((blog) => {
-    paths.push({
-      params: {
-        blogId: blog._id,
-      },
-    });
-  });
-
-  return {
-    paths: paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery>
+) => {
+  const { params } = context;
   let { blog }: { blog: Blog } =
     (await axiosFetcher(`${BLOGS_API_ENDPOINT}/${params.blogId}`)) ?? null;
 
@@ -121,6 +106,6 @@ export async function getStaticProps({ params }) {
       readingTime: readingTimeInMin,
     },
   };
-}
+};
 
 export default BlogPage;
