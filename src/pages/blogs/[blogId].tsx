@@ -21,8 +21,6 @@ import {
 } from "../../common/utils/markdown";
 import BlogViewCount from "../../common/components/BlogViewCount";
 import CommentsSection from "../../common/components/Comment/CommentsSection";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { ParsedUrlQuery } from "querystring";
 import BlogMeta from "../../common/types/BlogMeta";
 
 interface BlogPageProps {
