@@ -18,7 +18,7 @@ const AppBar: React.FC = () => {
   useEffect(() => setMounted(true), []);
 
   const switchTheme = () => {
-    theme === Theme.DARK ? setTheme(Theme.LIGHT) : setTheme(Theme.DARK);
+    theme === Theme.LIGHT ? setTheme(Theme.DARK) : setTheme(Theme.LIGHT);
   };
 
   return (
