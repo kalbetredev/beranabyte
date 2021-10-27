@@ -10,6 +10,8 @@ const DartIcon = () => {
         imageRendering="optimizeQuality"
         fillRule="evenodd"
         clipRule="evenodd"
+        height="48px"
+        width="48px"
         viewBox="0 0 48 48"
       >
         <path
