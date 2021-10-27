@@ -3,7 +3,15 @@ import React from "react";
 const DartIcon = () => {
   return (
     <span className="w-12 h-12 flex justify-center items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        shapeRendering="geometricPrecision"
+        textRendering="geometricPrecision"
+        imageRendering="optimizeQuality"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        viewBox="0 0 48 48"
+      >
         <path
           fill="#1565c0"
           d="m10 12 3 25-8.019-8.019a4 4 0 0 1-.796-4.52L10 12z"
